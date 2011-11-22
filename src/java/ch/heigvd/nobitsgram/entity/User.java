@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import java.util.*;
 import javax.persistence.CascadeType;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import sun.misc.BASE64Encoder;
 
@@ -29,6 +30,7 @@ import sun.misc.BASE64Encoder;
  */
 @Entity
 @XmlRootElement
+@Table(name="nobitsgram_user")
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
