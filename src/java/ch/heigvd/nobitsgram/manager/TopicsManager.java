@@ -40,6 +40,7 @@ public class TopicsManager {
         return em.createQuery(cq).getResultList();
     }
 
+  
 
     public int count() {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();

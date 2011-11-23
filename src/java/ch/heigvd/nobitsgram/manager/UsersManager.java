@@ -11,6 +11,7 @@ import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.criteria.*;
 import java.util.*;
 
 /**
@@ -36,6 +37,10 @@ public class UsersManager {
         em.remove(user);
     }
 
+     public User findUser(int id) {
+        return em.find(userClass, id);
+    }
+
     public List<User> findAllUser(){
         javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         cq.select(cq.from(userClass));
@@ -51,6 +56,20 @@ public class UsersManager {
         return ((Long) q.getSingleResult()).intValue();
     }
 
+    public User getUser(String username){
+
+        String query = "SELECT Id"+
+                       "FROM Nobitsgram_user nUser"
+                      +"WHERE nUser.username = "+username;
+       Query q = em.createQuery(query);
+
+
+       List<Integer> result = q.getResultList();
+       int id = result.get(0);
+
+       return findUser(id);
+
+    }
 
     public boolean isPasswordOK(User user, String pwdVar){
         return user.isPassword(pwdVar);
