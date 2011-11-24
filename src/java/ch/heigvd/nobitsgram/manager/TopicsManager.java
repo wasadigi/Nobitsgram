@@ -6,9 +6,13 @@ package ch.heigvd.nobitsgram.manager;
 
 import ch.heigvd.nobitsgram.entity.Topic;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -16,10 +20,17 @@ import javax.persistence.PersistenceContext;
  * @author Eyram
  */
 @Stateless
-@LocalBean
+//@LocalBean
+
 public class TopicsManager {
-@PersistenceContext(unitName = "nobitsgramPU")
-    private EntityManager em;
+//@PersistenceContext(unitName = "nobitsgramPU")
+//private EntityManager em;
+private EntityManagerFactory emf = Persistence.createEntityManagerFactory("nobitsgramPU");
+private EntityManager em = emf.createEntityManager();
+
+
+
+
     private Class<Topic> topiClass;
 
     public void create(Topic topic){
@@ -40,7 +51,7 @@ public class TopicsManager {
         return em.createQuery(cq).getResultList();
     }
 
-  
+
 
     public int count() {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();

@@ -20,10 +20,10 @@ public class UserBean {
     String username;
 
     // The firstname of the user
-    String firstname;
+    String firstName;
 
     // The lastname of the user
-    String lastname;
+    String lastName;
 
     // The country of the user
     String country;
@@ -31,17 +31,31 @@ public class UserBean {
     // The password of the user
     String password;
 
+    // The email of the user
+    String email;
+
     // User's ID
     Long id;
 
     // The topic list of the user
     List <TopicBean> listTopic = new ArrayList<TopicBean>();
 
+    private Hashtable errors = new Hashtable();
+
 
     public UserBean(){
 
     }
 
+    public UserBean(String firstName, String lastName, String country,
+                     String username, String password, String email){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.country = country;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
 
     public String getCountry() {
         return country;
@@ -51,12 +65,12 @@ public class UserBean {
         this.country = country;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstname(String firstName) {
+        this.firstName = firstName;
     }
 
     public Long getId() {
@@ -67,12 +81,12 @@ public class UserBean {
         this.id = id;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastname(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPassword() {
@@ -97,6 +111,38 @@ public class UserBean {
 
     public List<TopicBean> getTopicList(){
         return listTopic;
+    }
+
+    public boolean isValid(){
+        boolean valid = true;
+        if (firstName.trim().equals("")) {
+            errors.put("firstName","Please enter your first name");
+            valid=false;
+        }
+
+        if (lastName.trim().equals("")) {
+            errors.put("lastName","Please enter your last name");
+            valid = false;
+        }
+
+        if (email.trim().equals("")){// || (email.indexOf('@') == -1)) {
+            errors.put("email","Please enter a valid email address");
+
+            valid = false;
+        }
+        if (username.trim().equals("")) {
+            errors.put("username","Please enter a username");
+
+            valid = false;
+        }
+        if (password.trim().equals("") ) {
+            errors.put("password","Please enter a valid password");
+
+            valid = false;
+        }
+
+
+        return valid;
     }
 
 }

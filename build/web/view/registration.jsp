@@ -5,6 +5,9 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page language="java" %>
+<%@page session="true" import="ch.heigvd.nobitsgram.controller.RegistrationServlet"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,15 +15,12 @@
         <title>Application Registration</title>
     </head>
     <body>
-        <%
-            String msgError = "";
 
-        %>
-        <div style="width: 400px; margin: 0 auto;">
-        <form action="" method="POST" accept-charset="utf-8" class="table-style">
+        <div style="width: 430px; margin: 0 auto; background-color:#DCDCDC;">
+            <form action="/nobitsgram/RegistrationServlet" method="POST" accept-charset="utf-8">
 
-            </br></br></br><h1 style="margin-left: 1.5em; margin-top: 1.0em;">REGISTRATION</h1></br>
-            <% out.println(msgError); %>
+     </br></br> <h1 style="margin-left: 2.5em;">REGISTRATION</h1></br>
+
     <br><label for="user_firstname" name="firstname">First name:</label>
     <input id="user_login" name="firstname" size="30" type="text" /></br>
 
@@ -326,15 +326,15 @@
     <br><label for="password" name="password">Password:</label>
     <input id="password" name="password" size="30" type="password"/></br>
 
-    <br><label for="password" name="Topic">Topic:</label>
-    <input id="password" name="Topic" size="30" type="text"/></br>
+    <br><label name="Topic">Topic:</label>
+    <input name="Topic" size="30" type="text"/></br>
 
     <br><span style="margin-left:100px;">
         <button type="submit" style="border:1px solid #f6b22b;
                 background:#fbe26eE;width:200px;
                 background-color:#F7D92E;
                 height: 35px;font-size:18px "
-            id="signup_button">Create an account</button></span></br>
+            id="signup_button">Create an account</button></span></br></br>
         </form>
         </div>
     </body>

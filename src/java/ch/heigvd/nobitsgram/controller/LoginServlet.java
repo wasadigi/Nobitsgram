@@ -16,12 +16,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 /**
  *
  * @author Eyram
  */
-@EJB
+@EJB(name = "User", beanInterface=ch.heigvd.nobitsgram.entity.User.class)
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
 
@@ -79,10 +78,6 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
 
 
-        HttpSession session = request.getSession();
-        if (session == null) {
-            response.sendRedirect("/view/session.jsp");
-        }
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         UsersManager usersManager = new UsersManager();
@@ -92,7 +87,7 @@ public class LoginServlet extends HttpServlet {
         // database or the password don't match with the username
         if(user == null || !(usersManager.isPasswordOK(user,password))){
             // We redirect to the session.jsp which represent login error page
-            response.sendRedirect("/view/session.jsp");
+            response.sendRedirect("/nobitsgram/view/errorLogin.jsp");
         }
 
 

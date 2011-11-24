@@ -27,7 +27,7 @@
 
         <p><span style="margin-left:140px;"><input type="submit" value="Log in" class="button" style="border:1px solid #f6b22b;background:#fbe26eE;width:100px;background-color:#F7D92E;height: 35px;font-size:18px ">
             </span></p>
-        <p><h4>Do you have already an acount? <a href="/nobitsgr.am/config/registration.jsp" style="margin-left:150px;">Create on here!</h4> </a>
+        <p><h4>Do you have already an acount? <a href="/nobitsgram/view/registration.jsp" style="margin-left:150px;">Create on here!</h4> </a>
         </form>
 
 </div>

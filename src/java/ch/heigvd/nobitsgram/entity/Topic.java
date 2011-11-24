@@ -37,7 +37,7 @@ public class Topic implements Serializable {
     // Topic's name
     private String name;
 
-    @ManyToMany
+    @ManyToMany(mappedBy="topicList")
     private List<User> userList = new ArrayList<User>() ;
 
     public Topic (){
@@ -116,8 +116,10 @@ public class Topic implements Serializable {
     *
     */
     public String toString() {
-        return "uTopic[ id=" + id +" ;name ="+name+ " ]";
+        return "<Topic>\n<id>"+id+"</id>\n<name>"+name+"</name>\n</Topic>";
     }
+
+
 
     /*
      * This method is used to add an user to the user list.

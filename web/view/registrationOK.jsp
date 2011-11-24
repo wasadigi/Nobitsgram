@@ -1,6 +1,6 @@
-<%-- 
-    Document   : index
-    Created on : 22 nov. 2011, 14:41:22
+<%--
+    Document   : registrationOK
+    Created on : 24 nov. 2011, 16:29:53
     Author     : Eyram
 --%>
 
@@ -9,9 +9,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Registration is OK</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div style="width: 350px; margin: 0 auto;">
+         
+        </div>
     </body>
 </html>

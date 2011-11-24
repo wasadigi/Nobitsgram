@@ -6,13 +6,13 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page language="java" %>
-<%@page session="true" import="ch.heigvd.nobitsgram.controller.LoginServlet" %>
+<%@page session="true" import="ch.heigvd.nobitsgram.controller.LoginServlet"%>
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Log in nobitsgr.am</title>
+        <title>Log in nobitsgram</title>
     </head>
     <body style="background-color:#DAEADB;">
 
@@ -20,7 +20,7 @@
 
 <div style="width: 350px; margin: 0 auto;">
 
-    <form action="LoginServlet" method="POST" accept-charset="utf-8"
+    <form action="/nobitsgram/LoginServlet" method="POST" accept-charset="utf-8"
           name ="Login" class="table-style">
 
         </br></br></br><h1 style="width:350px; margin:0em auto;background-color:#022F47;color:#F9FBFF"><span style="margin-left:130px;">Log in</span></h1>

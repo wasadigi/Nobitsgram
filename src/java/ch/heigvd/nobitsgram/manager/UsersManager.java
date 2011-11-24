@@ -13,6 +13,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.*;
 import java.util.*;
+import javax.ejb.EJB;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.ws.rs.POST;
 
 /**
  *
@@ -20,11 +24,15 @@ import java.util.*;
  */
 @Stateless
 @LocalBean
+//@EJB(name = "User", beanInterface=ch.heigvd.nobitsgram.entity.User.class)
 public class UsersManager {
-    @PersistenceContext(unitName = "nobitsgramPU")
-    private EntityManager em;
-    private Class<User> userClass;
+    //@PersistenceContext(unitName = "nobitsgramPU")
+    //private EntityManager em;
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("nobitsgramPU");
+    private EntityManager em = emf.createEntityManager();
+    private Class<User> userClass = User.class;
 
+    
     public void create(User user){
         em.persist(user);
     }
@@ -57,17 +65,22 @@ public class UsersManager {
     }
 
     public User getUser(String username){
+        User user = null;
+        String query = "SELECT nuser "+
+                       "FROM User nuser "
+                      +"WHERE nuser.username = '"+username+"'";
 
-        String query = "SELECT Id"+
-                       "FROM Nobitsgram_user nUser"
-                      +"WHERE nUser.username = "+username;
-       Query q = em.createQuery(query);
+        Query q = em.createQuery(query);
 
+        try{
+            user = (User)q.getSingleResult();
+        }
 
-       List<Integer> result = q.getResultList();
-       int id = result.get(0);
+        catch(Exception exc){
+           user = null;
+        }
+       return user;
 
-       return findUser(id);
 
     }
 
@@ -88,6 +101,7 @@ public class UsersManager {
     public Query createQuery(String qlString) {
         return em.createQuery(qlString);
     }
+
 
     public EntityManager getEntityManager(){
         return em;

@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import java.util.*;
 import javax.persistence.CascadeType;
 import javax.persistence.ManyToMany;
@@ -37,6 +36,7 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+
     // firstname of the user
     private String firstname;
 
@@ -55,8 +55,16 @@ public class User implements Serializable {
     //email of the user
     private String email;
 
+    public User(String firstname, String lastname){
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
 
-    @ManyToMany
+    public User(){
+
+    }
+
+    @ManyToMany(cascade= CascadeType.ALL)
     // List of the user's topic
     private List<Topic> topicList = new ArrayList<Topic>();
 
