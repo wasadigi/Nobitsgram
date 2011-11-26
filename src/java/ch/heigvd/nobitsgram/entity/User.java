@@ -12,7 +12,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import sun.misc.BASE64Encoder;
+
 
 /**
  * File: User.java
@@ -170,14 +170,17 @@ public class User implements Serializable {
     *
     */
     public boolean isPassword(String passVar) {
-        boolean cond = false;
-        try{
+        //boolean cond = false;
+
+       /* try{
             cond = password.equals(hashPassword(passVar));
         }
         catch(NoSuchAlgorithmException excep){
             excep.getStackTrace();
         }
-        return cond;
+         *
+         */
+        return password.trim().equals(passVar.trim());
     }
 
 
@@ -189,12 +192,15 @@ public class User implements Serializable {
     */
     public void setPassword(String pwd) {
 
-        try{
+        password = pwd;
+      /*  try{
             password = hashPassword(pwd);
         }
         catch(NoSuchAlgorithmException excep){
             excep.getStackTrace();
         }
+         *
+         */
 
 
     }
@@ -287,9 +293,10 @@ public class User implements Serializable {
         md.update(pwd.getBytes());
         byte raw[] = md.digest();
 
-        String hash = (new BASE64Encoder()).encode(raw);
+        // String hash = (new BASE64Encoder()).encode(raw);
 
-        return hash;
+      //  return hash;
+        return "";
     }
 
 }

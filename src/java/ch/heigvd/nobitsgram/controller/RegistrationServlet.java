@@ -77,33 +77,27 @@ public class RegistrationServlet extends HttpServlet {
         // record in Nobitsgram database
         if(userBean.isValid()){
 
-        UsersManager usersManager = new UsersManager();
-        User newUser = new User(firstname,lastname);
-        //newUser.setFirstname(firstname);
-        //newUser.setLastname(lastname);
-        newUser.setCountry(country);
-        newUser.setCountry(email);
-        newUser.setUsername(username);
-        newUser.setPassword(password);
+            UsersManager usersManager = new UsersManager();
+            User newUser = new User(firstname,lastname);
+            newUser.setFirstname(firstname);
+            newUser.setLastname(lastname);
+            newUser.setCountry(country);
+            newUser.setCountry(email);
+            newUser.setUsername(username);
+            newUser.setPassword(password);
 
+            Topic topic = new Topic(topicName);
 
+            //topic.setId(21L);
 
-        Topic topic = new Topic(topicName);
+            TopicsManager topicsManager = new TopicsManager();
+           // newUser.addTopic(topic);
+           // topic.addUser(newUser);
 
-        //topic.setId(21L);
+            usersManager.create(newUser);
+            topicsManager.create(topic);
 
-        //TopicFacadeREST topicFac = new TopicFacadeREST();
-        TopicsManager topicsManager = new TopicsManager();
-        newUser.addTopic(topic);
-        topic.addUser(newUser);
-
-        //usersManager.create(newUser);
-        topicsManager.create(topic);
-        //topicFac.create(topic);
-
-        response.sendRedirect("/nobitsgram/view/pageClient.jsp");
-
-
+            response.sendRedirect("/nobitsgram/view/registrationOK.jsp");
         }
 
         // Else, the client is rediret to an error page

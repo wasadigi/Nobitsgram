@@ -4,13 +4,19 @@
  */
 package ch.heigvd.nobitsgram.controller;
 
+import ch.heigvd.nobitsgram.util.URLParser;
+import ch.heigvd.nobitsgram.util.ResearchTag;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.*;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -18,6 +24,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "sessionServlet", urlPatterns = {"/sessionServlet"})
 public class SessionServlet extends HttpServlet {
+
+    static int i = 0;
+    // For default, topic is snow. If nothing is writte in the field "search
+    // Topic" , the topic which will be research is "snow"
+    String topic = "snow";
+    List<String> listTopic = null;
+
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -31,17 +44,9 @@ public class SessionServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            /* TODO output your page here
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SessionServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SessionServlet at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-             */
-        } finally {
+            response.sendRedirect("/nobitsgram/view/pageClient.jsp");
+        }
+        finally {
             out.close();
         }
     }
@@ -70,7 +75,54 @@ public class SessionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        PrintWriter out = response.getWriter();
+        String action = request.getParameter("action");
+        ServletContext sc = getServletContext();
+
+
+        String url;
+       // HttpSession session = request.getSession(true);
+        if(action.equals("Refresh")){
+
+            listTopic = getListsUrl(topic);
+             i = (i+3) % (listTopic.size()-1);
+            try{
+                url = listTopic.get(i);
+            }
+            catch(IndexOutOfBoundsException exc){
+                url = "";
+            }
+            request.setAttribute("url", url);
+
+            sc.getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
+
+
+        }
+
+        else if(action.equals("Add Topic")){
+
+
+        }
+
+        else{
+            topic = request.getParameter("searchTopic");
+            listTopic = getListsUrl(topic);
+            i = (i+3) % (listTopic.size()-1);
+            try{
+                url = listTopic.get(i);
+            }
+            catch(IndexOutOfBoundsException exc){
+                url = "";
+            }
+            request.setAttribute("url", url);
+
+            sc.getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
+
+        }
+
+
+
     }
 
     /**
@@ -81,4 +133,21 @@ public class SessionServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    /*
+     * This method return a list of url.
+     */
+     public List<String> getListsUrl(String topicName){
+            List<String> listUrl;
+            URLParser parser = new URLParser();
+            ResearchTag research = new ResearchTag();
+            research.setUrl(topicName);
+
+            String resultResearch = research.getSearcResult();
+
+            listUrl = parser.getListUrls(resultResearch);
+
+            return listUrl;
+     }
+
 }

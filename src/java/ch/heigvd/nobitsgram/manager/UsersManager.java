@@ -15,6 +15,7 @@ import javax.persistence.criteria.*;
 import java.util.*;
 import javax.ejb.EJB;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.ws.rs.POST;
 
@@ -31,10 +32,14 @@ public class UsersManager {
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("nobitsgramPU");
     private EntityManager em = emf.createEntityManager();
     private Class<User> userClass = User.class;
+    private EntityTransaction tx = em.getTransaction();
 
-    
+
     public void create(User user){
+        
+        tx.begin();
         em.persist(user);
+        tx.commit();
     }
 
     public void edit(User user){

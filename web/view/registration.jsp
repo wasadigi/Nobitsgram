@@ -24,7 +24,7 @@
     <br><label for="user_firstname" name="firstname">First name:</label>
     <input id="user_login" name="firstname" size="30" type="text" /></br>
 
-    <br><label for="user_lastname" name="lastname">Last name:</label>
+    <br><label name="lastname">Last name:</label>
     <input id="user_login" name="lastname" size="30" type="text" /></br>
 
 <br><label class="label" for="country">Country:&nbsp;&nbsp;&nbsp;</label>

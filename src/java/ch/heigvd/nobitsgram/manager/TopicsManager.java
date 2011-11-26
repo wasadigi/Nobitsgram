@@ -27,13 +27,14 @@ public class TopicsManager {
 //private EntityManager em;
 private EntityManagerFactory emf = Persistence.createEntityManagerFactory("nobitsgramPU");
 private EntityManager em = emf.createEntityManager();
-
+EntityTransaction tx = em.getTransaction();
 
 
 
     private Class<Topic> topiClass;
 
     public void create(Topic topic){
+        tx.begin();
         em.persist(topic);
     }
 
@@ -42,6 +43,7 @@ private EntityManager em = emf.createEntityManager();
     }
 
     public void remove(Topic topic){
+
         em.remove(topic);
     }
 
