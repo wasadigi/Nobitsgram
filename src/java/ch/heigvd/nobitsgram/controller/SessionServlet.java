@@ -4,6 +4,9 @@
  */
 package ch.heigvd.nobitsgram.controller;
 
+import ch.heigvd.nobitsgram.entity.Topic;
+import ch.heigvd.nobitsgram.entity.User;
+import ch.heigvd.nobitsgram.manager.UsersManager;
 import ch.heigvd.nobitsgram.util.URLParser;
 import ch.heigvd.nobitsgram.util.ResearchTag;
 import java.io.IOException;
@@ -26,10 +29,19 @@ import javax.servlet.http.HttpSession;
 public class SessionServlet extends HttpServlet {
 
     static int i = 0;
+    static int j = 0;
+    //UsersManager usersManager = new UsersManager();
+    //User user = usersManager.findUser(12);
+    String username ;//user.getUsername();
+    String action = "";
     // For default, topic is snow. If nothing is writte in the field "search
     // Topic" , the topic which will be research is "snow"
-    String topic = "snow";
-    List<String> listTopic = null;
+    String topic; // = "snow";
+    List<List<String>>listTopicUrl = getList();
+    List<String> listTopic = getListTopic();
+    int curIndex = 0;
+
+
 
 
     /**
@@ -44,7 +56,8 @@ public class SessionServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            response.sendRedirect("/nobitsgram/view/pageClient.jsp");
+            //response.sendRedirect("/nobitsgram/view/pageClient.jsp");
+            getServletContext().getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
         }
         finally {
             out.close();
@@ -76,50 +89,44 @@ public class SessionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        PrintWriter out = response.getWriter();
-        String action = request.getParameter("action");
+
+        action = request.getParameter("action");
+        username = request.getParameter(username);
+
         ServletContext sc = getServletContext();
+        if(username == null)
+            username = "John";
 
 
-        String url;
+        //String username = request.getParameter("username");
+
+
+
        // HttpSession session = request.getSession(true);
-        if(action.equals("Refresh")){
-
-            listTopic = getListsUrl(topic);
-             i = (i+3) % (listTopic.size()-1);
-            try{
-                url = listTopic.get(i);
-            }
-            catch(IndexOutOfBoundsException exc){
-                url = "";
-            }
-            request.setAttribute("url", url);
-
-            sc.getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
+        request.setAttribute("username",username);
 
 
+        if(action.equals("Refresh") ){
+            sendUrl(request, response, sc);
         }
 
         else if(action.equals("Add Topic")){
 
-
+           /* int id = Integer.parseInt(request.getParameter("id"));
+            User user = usersManager.findUser(id);
+            Topic newTopic = new Topic(request.getParameter("Topic"));
+            usersManager.addTopic(user, newTopic);
+             *
+             */
         }
 
         else{
             topic = request.getParameter("searchTopic");
-            listTopic = getListsUrl(topic);
-            i = (i+3) % (listTopic.size()-1);
-            try{
-                url = listTopic.get(i);
-            }
-            catch(IndexOutOfBoundsException exc){
-                url = "";
-            }
-            request.setAttribute("url", url);
-
-            sc.getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
-
+            if(getListsUrl(topic)!= null)
+                listTopicUrl.add(curIndex,getListsUrl(topic));
+            sendUrl(request, response, sc);
         }
+
 
 
 
@@ -138,7 +145,7 @@ public class SessionServlet extends HttpServlet {
      * This method return a list of url.
      */
      public List<String> getListsUrl(String topicName){
-            List<String> listUrl;
+            List<String> listUrl = null;
             URLParser parser = new URLParser();
             ResearchTag research = new ResearchTag();
             research.setUrl(topicName);
@@ -150,4 +157,62 @@ public class SessionServlet extends HttpServlet {
             return listUrl;
      }
 
+     public List<String> getListTopic(){
+         List<String> tmp = new ArrayList<String>();
+         tmp.add("cat");
+         tmp.add("Tokyo");
+         tmp.add("sea");
+         tmp.add("snow");
+         tmp.add("Ferrari");
+         return tmp;
+     }
+     public List<List<String>> getList(){
+         int size = getListTopic().size();
+         String s;
+         List <List<String>> tmp = new ArrayList<List<String>>();
+         for(int i = 0; i < size; i++ ){
+             s = getListTopic().get(i);
+             tmp.add(getListsUrl(s));
+         }
+
+         return tmp;
+     }
+
+     public void sendUrl(HttpServletRequest request, HttpServletResponse response,
+                         ServletContext sc)throws IOException, ServletException{
+         String url;
+         String myname = "Yves";
+
+         listTopic = listTopicUrl.get(j);
+         int tmp = 0;
+         boolean cond = false;
+         j  += 1;
+
+         if(j == listTopicUrl.size()){
+            i++;
+            j = 0;
+         }
+         curIndex = j;
+         if(i == listTopic.size()){
+             tmp = i;
+             i = 0;
+             cond = true;
+         }
+
+            try{
+                url = listTopic.get(i);
+                if(cond){
+                    i = tmp;
+                    cond = false;
+                }
+            }
+            catch(IndexOutOfBoundsException exc){
+                url = "";
+            }
+
+            request.setAttribute("url", url);
+
+            sc.getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
+
+     }
 }

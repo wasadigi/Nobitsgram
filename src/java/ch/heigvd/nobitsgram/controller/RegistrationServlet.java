@@ -10,8 +10,9 @@ import ch.heigvd.nobitsgram.manager.TopicsManager;
 import ch.heigvd.nobitsgram.manager.UsersManager;
 import ch.heigvd.nobitsgram.model.UserBean;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
+import javax.persistence.PersistenceContext;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 public class RegistrationServlet extends HttpServlet {
-
+    @EJB
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -88,16 +89,23 @@ public class RegistrationServlet extends HttpServlet {
 
             Topic topic = new Topic(topicName);
 
-            //topic.setId(21L);
+            ServletContext sc = getServletContext();
 
             TopicsManager topicsManager = new TopicsManager();
-           // newUser.addTopic(topic);
-           // topic.addUser(newUser);
 
-            usersManager.create(newUser);
-            topicsManager.create(topic);
 
-            response.sendRedirect("/nobitsgram/view/registrationOK.jsp");
+            //usersManager.create(newUser);
+            //topicsManager.create(topic);
+
+            /*String id =""+usersManager.getUser(username).getId();
+
+            request.setAttribute("username", username);
+            request.setAttribute("id",id);
+             *
+             */
+            request.setAttribute("username",username);
+            sc.getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
+            //response.sendRedirect("/nobitsgram/view/pageClient.jsp");
         }
 
         // Else, the client is rediret to an error page
@@ -115,4 +123,9 @@ public class RegistrationServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+
+
+
 }
+

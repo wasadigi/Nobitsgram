@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Remarque:
  *
  */
-@Entity
+@javax.persistence.Entity
 @XmlRootElement
 @Table(name="nobitsgram_user")
 public class User implements Serializable {

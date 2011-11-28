@@ -23,18 +23,23 @@ import javax.persistence.PersistenceContext;
 //@LocalBean
 
 public class TopicsManager {
-//@PersistenceContext(unitName = "nobitsgramPU")
-//private EntityManager em;
-private EntityManagerFactory emf = Persistence.createEntityManagerFactory("nobitsgramPU");
-private EntityManager em = emf.createEntityManager();
-EntityTransaction tx = em.getTransaction();
-
-
-
+    @PersistenceContext(unitName = "nobitsgramPU")
+    private EntityManager em;
     private Class<Topic> topiClass;
 
+
+    public TopicsManager(){
+        if(em == null){
+            try{
+                em = Persistence.createEntityManagerFactory("nobitsgramPU").createEntityManager();
+            }
+            catch(Exception exc){
+                exc.getStackTrace();
+            }
+        }
+    }
+
     public void create(Topic topic){
-        tx.begin();
         em.persist(topic);
     }
 

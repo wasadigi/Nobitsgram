@@ -17,6 +17,8 @@ import javax.ejb.EJB;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContextType;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 
 /**
@@ -27,19 +29,28 @@ import javax.ws.rs.POST;
 @LocalBean
 //@EJB(name = "User", beanInterface=ch.heigvd.nobitsgram.entity.User.class)
 public class UsersManager {
-    //@PersistenceContext(unitName = "nobitsgramPU")
-    //private EntityManager em;
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("nobitsgramPU");
-    private EntityManager em = emf.createEntityManager();
+    @PersistenceContext(unitName = "nobitsgramPU", type= PersistenceContextType.TRANSACTION)
+    private EntityManager em;
+
     private Class<User> userClass = User.class;
-    private EntityTransaction tx = em.getTransaction();
+
+    public UsersManager(){
+        if(em == null){
+            try{
+                em = Persistence.createEntityManagerFactory("nobitsgramPU").createEntityManager();
+            }
+            catch(Exception exc){
+                exc.getStackTrace();
+            }
+        }
+
+    }
 
 
     public void create(User user){
-        
-        tx.begin();
+       
         em.persist(user);
-        tx.commit();
+
     }
 
     public void edit(User user){
@@ -94,6 +105,10 @@ public class UsersManager {
     }
 
 
+    /*
+     * This method permit to a User to add a topic in his topicList.
+     *
+     */
     public void addTopic(User user, Topic topic){
         user.addTopic(topic);
         topic.addUser(user);
