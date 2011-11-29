@@ -3,15 +3,14 @@ package ch.heigvd.nobitsgram.entity;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.*;
-import javax.persistence.CascadeType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import sun.misc.BASE64Encoder;
 
 
 /**
@@ -64,9 +63,9 @@ public class User implements Serializable {
 
     }
 
-    @ManyToMany(cascade= CascadeType.ALL)
+    @ManyToMany(mappedBy="users")
     // List of the user's topic
-    private List<Topic> topicList = new ArrayList<Topic>();
+    private List<Topic> topics = new ArrayList<Topic>();
 
     /**
     *
@@ -170,17 +169,16 @@ public class User implements Serializable {
     *
     */
     public boolean isPassword(String passVar) {
-        //boolean cond = false;
+        boolean cond = false;
 
-       /* try{
+        try{
             cond = password.equals(hashPassword(passVar));
         }
         catch(NoSuchAlgorithmException excep){
             excep.getStackTrace();
         }
-         *
-         */
-        return password.trim().equals(passVar.trim());
+
+        return cond;
     }
 
 
@@ -192,16 +190,13 @@ public class User implements Serializable {
     */
     public void setPassword(String pwd) {
 
-        password = pwd;
-      /*  try{
+
+        try{
             password = hashPassword(pwd);
         }
         catch(NoSuchAlgorithmException excep){
             excep.getStackTrace();
         }
-         *
-         */
-
 
     }
 
@@ -234,12 +229,9 @@ public class User implements Serializable {
     * This method is used to add a or more topics to the topic list of the user
     *
     */
-    public void addTopic(Topic ... argsTopics){
+    public void addTopic(Topic topic){
 
-        for(int i = 0; i < argsTopics.length; i++){
-            topicList.add(argsTopics[i]);
-            topicList.get(topicList.size()-1).addUser(this);
-        }
+        topics.add(topic);
 
     }
 
@@ -279,7 +271,7 @@ public class User implements Serializable {
     * This method return the user's topic list
     */
     public List<Topic> getTopicList(){
-        return topicList;
+        return topics;
     }
 
     /*
@@ -293,10 +285,14 @@ public class User implements Serializable {
         md.update(pwd.getBytes());
         byte raw[] = md.digest();
 
-        // String hash = (new BASE64Encoder()).encode(raw);
+       String hash = (new BASE64Encoder()).encode(raw);
 
-      //  return hash;
-        return "";
+      return hash;
+
+    }
+
+    public void setListTopic(List<Topic> topics){
+        this.topics = topics;
     }
 
 }

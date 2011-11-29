@@ -5,14 +5,10 @@
 package ch.heigvd.nobitsgram.manager;
 
 import ch.heigvd.nobitsgram.entity.Topic;
+import ch.heigvd.nobitsgram.entity.User;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -20,23 +16,14 @@ import javax.persistence.PersistenceContext;
  * @author Eyram
  */
 @Stateless
-//@LocalBean
-
 public class TopicsManager {
     @PersistenceContext(unitName = "nobitsgramPU")
     private EntityManager em;
-    private Class<Topic> topiClass;
+    private Class<Topic> topiClass = Topic.class;
 
 
     public TopicsManager(){
-        if(em == null){
-            try{
-                em = Persistence.createEntityManagerFactory("nobitsgramPU").createEntityManager();
-            }
-            catch(Exception exc){
-                exc.getStackTrace();
-            }
-        }
+
     }
 
     public void create(Topic topic){
@@ -70,6 +57,47 @@ public class TopicsManager {
 
     public EntityManager getEntityManager(){
         return em;
+    }
+
+    public void addUser(User user, Topic topic){
+        topic.addUser(user);
+        user.addTopic(topic);
+    }
+
+
+     public Topic findTopic(int id) {
+        return em.find(topiClass,(long )id);
+    }
+
+   /*
+    * This method return the id of the topic which is in parameter
+   */
+    public int getId(Topic topic){
+        int i = -1;
+        List<Topic> topics = findAllTopic();;
+        int size = topics.size();
+        if(size < 1){
+            return i;
+        }
+
+        i = 0;
+        // If it's at least one topic in database, we search if the topic
+        // is the same with one of it in database
+        if(size > 0){
+
+            while(i < size && !topic.getName().equals(topics.get(i).getName())){
+                i++;
+            }
+
+            if(i == size){
+                i = -1;
+            }
+            else{
+                i = topics.get(i).getId().intValue();
+            }
+        }
+
+        return i;
     }
 
 }

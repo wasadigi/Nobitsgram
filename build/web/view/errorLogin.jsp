@@ -17,7 +17,8 @@
 
 <div style="width: 350px; margin: 0 auto;">
 
-    <form action="/nobitsgr.am/config/checkLogin.jsp" method="POST" accept-charset="utf-8" class="table-style">
+    <form action="/nobitsgram/LoginServlet" method="POST" accept-charset="utf-8"
+          name ="Login" class="table-style">
         </br></br></br><h1 style="width:350px; margin:0em auto;background-color:#022F47;color:#F9FBFF"><span style="margin-left:130px;">Log in</span></h1>
         <table style="width:350px;padding:2em;background-color:#0AA9FF">
             <td colspan="2"><h4 style="color:#BF0B0B">Incorrect Login and/or Password</h4></td>

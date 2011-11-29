@@ -11,7 +11,6 @@ import ch.heigvd.nobitsgram.manager.UsersManager;
 import ch.heigvd.nobitsgram.model.UserBean;
 import java.io.IOException;
 import javax.ejb.EJB;
-import javax.persistence.PersistenceContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,9 +25,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "RegistrationServlet", urlPatterns = {"/RegistrationServlet"})
 
-
 public class RegistrationServlet extends HttpServlet {
     @EJB
+    private UsersManager usersManager;
+    @EJB
+    private TopicsManager topicsManager;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -61,7 +62,6 @@ public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
 
 
         String firstname = request.getParameter("firstname");
@@ -74,38 +74,45 @@ public class RegistrationServlet extends HttpServlet {
         UserBean userBean = new UserBean(firstname,lastname,country,username,
                                          password,email);
 
-        // If all informations about a user are valid, then the user can be
-        // record in Nobitsgram database
-        if(userBean.isValid()){
+        // If all informations about a user are valid and the username don't
+        // exist yet, then the user can be record in Nobitsgram database
+        if(userBean.isValid() && !usersManager.isAllreadyRecord(username)){
 
-            UsersManager usersManager = new UsersManager();
-            User newUser = new User(firstname,lastname);
+            User newUser = new User();
             newUser.setFirstname(firstname);
             newUser.setLastname(lastname);
             newUser.setCountry(country);
-            newUser.setCountry(email);
+            newUser.setEmail(email);
             newUser.setUsername(username);
             newUser.setPassword(password);
 
+
+
             Topic topic = new Topic(topicName);
+
+            usersManager.create(newUser);
+            // We get the id of topic in database. If the this topic don't
+            // exist yet in database, it return -1, else it return the id of
+            // the topic which have the same name with this topic
+            int topicId = topicsManager.getId(topic);
+
+
+            if( topicId != -1){
+                topic = topicsManager.findTopic(topicId);
+
+            }
+
+            else{
+                topicsManager.create(topic);
+
+            }
+            usersManager.addTopicToUser(newUser,topic);
+
 
             ServletContext sc = getServletContext();
 
-            TopicsManager topicsManager = new TopicsManager();
-
-
-            //usersManager.create(newUser);
-            //topicsManager.create(topic);
-
-            /*String id =""+usersManager.getUser(username).getId();
-
-            request.setAttribute("username", username);
-            request.setAttribute("id",id);
-             *
-             */
             request.setAttribute("username",username);
             sc.getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
-            //response.sendRedirect("/nobitsgram/view/pageClient.jsp");
         }
 
         // Else, the client is rediret to an error page

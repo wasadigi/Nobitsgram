@@ -55,7 +55,6 @@ public class ResearchTag {
 
 
         try{
-           System.out.println("URL ==> "+url);
             myUrl = new URL(url);
 
             URLConnection yc = myUrl.openConnection();

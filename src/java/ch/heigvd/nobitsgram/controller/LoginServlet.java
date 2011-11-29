@@ -20,9 +20,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Eyram
  */
-@EJB(name = "User", beanInterface=ch.heigvd.nobitsgram.entity.User.class)
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
+@EJB
+private UsersManager usersManager;
 
     /**
      *
@@ -77,20 +78,33 @@ public class LoginServlet extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        UsersManager usersManager = new UsersManager();
-        User user = usersManager.getUser(username);
-        ServletContext sc = getServletContext();
+
+        if((!username.trim().equals("") && !password.trim().equals(""))&&
+           usersManager.isAllreadyRecord(username)){
+           User user = usersManager.getUser(username);
+
+           System.out.println("\t####### USER ===> "+user);
+
+            // If password don't match with the username we redirect the
+            // user to login error page
+            if(!usersManager.isPasswordOK(user,password)){
+                response.sendRedirect("/nobitsgram/view/errorLogin.jsp");
+            }
+            else{
+                ServletContext sc = getServletContext();
+                request.setAttribute("username", username);
+                sc.getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
+            }
+        }
+        else{
+           response.sendRedirect("/nobitsgram/view/errorLogin.jsp");
+        }
+
 
         // Return a jsp page error where the username don't exist in the
         // database or the password don't match with the username
-        if(usersManager.isPasswordOK(user,password)){
+
             // We redirect to the session.jsp which represent login error page
-            response.sendRedirect("/nobitsgram/view/errorLogin.jsp");
-        }
-        else{
-            request.setAttribute("username", username);
-            sc.getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
-        }
 
     }
 

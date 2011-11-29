@@ -12,4 +12,5 @@
     </jdbc-connection-pool>
     <jdbc-resource enabled="true" jndi-name="nobitsgram_data_source" object-type="user" pool-name="derby_net_nobitsgram_db_admin_nobitsgramPool"/>
     <jdbc-resource enabled="true" jndi-name="data_source_notbitsg" object-type="user" pool-name="derby_net_nobitsgram_db_admin_nobitsgramPool"/>
+    <jdbc-resource enabled="true" jndi-name="nobitgram_ds" object-type="user" pool-name="derby_net_nobitsgram_db_admin_nobitsgramPool"/>
 </resources>

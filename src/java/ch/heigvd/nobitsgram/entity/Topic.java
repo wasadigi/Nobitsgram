@@ -6,16 +6,15 @@ package ch.heigvd.nobitsgram.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.xml.bind.annotation.XmlRootElement;
+
+
 
 /**
  * File: Topic.java
@@ -37,8 +36,8 @@ public class Topic implements Serializable {
     // Topic's name
     private String name;
 
-    @ManyToMany(mappedBy="topicList")
-    private List<User> userList = new ArrayList<User>() ;
+    @ManyToMany(cascade= CascadeType.ALL)
+    private List<User> users = new ArrayList<User>() ;
 
     public Topic (){
 
@@ -101,7 +100,8 @@ public class Topic implements Serializable {
             return false;
         }
         Topic other = (Topic) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)) ||
+             (!this.name.equals(other.name)) ) {
             return false;
         }
         return true;
@@ -125,8 +125,10 @@ public class Topic implements Serializable {
      * This method is used to add an user to the user list.
      */
     public void addUser(User user){
-        userList.add(user);
-
-
+        users.add(user);
     }
+
+
+
+
 }
