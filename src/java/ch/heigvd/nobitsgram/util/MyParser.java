@@ -7,7 +7,7 @@ package ch.heigvd.nobitsgram.util;
 import java.util.ArrayList;
 
 /**
- * File: URLParser.java
+ * File: MyParser.java
  *
  * @author:  Eyram DOVI
  *
@@ -18,12 +18,12 @@ import java.util.ArrayList;
 
 import java.util.*;
 
-public class URLParser {
+public class MyParser {
 
 
 
 
-    public URLParser(){
+    public MyParser(){
 
     }
 
@@ -36,6 +36,7 @@ public class URLParser {
      */
     public List<String> getListUrls(String var){
         String url="";
+
         // List of url which is return;
         List<String> listUrl= new ArrayList<String>();
 
@@ -44,6 +45,7 @@ public class URLParser {
 
         // We want to extract url for image, then the extension is ".jpg"
         String endExpression = "_7.jpg";
+
 
         // Temporary variable is used to scan var
         String tmp = var;
@@ -68,16 +70,31 @@ public class URLParser {
 
 
     /*
-     * This method is used to display the list of url
+     *
+     *
      */
-    public void displayList(List<String> list){
-        Iterator<String> it = list.iterator();
+    public String getLatLong(String response){
+        String tmp = response;
+        String latDel1 = "<lat>";
+        String latDel2 = "</lat>";
 
-        while(it.hasNext()){
-            String s = it.next();
+        String latlong;
 
-                System.out.println(s);
-        }
+        String lngDel1 = "<lng>";
+        String lngDel2 = "</lng>";
+
+        int i = response.indexOf(latDel1);
+        int j = response.indexOf(latDel2);
+
+        latlong = response.substring(i+latDel1.length(), j);
+
+        i = response.indexOf(lngDel1);
+        j = response.indexOf(lngDel2);
+
+        latlong =latlong+"#"+response.substring(i+lngDel1.length(), j);
+
+
+
+        return latlong;
     }
-
 }

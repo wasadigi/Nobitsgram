@@ -7,7 +7,7 @@ package ch.heigvd.nobitsgram.controller;
 import ch.heigvd.nobitsgram.entity.Topic;
 import ch.heigvd.nobitsgram.entity.User;
 import ch.heigvd.nobitsgram.manager.UsersManager;
-import ch.heigvd.nobitsgram.util.URLParser;
+import ch.heigvd.nobitsgram.util.MyParser;
 import ch.heigvd.nobitsgram.util.ResearchTag;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -146,7 +146,7 @@ public class SessionServlet extends HttpServlet {
      */
      public List<String> getListsUrl(String topicName){
             List<String> listUrl = null;
-            URLParser parser = new URLParser();
+            MyParser parser = new MyParser();
             ResearchTag research = new ResearchTag();
             research.setUrl(topicName);
 

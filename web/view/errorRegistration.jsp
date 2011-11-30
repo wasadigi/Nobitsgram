@@ -29,6 +29,20 @@
     <br><label for="user_lastname" name="lastname">&nbsp;&nbsp;Last name:</label>
     <input id="user_login" name="lastname" size="30" type="text" /></br>
 
+
+     <br><label>Street number:</label>
+    <input name="streetNumber" size="8" type="text" /></br>
+
+    <br><label>Street address:</label>
+    <input name="street" size="30" type="text" /></br>
+
+    <br><label>city:</label>
+    <input name="city" size="30" type="text" /></br>
+
+    <br><label>ZIP/Postal Code:</label>
+    <input name="zip" size="8" type="text" /></br>
+
+
 <br><label class="label" for="country">&nbsp;&nbsp;Country:&nbsp;&nbsp;&nbsp;</label>
 
                <select class="" id="country" name="country">

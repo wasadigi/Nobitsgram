@@ -19,12 +19,13 @@ import java.util.*;
  */
 public class Test {
     public static void main(String[] args){
-        URLParser parser = new URLParser();
+        MyParser parser = new MyParser();
 
         System.out.println("Veuillez saisir votre texte:");
         Scanner sc = new Scanner(System.in);
         String saisie = sc.nextLine();
 
+        /*
         List<String> list = parser.getListUrls(saisie);
         parser.displayList(list);
 
@@ -36,11 +37,17 @@ public class Test {
         System.out.println("\n\t\tSAISI ==> "+saisie);
         rt.setUrl(saisie);
         String s = rt.getSearcResult();
+         *
+         */
 
        // System.out.println("REPONSE SERVEUR ==> "+s);
-       List<String> list1 = parser.getListUrls(s);
+       //List<String> list1 = parser.getListUrls(s);
         //parser.displayList(list1);
-
+        ResearchGeocode rs = new ResearchGeocode(saisie);
+        String s = rs.getLatLng();
+        MyParser pars = new MyParser();
+        System.out.println("**********************************************\n"+s);
+        System.out.println("/////////////////////////// =======> "+pars.getLatLong(s));
 
     }
 

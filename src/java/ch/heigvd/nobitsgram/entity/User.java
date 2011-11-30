@@ -54,6 +54,11 @@ public class User implements Serializable {
     //email of the user
     private String email;
 
+    private Double latitude = null;
+
+    private Double longitude = null;
+
+
     public User(String firstname, String lastname){
         this.firstname = firstname;
         this.lastname = lastname;
@@ -222,6 +227,26 @@ public class User implements Serializable {
     public void setUsername(String username) {
         this.username = username;
     }
+
+
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+
 
 
     /**

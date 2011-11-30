@@ -37,6 +37,14 @@ public class UserBean {
     // User's ID
     Long id;
 
+    String city;
+
+    String zip;
+
+    String street;
+
+    String streetNumber;
+
     // The topic list of the user
     List <TopicBean> listTopic = new ArrayList<TopicBean>();
 
@@ -48,14 +56,48 @@ public class UserBean {
     }
 
     public UserBean(String firstName, String lastName, String country,
-                     String username, String password, String email){
+                     String username, String password, String email,
+                     String streetNumber, String street, String city,String zip){
         this.firstName = firstName;
         this.lastName = lastName;
         this.country = country;
         this.username = username;
         this.password = password;
         this.email = email;
+        this.streetNumber = streetNumber;
+        this.street = street;
+        this.city = city;
+        this.zip = zip;
     }
+
+
+    public boolean isValidAddress(){
+
+        if (city.trim().equals("") ) {
+            errors.put("password","Please enter a valid password");
+
+            return false;
+        }
+
+        if (street.trim().equals("") ) {
+            errors.put("password","Please enter a valid password");
+
+            return false;
+        }
+
+        if (streetNumber.trim().equals("") ) {
+            errors.put("password","Please enter a valid password");
+            return false;
+        }
+
+        if (zip.trim().equals("") ) {
+            errors.put("password","Please enter a valid password");
+
+            return false;
+        }
+        return true;
+    }
+
 
     public String getCountry() {
         return country;
@@ -114,35 +156,34 @@ public class UserBean {
     }
 
     public boolean isValid(){
-        boolean valid = true;
+
         if (firstName.trim().equals("")) {
             errors.put("firstName","Please enter your first name");
-            valid=false;
+            return false;
         }
 
         if (lastName.trim().equals("")) {
             errors.put("lastName","Please enter your last name");
-            valid = false;
+            return false;
         }
 
         if (email.trim().equals("")){// || (email.indexOf('@') == -1)) {
             errors.put("email","Please enter a valid email address");
 
-            valid = false;
+            return false;
         }
         if (username.trim().equals("")) {
             errors.put("username","Please enter a username");
 
-            valid = false;
+            return false;
         }
         if (password.trim().equals("") ) {
             errors.put("password","Please enter a valid password");
 
-            valid = false;
+            return false;
         }
 
-
-        return valid;
+        return true;
     }
 
 }

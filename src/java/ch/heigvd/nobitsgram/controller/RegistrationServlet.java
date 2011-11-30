@@ -9,6 +9,8 @@ import ch.heigvd.nobitsgram.entity.User;
 import ch.heigvd.nobitsgram.manager.TopicsManager;
 import ch.heigvd.nobitsgram.manager.UsersManager;
 import ch.heigvd.nobitsgram.model.UserBean;
+import ch.heigvd.nobitsgram.util.MyParser;
+import ch.heigvd.nobitsgram.util.ResearchGeocode;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
@@ -71,8 +73,13 @@ public class RegistrationServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String topicName = request.getParameter("Topic");
+        String street = request.getParameter("street");
+        String streetNumber = request.getParameter("streetNumber");
+        String city = request.getParameter("city");
+        String zip = request.getParameter("zip");
+
         UserBean userBean = new UserBean(firstname,lastname,country,username,
-                                         password,email);
+                     password,email,streetNumber, street,city,zip);
 
         // If all informations about a user are valid and the username don't
         // exist yet, then the user can be record in Nobitsgram database
@@ -86,6 +93,18 @@ public class RegistrationServlet extends HttpServlet {
             newUser.setUsername(username);
             newUser.setPassword(password);
 
+            if(userBean.isValidAddress()){
+                String address = streetNumber+"+"+street+"+"+city+"+"+zip;
+
+                String tmp = new ResearchGeocode(address).getLatLng();
+                String s = new MyParser().getLatLong(tmp);
+                int i = s.indexOf("#");
+                String lat = s.substring(0, i);
+                String lng = s.substring(i+1);
+
+                newUser.setLatitude(Double.parseDouble(lat));
+                newUser.setLongitude(Double.parseDouble(lng));
+            }
 
 
             Topic topic = new Topic(topicName);
