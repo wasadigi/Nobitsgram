@@ -28,15 +28,24 @@ public class ResearchTag {
     // The end of the url
     private String acces_token = "/media/recent?access_token=10840565.f59def8.778aab0dc2d64a8ca9c27694ed9444bc";
 
-    private String url;
+    private String url ;
 
     public ResearchTag(){
+        String client_id = "5e2a174a39804619840925781251b646";
+        String redirect_uri = "http://localhost:8080/nobitsgram/view/pageClient.jsp";
+        String response_type = "token";
+        String oauth_url = "https://api.instagram.com/oauth/authorize/";
+
+        url =oauth_url+"?client_id="+client_id+
+        "&redirect_uri="+redirect_uri+
+        "&response_type="+response_type;
 
     }
 
     public ResearchTag(String tagSearch){
         setUrl(tagSearch);
     }
+
 
     /*
      * Complete the url with the search tag
@@ -67,7 +76,7 @@ public class ResearchTag {
                 //System.out.println(inputLine);
                 searchResult +=inputLine;
             }
-            in.close();
+            //in.close();
 
         }
 

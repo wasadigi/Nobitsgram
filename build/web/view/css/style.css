@@ -1,0 +1,57 @@
+/* *****************************************************************/
+/* Feuille de style                                                */
+/*                                                                 */
+/* Date de creation : 29/11/2011                                   */
+/* Auteur : Eyram   DOVI                                           */
+/*                                                                 */
+/* Adresse de validation CSS :				                       */
+/* http://jigsaw.w3.org/css-validator/			                   */
+/*																   */
+/*                                                     			   */
+/*******************************************************************/
+#header
+	{
+	height: 235px;
+	background: url(../images/bg-header.jpg) repeat-x top;
+	}
+
+#formlogin
+	{
+	position:absolute;
+	top: 7.5px;
+	right: 470px;
+	width: 300px;
+	}
+
+#formregister
+	{
+	position:absolute;
+	top: 7.5px;
+	right: 90px;
+	width: 300px;
+	}
+
+#global {
+  position:absolute;
+  left: 60%;
+  top: 85%;
+  width: 400px;
+  height: 350px;
+  margin-top: -250px; /* moiti� de la hauteur */
+  margin-left: -450px; /* moiti� de la largeur */
+  bgcolor: #B0A3C0;
+
+-webkit-border-top-left-radius: 20px;
+-webkit-border-top-right-radius: 20px;
+-webkit-border-bottom-right-radius: 20px;
+-webkit-border-bottom-left-radius: 20px;
+-moz-border-radius-topleft: 20px;
+-moz-border-radius-topright: 20px;
+-moz-border-radius-bottomright: 20px;
+-moz-border-radius-bottomleft: 20px;
+border-top-left-radius: 20px;
+border-top-right-radius: 20px;
+border-bottom-right-radius: 20px;
+border-bottom-left-radius: 20px;
+  border: 6px solid #B0A3C0;
+}
