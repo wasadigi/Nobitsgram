@@ -81,9 +81,10 @@ public class RegistrationServlet extends HttpServlet {
         UserBean userBean = new UserBean(firstname,lastname,country,username,
                      password,email,streetNumber, street,city,zip);
 
+
         // If all informations about a user are valid and the username don't
         // exist yet, then the user can be record in Nobitsgram database
-        if(userBean.isValid() && !usersManager.isAllreadyRecord(username)){
+        if(userBean.isValid() && !usersManager.isAllReadyRecord(username)){
 
             User newUser = new User();
             newUser.setFirstname(firstname);
@@ -105,25 +106,26 @@ public class RegistrationServlet extends HttpServlet {
                 newUser.setLatitude(Double.parseDouble(lat));
                 newUser.setLongitude(Double.parseDouble(lng));
             }
-
-
-            Topic topic = new Topic(topicName);
-
             usersManager.create(newUser);
-            // We get the id of topic in database. If the this topic don't
-            // exist yet in database, it return -1, else it return the id of
-            // the topic which have the same name with this topic
-            int topicId = topicsManager.getId(topic);
 
+            Topic topic;
 
-            if( topicId != -1){
-                topic = topicsManager.findTopic(topicId);
-
+            // We try to get a topic which have the same name with
+            // which we get in parameter. If the topic get was null, then
+            // it haven't any topic with the same name in database, else it
+            // have one and we add new user to it.
+            try{
+                topic = topicsManager.getTopic(topicName);
+            }
+            catch(Exception ex){
+                topic = null;
             }
 
-            else{
+            // It haven't any topic with the same name in database, then we
+            // can create a new with topicName.
+            if(topic == null){
+                topic = new Topic(topicName);
                 topicsManager.create(topic);
-
             }
             usersManager.addTopicToUser(newUser,topic);
 

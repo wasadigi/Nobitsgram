@@ -8,6 +8,7 @@ import ch.heigvd.nobitsgram.entity.Topic;
 import ch.heigvd.nobitsgram.entity.User;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -70,34 +71,13 @@ public class TopicsManager {
     }
 
    /*
-    * This method return the id of the topic which is in parameter
+    * This method return the topic which have the same name with the String
+    * which is the parameter
    */
-    public int getId(Topic topic){
-        int i = -1;
-        List<Topic> topics = findAllTopic();;
-        int size = topics.size();
-        if(size < 1){
-            return i;
-        }
-
-        i = 0;
-        // If it's at least one topic in database, we search if the topic
-        // is the same with one of it in database
-        if(size > 0){
-
-            while(i < size && !topic.getName().equals(topics.get(i).getName())){
-                i++;
-            }
-
-            if(i == size){
-                i = -1;
-            }
-            else{
-                i = topics.get(i).getId().intValue();
-            }
-        }
-
-        return i;
+    public Topic getTopic(String topicName){
+         Query q = em.createQuery("SELECT top FROM Topic top WHERE top.name='"+topicName+"'");
+         List<Topic> top = q.getResultList();
+         return top.get(0);
     }
 
 }

@@ -4,8 +4,13 @@
  */
 package ch.heigvd.nobitsgram.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.net.URL;
+import java.net.URLConnection;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -82,6 +87,19 @@ public class instagramLogin extends HttpServlet {
         "&redirect_uri="+redirect_uri+
         "&response_type="+response_type;
 
+
+         URL instaUrl = new URL(url);
+         response.sendRedirect(instaUrl.getPath());
+
+        URLConnection connection = instaUrl.openConnection();
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        String line;
+        while ((line = br.readLine()) != null) {
+        /** traitement des lignes */
+        }
+        br.close();
+        System.out.println("LINE LINE LINE LINE =======> "+line);
 
     }
 

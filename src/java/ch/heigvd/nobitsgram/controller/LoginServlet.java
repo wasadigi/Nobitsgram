@@ -78,10 +78,20 @@ private UsersManager usersManager;
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        User user;
+        try{
+            user = usersManager.getUser(username);
+        }
+        catch(Exception exc){
+           user = null;
+        }
+
+
+           System.out.println("\t####### USER11 ===> "+user);
 
         if((!username.trim().equals("") && !password.trim().equals(""))&&
-           usersManager.isAllreadyRecord(username)){
-           User user = usersManager.getUser(username);
+             user != null){
+
 
            System.out.println("\t####### USER ===> "+user);
 

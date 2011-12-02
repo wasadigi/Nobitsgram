@@ -18,18 +18,7 @@
         <form  action="/nobitsgram/instagramLogin" method="POST" accept-charset="utf-8"  class="table-style" align="right">
 
         <span style="margin-left:140px;">
-            <%
-
-        String client_id = "5e2a174a39804619840925781251b646";
-        String redirect_uri = "http://localhost:8080/nobitsgram/view/pageClient.jsp";
-        String response_type = "token";
-        String oauth_url = "https://api.instagram.com/oauth/authorize/";
-
-        String url =oauth_url+"?client_id="+client_id+
-        "&redirect_uri="+redirect_uri+
-        "&response_type="+response_type;
-            %>
-         <a href="<%out.print(url);%>" title="instagram login" class="sign-up-haut btn-sign-up-right">Sign in with Instagram</a>
+           <input type="submit" value="Sign in with instagram" class="button" style="border:1px solid #f6b22b;background:#fbe26eE;width:200px;background-color:#F7D92E;height: 35px;font-size:18px" />
         </span>
         </form>
     </div>

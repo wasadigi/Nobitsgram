@@ -63,16 +63,22 @@ public class UsersManager {
 
     public User getUser(String username){
 
-       List<User> users = findAllUser();
-       int size = users.size();
-       int i = 0;
-       while(i < size && !users.get(i).getUsername().equals(username)){
-           i++;
-       }
-       if(i < size){
-           return users.get(i);
-       }
-       return null;
+         Query q = em.createQuery("SELECT s FROM User s WHERE s.username='"+username+"'");
+         List<User> user = q.getResultList();
+         return user.get(0);
+    }
+
+
+    public boolean isAllReadyRecord(String username){
+        boolean cond = false;
+        try{
+            User tmp = getUser(username);
+            cond = true;
+        }
+        catch(Exception exc){
+
+        }
+        return cond;
     }
 
     public boolean isPasswordOK(User user, String pwdVar){
@@ -111,15 +117,7 @@ public class UsersManager {
         return em.createQuery(qlString);
     }
 
-    public boolean isAllreadyRecord(String username){
-        int i = 0;
-        List<User> users = findAllUser();
-        int size = users.size();
-        while(i < size && !users.get(i).getUsername().equals(username)){
-            i++;
-        }
-        return (i < size);
-    }
+
 
     public EntityManager getEntityManager(){
         return em;
