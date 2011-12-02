@@ -51,7 +51,7 @@
 
 	<div style="width: 300px; margin: 0 auto;">
 
-		<form id = "formregister" action="/nobitsgram/RegistrationServlet" method="POST" accept-charset="utf-8" name ="Login" class="table-style" align="right">
+		<form id = "formregister" action="http://localhost:8080/nobitsgram/view/registration.jsp" method="POST" accept-charset="utf-8" name ="Login" class="table-style" align="right">
 
 		<h1 style="width:350px; margin:0em auto;background-color:#022F47;color:#F9FBFF"><span style="margin-left:130px;">No Account</span></h1>
 		<br/>

@@ -12,6 +12,7 @@ import ch.heigvd.nobitsgram.model.UserBean;
 import ch.heigvd.nobitsgram.util.MyParser;
 import ch.heigvd.nobitsgram.util.ResearchGeocode;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -40,6 +41,29 @@ public class RegistrationServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
 
+     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        try {
+
+            getServletContext().getRequestDispatcher("/view/registration.jsp").forward(request, response);
+            /* TODO output your page here
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ServletPageAccueil</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ServletPageAccueil at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+             */
+        } finally {
+            out.close();
+        }
+    }
+
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -51,7 +75,7 @@ public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
+        processRequest(request, response);
     }
 
     /**
