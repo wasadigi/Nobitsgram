@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page session="true" %>
+<meta http-equiv="refresh" content="5; URL=/nobitsgram/WelcomeServlet">
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
 <head>
 <title>Test page login</title>
@@ -15,13 +17,13 @@
 <!--Positionnement du header et du formulaire de login-->
 <div id ="header">
     <div style="width: 300px; margin-left: 130 auto;">
-        <form  action="/nobitsgram/instagramLogin" method="POST" accept-charset="utf-8"  class="table-style" align="right">
+        <form class="table-style" align="right">
 
         <span style="margin-left:140px;">
             <%
 
         String client_id = "5e2a174a39804619840925781251b646";
-        String redirect_uri = "http://localhost:8080/nobitsgram/sessionServlet";
+        String redirect_uri = "/nobitsgram/sessionServlet";
         String response_type = "token";
         String oauth_url = "https://api.instagram.com/oauth/authorize/";
 
@@ -29,7 +31,7 @@
         "&redirect_uri="+redirect_uri+
         "&response_type="+response_type;
             %>
-         <a href="<%out.print(url);%>" title="instagram login" class="sign-up-haut btn-sign-up-right">Sign in with Instagram</a>
+            <h3><a href="<%out.print(url);%>" style="color:#0000CC; margin-left:40px;" title="instagram login">Sign in with Instagram</a></h3>
         </span>
         </form>
     </div>
@@ -51,38 +53,31 @@
 
 	<div style="width: 300px; margin: 0 auto;">
 
-		<form id = "formregister" action="http://localhost:8080/nobitsgram/view/registration.jsp" method="POST" accept-charset="utf-8" name ="Login" class="table-style" align="right">
+		<form id = "formregister"  class="table-style" align="right">
 
 		<h1 style="width:350px; margin:0em auto;background-color:#022F47;color:#F9FBFF"><span style="margin-left:130px;">No Account</span></h1>
 		<br/>
-		<span style="margin-left:140px;"><input type="submit" value="Register" class="button" style="border:1px solid #f6b22b;background:#fbe26eE;width:100px;background-color:#F7D92E;height: 35px;font-size:18px" />
+                <h2><span style="margin-left:150px;color:#FFFFCC"> <a href="/nobitsgram/view/registration.jsp" style="color:#00CC00"  title="Nobitsgram Registration">Register</a></span></h2>
         </span>
         </form>
 	</div>
 
 
 </div>
-<!--Mise en place du cadre pour l'image-->
-<!--Fonction de déféliment indéfini logo-->
-            <script type="jtext/javascript">
-var photologo = new Array("images/fleure.jpg","images/image1.jpg","images/image2.jpg","images/image3.jpg","images/image4.jpg")
-var limgCt = 5;
-var limgNum = 0;
-<!--document.write("<p>" + " " + "</p>"+"<br>");-->
-function lAvantPremiere(){
-limgNum++
-if(limgNum==limgCt){limgNum = 0;
-}
-document.logo.src = photologo[limgNum];
-setTimeout("lAvantPremiere()",1500);
-}
-</script>
-<!--End Fonction de déféliment indéfini logo-->
-<table id= "global" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#B0A3C0">
-  <tr>
-      <th height="245" colspan="2" bgcolor="#B0A3C0" scope="row"> <img src="view/images/fleure.jpg" name="logo" style="width:300px; height:200px border=0" alt="noBits"/> &nbsp;</th>
-  </tr>
-</table>
+<form action="/nobitsgram/WelcomeServlet" method="POST" accept-charset="utf-8">
+
+            <% url =(String)request.getAttribute("url");
+                if(url == null){
+                    url = "http://distilleryimage2.instagram.com/fabbedf01cd411e180c9123138016265_7.jpg";
+                }
+            %>
+
+    <table id= "global" bgcolor="#000000">
+    <tr>
+      <th> <img src="<%out.print(url);%>" name="image" style="width:400px; height:300px border=0"/></th>
+     </tr>
+    </table>
+</form>
 
 </body>
 </html>

@@ -4,8 +4,12 @@
  */
 package ch.heigvd.nobitsgram.controller;
 
+import ch.heigvd.nobitsgram.util.MyParser;
+import ch.heigvd.nobitsgram.util.ResearchTag;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,9 +20,13 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Eyram
  */
-@WebServlet(name = "ServletPageAccueil", urlPatterns = {"/ServletPageAccueil"})
-public class ServletPageAccueil extends HttpServlet {
+@WebServlet(name = "WelcomeServlet", urlPatterns = {"/WelcomeServlet"})
+public class WelcomeServlet extends HttpServlet {
+// We create a list of url with the name nobits
+    List<String> listTopic = getListsUrl("Ferrari");
 
+    // This variable will be increment to scan the list
+    static int i = 0;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -33,22 +41,14 @@ public class ServletPageAccueil extends HttpServlet {
         try {
 
             getServletContext().getRequestDispatcher("/view/pagelogin.jsp").forward(request, response);
-            /* TODO output your page here
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ServletPageAccueil</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ServletPageAccueil at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-             */
-        } finally {
+
+        }
+        finally {
             out.close();
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
@@ -59,7 +59,9 @@ public class ServletPageAccueil extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        ServletContext sc = getServletContext();
+        sendUrlToJSP(request, response, sc);
     }
 
     /**
@@ -72,8 +74,41 @@ public class ServletPageAccueil extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
     }
+
+    /*
+     * This method send the url to the jsp page which call this servlet
+     */
+    public void sendUrlToJSP(HttpServletRequest request, HttpServletResponse response,
+                         ServletContext sc)throws IOException, ServletException{
+
+        int size = listTopic.size();
+        String url = listTopic.get((i++)%size);
+        request.setAttribute("url", url);
+        sc.getRequestDispatcher("/view/pagelogin.jsp").forward(request, response);
+
+     }
+
+    /*
+     * This method create a list of url according to the topic name we get in
+     * parameter
+     */
+    public List<String> getListsUrl(String topicName){
+            List<String> listUrl = null;
+            MyParser parser = new MyParser();
+            ResearchTag research = new ResearchTag();
+            research.setUrl(topicName);
+
+            // Get the result when an instance of ResearchTag do a request
+            // to the instagram site.
+            String resultResearch = research.getSearcResult();
+
+            listUrl = parser.getListUrls(resultResearch);
+
+            return listUrl;
+     }
+
 
     /**
      * Returns a short description of the servlet.
@@ -82,5 +117,8 @@ public class ServletPageAccueil extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }// </editor-fold>// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
+
+
 }

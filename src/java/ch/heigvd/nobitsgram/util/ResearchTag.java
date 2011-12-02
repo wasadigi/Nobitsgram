@@ -31,14 +31,6 @@ public class ResearchTag {
     private String url ;
 
     public ResearchTag(){
-        String client_id = "5e2a174a39804619840925781251b646";
-        String redirect_uri = "http://localhost:8080/nobitsgram/view/pageClient.jsp";
-        String response_type = "token";
-        String oauth_url = "https://api.instagram.com/oauth/authorize/";
-
-        url =oauth_url+"?client_id="+client_id+
-        "&redirect_uri="+redirect_uri+
-        "&response_type="+response_type;
 
     }
 
@@ -66,17 +58,17 @@ public class ResearchTag {
         try{
             myUrl = new URL(url);
 
-            URLConnection yc = myUrl.openConnection();
+            URLConnection connect = myUrl.openConnection();
             BufferedReader in = new BufferedReader(
                                 new InputStreamReader(
-                                yc.getInputStream()));
+                                connect.getInputStream()));
             String inputLine;
 
             while ((inputLine = in.readLine()) != null){
                 //System.out.println(inputLine);
                 searchResult +=inputLine;
             }
-            //in.close();
+            in.close();
 
         }
 

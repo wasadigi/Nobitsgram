@@ -33,25 +33,12 @@
 
 #global {
   position:absolute;
-  left: 60%;
-  top: 85%;
+  left: 45%;
+  top: 70%;
   width: 400px;
-  height: 350px;
-  margin-top: -250px; /* moiti� de la hauteur */
-  margin-left: -450px; /* moiti� de la largeur */
-  bgcolor: #B0A3C0;
+  height: 300px;
+  margin-top: -250px;
+  margin-left: -450px;
 
--webkit-border-top-left-radius: 20px;
--webkit-border-top-right-radius: 20px;
--webkit-border-bottom-right-radius: 20px;
--webkit-border-bottom-left-radius: 20px;
--moz-border-radius-topleft: 20px;
--moz-border-radius-topright: 20px;
--moz-border-radius-bottomright: 20px;
--moz-border-radius-bottomleft: 20px;
-border-top-left-radius: 20px;
-border-top-right-radius: 20px;
-border-bottom-right-radius: 20px;
-border-bottom-left-radius: 20px;
-  border: 6px solid #B0A3C0;
+
 }
