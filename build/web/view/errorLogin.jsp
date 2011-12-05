@@ -22,8 +22,8 @@
         </br></br></br><h1 style="width:350px; margin:0em auto;background-color:#022F47;color:#F9FBFF"><span style="margin-left:130px;">Log in</span></h1>
         <table style="width:350px;padding:2em;background-color:#0AA9FF">
             <td colspan="2"><h4 style="color:#BF0B0B">Incorrect Login and/or Password</h4></td>
-            <tr><th><label for="id_username">Username:</label></th><td><input autocapitalize="off" autocorrect="off" type="text" name="username" id="id_username" /></td></tr>
-<tr><th> <br/><label for="id_password">Password:</label></th><td><br/><input autocapitalize="off" autocorrect="off" type="password" name="password" id="id_password" /></td></tr>
+            <tr><th><label for="id_username">Username:</label></th><td><input  type="text" name="username" id="id_username" /></td></tr>
+<tr><th> <br/><label for="id_password">Password:</label></th><td><br/><input   type="password" name="password" id="id_password" /></td></tr>
         </table>
 
         <p><span style="margin-left:140px;"><input type="submit" value="Log in" class="button" style="border:1px solid #f6b22b;background:#fbe26eE;width:100px;background-color:#F7D92E;height: 35px;font-size:18px ">

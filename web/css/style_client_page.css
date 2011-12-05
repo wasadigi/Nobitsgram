@@ -1,0 +1,93 @@
+/* *****************************************************************
+/* Feuille de style
+/*
+/* Date de creation : 04/12/2011
+/* Auteur : Eyram   DOVI
+/*
+/* Adresse de validation CSS :
+/* http://jigsaw.w3.org/css-validator/
+/*																   */
+/*
+/*******************************************************************/
+#contener {
+margin-left : auto;
+margin-right : auto;
+}
+#header {
+height : 200px;
+background : url(../images/bg-header.jpg) repeat-x ;
+margin-left : auto;
+margin-right : auto;
+}
+#formlogin {
+position : absolute;
+top : 7.5px;
+right : 300px;
+width : 300px;
+}
+#body_bg {
+background : url("../images/body-bg.jpg") repeat-x;
+}
+#body1 {
+background : url("../images/background.jpg") repeat-x;
+}
+div.menu {
+background : url(../images/menubg.gif) repeat-x ;
+font-size : 170%;
+text-align : center;
+width : 100%;
+margin-left : auto;
+margin-right : auto;
+}
+.menu a:hover, .menu a.current {
+background : url(../images/blockactive1.gif) repeat-x ;
+text-decoration : none;
+}
+a {
+color : green;
+text-decoration : none;
+}
+a:hover {
+color : blue;
+text-decoration : none;
+}
+.chromemenu ul li a:hover, .chromemenu ul li a.current {
+background : url(media/chromebg2.gif) repeat-x ;
+}
+#global {
+position : absolute;
+left : 40%;
+top : 90%;
+width : 340px;
+height : 250px;
+margin-top : -250px;
+margin-left : -450px;
+border : 7px solid #000;
+}
+#footer {
+color : #00b1d7;
+background : url(../images/footer.jpg) repeat-x scroll;
+height : 65px;
+width : 100%;
+position : absolute;
+bottom : 0;
+padding : 6px 0;
+margin : -80px 0;
+}
+#content, #footer1 {
+background : url("../images/footer_bg.gif") repeat-x;
+clear : both;
+}
+html, body {
+height : 100%;
+}
+#posearch {
+position : absolute;
+top : 220px;
+right : 100px;
+}
+.btn_search {
+background : url(../images/btn-search.png);
+width : 10px;
+height : 10px;
+}

@@ -24,10 +24,10 @@
      <span style="color:#BF0B0B;margin-left:110px;">Required field *</span></br>
 
     <br><label for="user_firstname" name="firstname">&nbsp;&nbsp;First name:</label>
-    <input id="user_login" name="firstname" size="30" type="text" /></br>
+    <input name="firstname" size="30" type="text" /></br>
 
     <br><label for="user_lastname" name="lastname">&nbsp;&nbsp;Last name:</label>
-    <input id="user_login" name="lastname" size="30" type="text" /></br>
+    <input name="lastname" size="30" type="text" /></br>
 
 
      <br><label>Street number:</label>

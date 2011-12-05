@@ -9,12 +9,14 @@ import ch.heigvd.nobitsgram.entity.User;
 import ch.heigvd.nobitsgram.manager.UsersManager;
 import ch.heigvd.nobitsgram.util.MyParser;
 import ch.heigvd.nobitsgram.util.ResearchTag;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -56,54 +58,9 @@ public class SessionServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-        ServletContext sc = getServletContext();
-            String s2 = response.getHeader("acces_token");
-            System.out.println("3 1 S2 S2 S2 S2 ////// //// ////=========> "+s2);
 
-
-            String s1 = request.getQueryString();
-        System.out.println("3 1 S1 S1 S1 S1 =========> "+s1);
-
-        s1 = request.getParameter("acces_token");
-        System.out.println("3 2 S1 S1 S1 S1 =========> "+s1);
-
-
-        s1 = request.getRemoteHost();
-        System.out.println("3 3 S1 S1 S1 S1 =========> "+s1);
-
-        s1 = request.getRequestURL().toString();
-        System.out.println("3 4 S1 S1 S1 S1 =========> "+s1);
-
-        s1 = request.getContextPath();
-        System.out.println("3 5 S1 S1 S1 S1 =========> "+s1);
-
-        s1 = request.getPathTranslated();
-        System.out.println("3 6 S1 S1 S1 S1 =========> "+s1);
-
-        s1 = (String)request.getAttribute("access_token");
-        System.out.println("3 7 S1 S1 S1 S1 =========> "+s1);
-
-        s1 = request.getParameter("acces_token");
-        System.out.println("3 8 S1 S1 S1 S1 =========> "+s1);
-
-        s1 = (String)request.getSession().getAttribute("access_token");
-        System.out.println("3 9 S1 S1 S1 S1 =========> "+s1);
-
-        s1 = sc.getContextPath();
-        System.out.println("3 10 S1 S1 S1 S1 =========> "+s1);
-
-        s1 = sc.getInitParameter("access_token");
-        System.out.println("3 11 S1 S1 S1 S1 =========> "+s1);
-
-        s1 =(String)sc.getAttribute("access_token");
-        System.out.println("3 11 S1 S1 S1 S1 =========> "+s1);
-
-
-        s1 =request.getLocalName();
-        System.out.println("3 12 S1 S1 S1 S1 =========> "+s1);
-
-            //response.sendRedirect("/nobitsgram/view/pageClient.jsp");
             getServletContext().getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
+
         }
         finally {
             out.close();
@@ -121,28 +78,8 @@ public class SessionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         processRequest(request, response);
-
-
-        String s1 = request.getQueryString();
-        System.out.println("3 1 S1 S1 S1 S1 =========> "+s1);
-
-        s1 = request.getParameter("acces_token");
-        System.out.println("3 2 S1 S1 S1 S1 =========> "+s1);
-
-
-        s1 = request.getRemoteHost();
-        System.out.println("3 3 S1 S1 S1 S1 =========> "+s1);
-
-        s1 = request.getRequestURL().toString();
-        System.out.println("3 4 S1 S1 S1 S1 =========> "+s1);
-
-        s1 = request.getContextPath();
-        System.out.println("3 5 S1 S1 S1 S1 =========> "+s1);
-
-        s1 = request.getPathTranslated();
-        System.out.println("3 6 S1 S1 S1 S1 =========> "+s1);
-
 
     }
 
@@ -156,50 +93,8 @@ public class SessionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-   ServletContext sc = getServletContext();
-        String s2 = response.getHeader("acces_token");
-            System.out.println("3 1 S2 S2 S2 S2 ////// //// ////=========> "+s2);
 
-        String s1 = request.getQueryString();
-        System.out.println("3 1 S1 S1 S1 S1 =========> "+s1);
-
-        s1 = request.getParameter("acces_token");
-        System.out.println("3 2 S1 S1 S1 S1 =========> "+s1);
-
-
-        s1 = request.getRemoteHost();
-        System.out.println("3 3 S1 S1 S1 S1 =========> "+s1);
-
-        s1 = request.getRequestURL().toString();
-        System.out.println("3 4 S1 S1 S1 S1 =========> "+s1);
-
-        s1 = request.getContextPath();
-        System.out.println("3 5 S1 S1 S1 S1 =========> "+s1);
-
-        s1 = request.getPathTranslated();
-        System.out.println("3 6 S1 S1 S1 S1 =========> "+s1);
-
-        s1 = (String)request.getAttribute("access_token");
-        System.out.println("3 7 S1 S1 S1 S1 =========> "+s1);
-
-        s1 = request.getParameter("acces_token");
-        System.out.println("3 8 S1 S1 S1 S1 =========> "+s1);
-
-
-        s1 = (String)request.getSession().getAttribute("access_token");
-        System.out.println("3 9 S1 S1 S1 S1 =========> "+s1);
-
-        s1 = sc.getContextPath();
-        System.out.println("3 10 S1 S1 S1 S1 =========> "+s1);
-
-        s1 = sc.getInitParameter("access_token");
-        System.out.println("3 11 S1 S1 S1 S1 =========> "+s1);
-
-        s1 =(String)sc.getAttribute("access_token");
-        System.out.println("3 11 S1 S1 S1 S1 =========> "+s1);
-
-        s1 =request.getLocalName();
-        System.out.println("3 12 S1 S1 S1 S1 =========> "+s1);
+        ServletContext sc = getServletContext();
 
         action = request.getParameter("action");
         username = request.getParameter(username);
@@ -211,11 +106,7 @@ public class SessionServlet extends HttpServlet {
 
         //String username = request.getParameter("username");
 
-
-
-       // HttpSession session = request.getSession(true);
         request.setAttribute("username",username);
-
 
         if(action.equals("Refresh") ){
             sendUrl(request, response, sc);

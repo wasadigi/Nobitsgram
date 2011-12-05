@@ -15,6 +15,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <title>Nobitsgram</title>
+
     </head>
     <body>
 
@@ -63,5 +64,52 @@
           </table>
 
        </form>
+             <script>
+                 $(function() {
+if (location.hash) {
+    var access_token = location.hash.split('=')[1];
+    $.ajax({
+        dataType: "jsonp",
+        url: "https://api.instagram.com/v1/users/self/feed",
+        data: {
+            access_token: access_token
+        },
+        success: function(json) {
+//          console.log(json);
+            var htmls = [];
+            for (var i = 0; i < json.data.length; i++) {
+                htmls[htmls.length] = (function(data){
+                var html = '\
+                        <li class="item">\
+                            <div class="userprofile">\
+                                <img width="20" src="'+data.user.profile_picture+'"><span>'+data.user.username+'</span>\
+                            </div>\
+                            <div class="userimage">\
+                                <a href="'+data.images.standard_resolution.url+'" target="_blank"><img src="'+data.images.thumbnail.url+'"></a>\
+                                <div class="overimage">\
+                                    ';
+                                    if(data.caption != null){
+                                        html += '<p>'+data.caption.text+'</p>';
+                                    }
+                                    html += '\
+                                    <p>filter : '+data.filter+'</p>\
+                                </div>\
+                            </div>\
+                        </li>\
+                    ';
+                    return html;
+                })(json.data[i]);
+            }
+            $("#main ul").html(htmls.join(''));
+        }
+    });
+} else {
+    //http://instagram.com/developer/manage/
+    var CLIENT_ID = '5e2a174a39804619840925781251b646'; //change here
+    var CALLBACK_URL = 'http://localhost:8080/nobitsgram/sessionServlet'; // change here
+    location.href="https://instagram.com/oauth/authorize/?display=touch&client_id="+CLIENT_ID+"&redirect_uri="+CALLBACK_URL+"&response_type=token";
+}
+});
+             </script>
     </body>
 </html>

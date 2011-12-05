@@ -1,0 +1,86 @@
+/* *****************************************************************/
+/* Feuille de style                                                */
+/*                                                                 */
+/* Date de creation : 29/11/2011                                   */
+/* Auteur : Eyram   DOVI                                           */
+/*                                                                 */
+/* Adresse de validation CSS :				                       */
+/* http://jigsaw.w3.org/css-validator/			                   */
+/*																   */
+/*                                                     			   */
+/*******************************************************************/
+
+
+#contener {
+margin-left : auto;
+margin-right : auto;
+}
+#header {
+margin : auto;
+height : 180px;
+background : url(../images/bg-header1.jpg);
+}
+#formlogin {
+position : absolute;
+top : 7.5px;
+right : 300px;
+width : 300px;
+}
+#formregister {
+position : absolute;
+top : 7.5px;
+right : 60px;
+width : 300px;
+}
+#cadreregister {
+position : absolute;
+top : 60px;
+right : 100px;
+width : 100px;
+}
+#cadreInstagram {
+position : absolute;
+top : 40px;
+left : 80px;
+}
+#cadreSignInstagram {
+position : absolute;
+top : 55px;
+left : 155px;
+}
+#cadretexteInstagram {
+position : absolute;
+top : 180px;
+left : 450px;
+}
+#body_bg {
+background : url("../images/body-bg.png") repeat-x;
+}
+#body1 {
+background : url("../images/body-bg.png") repeat-x;
+}
+#global {
+position : absolute;
+left : 170px;
+top : 300px;
+width : 300px;
+height : 200px;
+border : 7px solid #000;
+}
+#footer {
+color : #00b1d7;
+background : url(../images/footer.jpg) repeat-x scroll;
+height : 65px;
+width : 100%;
+position : absolute;
+bottom : 0;
+padding : 6px 0;
+margin : -80px 0;
+}
+#content, #footer1 {
+background : url("../images/footer_bg.gif") repeat-x;
+clear : both;
+}
+html, body {
+height : 100%;
+}
