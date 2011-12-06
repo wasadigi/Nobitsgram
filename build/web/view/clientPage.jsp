@@ -16,13 +16,13 @@
 </head>
 <body id="body_bg" style="background-color:#DAEADB;" >
 <!--Positionnement du header et du formulaire de login-->
-<div id ="header">
-
+<div id ="header" style=" top: 0px; margin-top: 0px">
+    <h1 style="margin-top: -5px; margin-left: 40%;"> Nobitsgram </h1>
 </div>
 
 <!--Bare menu-->
 <div class="menu">
-  |<a href="">Personnal data</a>|
+  |<a href="">My Account</a>|
   <a href="">Friends</a> |
    <a href="">Gallery</a> |
     <a href="">Map</a> |

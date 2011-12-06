@@ -8,7 +8,7 @@ import ch.heigvd.nobitsgram.entity.Topic;
 import ch.heigvd.nobitsgram.entity.User;
 import ch.heigvd.nobitsgram.manager.UsersManager;
 import ch.heigvd.nobitsgram.util.MyParser;
-import ch.heigvd.nobitsgram.util.ResearchTag;
+import ch.heigvd.nobitsgram.util.InterrogatorInstagram;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import sun.awt.datatransfer.DataTransferer.IndexOrderComparator;
 
 /**
  *
@@ -81,6 +82,20 @@ public class SessionServlet extends HttpServlet {
 
         processRequest(request, response);
 
+        // We get the code of the client
+        String code = request.getQueryString();
+
+        // We extract the code of the expression
+        code = code.substring(code.indexOf("=")+1);
+
+        InterrogatorInstagram intInstag = new InterrogatorInstagram();
+        // We  set the oauth url to do the request
+        intInstag.setOAuthUrl(code);
+        // We get information about the client.
+        String information = intInstag.getClientInformations();
+
+        getServletContext().getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
+
     }
 
     /**
@@ -103,7 +118,8 @@ public class SessionServlet extends HttpServlet {
         if(username == null)
             username = "John";
 
-
+        String s = request.getHeader("Location");
+        System.out.println("LOCATION ===> "+s);
         //String username = request.getParameter("username");
 
         request.setAttribute("username",username);
@@ -149,10 +165,10 @@ public class SessionServlet extends HttpServlet {
      public List<String> getListsUrl(String topicName){
             List<String> listUrl = null;
             MyParser parser = new MyParser();
-            ResearchTag research = new ResearchTag();
-            research.setUrl(topicName);
+            InterrogatorInstagram interrogator = new InterrogatorInstagram();
+            interrogator.setSearchUrl(topicName);
 
-            String resultResearch = research.getSearcResult();
+            String resultResearch = interrogator.getSearcResult();
 
             listUrl = parser.getListUrls(resultResearch);
 

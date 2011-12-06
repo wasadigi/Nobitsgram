@@ -5,7 +5,7 @@
 package ch.heigvd.nobitsgram.controller;
 
 import ch.heigvd.nobitsgram.util.MyParser;
-import ch.heigvd.nobitsgram.util.ResearchTag;
+import ch.heigvd.nobitsgram.util.InterrogatorInstagram;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -59,9 +59,14 @@ public class WelcomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         ServletContext sc = getServletContext();
         sendUrlToJSP(request, response, sc);
+        String s = request.getRequestURI();
+        System.out.println("REQUEST LINE ===> "+s);
+        s = request.getRequestURL().toString();
+        System.out.println("REQUEST LINE 1 ===> "+s);
+
+
     }
 
     /**
@@ -97,10 +102,10 @@ public class WelcomeServlet extends HttpServlet {
     public List<String> getListsUrl(String topicName){
             List<String> listUrl = null;
             MyParser parser = new MyParser();
-            ResearchTag research = new ResearchTag();
-            research.setUrl(topicName);
+            InterrogatorInstagram research = new InterrogatorInstagram();
+            research.setSearchUrl(topicName);
 
-            // Get the result when an instance of ResearchTag do a request
+            // Get the result when an instance of InterrogatorInstagram do a request
             // to the instagram site.
             String resultResearch = research.getSearcResult();
 

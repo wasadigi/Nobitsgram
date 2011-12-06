@@ -1,13 +1,13 @@
 /* *****************************************************************/
-/* Feuille de style                                                */
-/*                                                                 */
-/* Date de creation : 29/11/2011                                   */
-/* Auteur : Eyram   DOVI                                           */
-/*                                                                 */
-/* Adresse de validation CSS :				                       */
-/* http://jigsaw.w3.org/css-validator/			                   */
+/* Feuille de style
+/*
+/* Date de creation : 29/11/2011
+/* Auteur : Eyram   DOVI
+/*                                                                 
+/* Adresse de validation CSS :
+/* http://jigsaw.w3.org/css-validator/
 /*																   */
-/*                                                     			   */
+/*
 /*******************************************************************/
 
 
@@ -65,6 +65,20 @@ left : 170px;
 top : 300px;
 width : 300px;
 height : 200px;
+
+-webkit-border-top-left-radius: 20px;
+-webkit-border-top-right-radius: 20px;
+-webkit-border-bottom-right-radius: 20px;
+-webkit-border-bottom-left-radius: 20px;
+-moz-border-radius-topleft: 20px;
+-moz-border-radius-topright: 20px;
+-moz-border-radius-bottomright: 20px;
+-moz-border-radius-bottomleft: 20px;
+border-top-left-radius: 20px;
+border-top-right-radius: 20px;
+border-bottom-right-radius: 20px;
+border-bottom-left-radius: 20px;
+
 border : 7px solid #000;
 }
 #footer {

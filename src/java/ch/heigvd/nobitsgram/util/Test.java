@@ -31,7 +31,7 @@ public class Test {
         List<String> list = parser.getListUrls(saisie);
         parser.displayList(list);
 
-        ResearchTag rt = new ResearchTag();
+        InterrogatorInstagram rt = new InterrogatorInstagram();
         System.out.println("\n\n\nTag à rechercher:");
         sc = new Scanner(System.in);
         saisie = sc.nextLine();
@@ -54,7 +54,7 @@ public class Test {
          */
 
         System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-        ResearchTag rs = new ResearchTag();
+        InterrogatorInstagram rs = new InterrogatorInstagram();
         String s = rs.getSearcResult();
 
         System.out.println(" ======> "+s);
