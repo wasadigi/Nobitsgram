@@ -21,8 +21,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import sun.awt.datatransfer.DataTransferer.IndexOrderComparator;
+
 
 /**
  *
@@ -90,11 +89,12 @@ public class SessionServlet extends HttpServlet {
 
         InterrogatorInstagram intInstag = new InterrogatorInstagram();
         // We  set the oauth url to do the request
-        intInstag.setOAuthUrl(code);
+
+        intInstag.setCode(code);
         // We get information about the client.
         String information = intInstag.getClientInformations();
 
-        getServletContext().getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
+        //getServletContext().getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
 
     }
 
@@ -115,12 +115,9 @@ public class SessionServlet extends HttpServlet {
         username = request.getParameter(username);
 
 
-        if(username == null)
-            username = "John";
 
-        String s = request.getHeader("Location");
-        System.out.println("LOCATION ===> "+s);
-        //String username = request.getParameter("username");
+
+        String username = request.getParameter("username");
 
         request.setAttribute("username",username);
 
@@ -199,7 +196,7 @@ public class SessionServlet extends HttpServlet {
      public void sendUrl(HttpServletRequest request, HttpServletResponse response,
                          ServletContext sc)throws IOException, ServletException{
          String url;
-         String myname = "Yves";
+
 
          listTopic = listTopicUrl.get(j);
          int tmp = 0;

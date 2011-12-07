@@ -5,9 +5,7 @@
 package ch.heigvd.nobitsgram.util;
 
 import java.io.*;
-
 import java.net.*;
-import java.util.HashSet;
 
 
 
@@ -18,7 +16,7 @@ import java.util.HashSet;
  * @author:  Eyram DOVI
  *
  * description: This class is used to communicate with instagram. It's interrogate
- *              instagram server and receive a response, which can be parse or
+ *              instagram server and receive a response, which can be parse.
  *
  */
 public class InterrogatorInstagram {
@@ -34,10 +32,12 @@ public class InterrogatorInstagram {
 
     private String oauthUrl = "https://api.instagram.com/oauth/access_token";
 
-    private String client_Id = "";
-    private String client_secret ="";
-    private String callbackUrl = "";
+    private String client_Id = "5e2a174a39804619840925781251b646";
+    private String client_secret ="26a951460081472fab2c0bb2f505a397";
+    private String callbackUrl;
     private String grant_type = "authorization_code";
+    private String code;
+
 
 
     public InterrogatorInstagram(){
@@ -57,35 +57,75 @@ public class InterrogatorInstagram {
     }
 
     /*
-     * This method form the url of the request to get access token
+     * This method is used to set the code which was get during the logging of
+     * the client
      */
-    public void setOAuthUrl(String code){
-        oauthUrl += "/?client_id="+client_Id+"&client_secret="+client_secret+
-                    "&grant_type="+grant_type+"&redirect_uri="+callbackUrl+
-                    "&code="+code;
+    public void setCode(String code){
+        this.code = code;
+    }
+
+    public void setCallbackUrl(String callbackUrl){
+        this.callbackUrl = callbackUrl;
     }
 
     /*
      * This method is use to receive client information according to his code.
+     * The request is a post request
      */
     public String getClientInformations(){
-        URL myUrl;
+
         String response = null;
-        try{
+        String parameters = "";
+        OutputStreamWriter outWriter = null;
+        URL myUrl;
+
+        try {
+            // We set the parameters of the request.
+            parameters = URLEncoder.encode("client_id", "UTF-8")+
+                            "="+URLEncoder.encode(client_Id, "UTF-8");
+
+            parameters += "&"+URLEncoder.encode("client_secret", "UTF-8")+
+                            "=" + URLEncoder.encode(client_secret, "UTF-8");
+
+            parameters += "&"+URLEncoder.encode("grant_type", "UTF-8")+
+                                "=" + URLEncoder.encode(grant_type, "UTF-8");
+
+            parameters += "&"+URLEncoder.encode("redirect_uri", "UTF-8")+
+                                "=" + URLEncoder.encode(callbackUrl, "UTF-8");
+
+            parameters += "&"+URLEncoder.encode("code", "UTF-8")+
+                                "=" + URLEncoder.encode(code, "UTF-8");
+            // We create the connection to instagram
             myUrl = new URL(oauthUrl);
-            response = getResponseOfInstagram(myUrl);
-        }
-        catch(MalformedURLException mexc){
-            mexc.printStackTrace();
+
+            // We open the connection
+            URLConnection connect = myUrl.openConnection();
+
+            // We use connect for output
+            connect.setDoOutput(true);
+
+            // We send the request;
+            outWriter = new OutputStreamWriter(connect.getOutputStream());
+            // We add parameters to the request
+            outWriter.write(parameters);
+
+            // We flush the stream
+            outWriter.flush();
+
+            // We get response for instagram
+            response = getResponseOfInstagram(connect);
+
+            // We close the stream
+            outWriter.close();
         }
 
-        return "";
+        catch (Exception exc) {
+             System.out.println(exc.getStackTrace());
+        }
+
+        return response;
     }
 
-
-    public String getUrl(){
-        return url;
-    }
 
 
     /*
@@ -97,10 +137,11 @@ public class InterrogatorInstagram {
 
         try{
             myUrl= new URL(url);
-            searchResult = getResponseOfInstagram(myUrl);
+            URLConnection connect = myUrl.openConnection();
+            searchResult = getResponseOfInstagram(connect);
         }
-        catch(MalformedURLException mexc){
-             mexc.printStackTrace();
+        catch(Exception exc){
+              System.out.println(exc.getStackTrace());
         }
         return searchResult;
     }
@@ -111,21 +152,20 @@ public class InterrogatorInstagram {
      * response in text format.
      *
      */
-    public String getResponseOfInstagram(URL myUrl){
-        String response ="";
+    public String getResponseOfInstagram(URLConnection connect){
+        String response = null;
 
         try{
-            URLConnection connect = myUrl.openConnection();
-            BufferedReader in = new BufferedReader(
+            BufferedReader reader = new BufferedReader(
                                 new InputStreamReader(
                                 connect.getInputStream()));
             String inputLine;
+            response = "";
+            while ((inputLine = reader.readLine()) != null){
 
-            while ((inputLine = in.readLine()) != null){
-                //System.out.println(inputLine);
                 response +=inputLine;
             }
-            in.close();
+            reader.close();
         }
 
         catch(Exception excp){

@@ -92,13 +92,15 @@ public class UsersManager {
 */
     public void addTopicToUser(User user, Topic topic){
 
-        // If the topic is already in database, we add only user to userlist
-        // of that topic
-        topic = em.merge(topic);
-        user = em.merge(user);
+        if(!user.isTopicRecord(topic)){
+            // If the topic is already in database, we add only user to userlist
+            // of that topic
+            topic = em.merge(topic);
+            user = em.merge(user);
 
-        user.addTopic(topic);
-        topic.addUser(user);
+            user.addTopic(topic);
+            topic.addUser(user);
+        }
     }
 
      public Topic findTopic(int id) {

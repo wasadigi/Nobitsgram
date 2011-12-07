@@ -7,6 +7,7 @@ package ch.heigvd.nobitsgram.manager;
 import ch.heigvd.nobitsgram.entity.Topic;
 import ch.heigvd.nobitsgram.entity.User;
 import java.util.List;
+import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import javax.persistence.EntityManager;
@@ -74,9 +75,16 @@ public class TopicsManager {
     * This method return the topic which have the same name with the String
     * which is the parameter
    */
-    public Topic getTopic(String topicName){
+    public Topic getTopic(String topicName)throws EJBException{
          Query q = em.createQuery("SELECT top FROM Topic top WHERE top.name='"+topicName+"'");
          List<Topic> top = q.getResultList();
+         System.out.println("TOPIC TOPIC ====> "+top.isEmpty());
+
+         // If the list of resul is empty, we return null
+         if(top.isEmpty()){
+             return null;
+         }
+         System.out.println("TOPIC VALUE VALUE TOPIC VALUE ====> "+top.get(0));
          return top.get(0);
     }
 

@@ -4,27 +4,25 @@
  */
 package ch.heigvd.nobitsgram.controller;
 
-import ch.heigvd.nobitsgram.entity.Topic;
-import ch.heigvd.nobitsgram.entity.User;
-import ch.heigvd.nobitsgram.manager.TopicsManager;
-import ch.heigvd.nobitsgram.manager.UsersManager;
+import ch.heigvd.nobitsgram.entity.*;
+import ch.heigvd.nobitsgram.manager.*;
 import ch.heigvd.nobitsgram.model.UserBean;
-import ch.heigvd.nobitsgram.util.MyParser;
-import ch.heigvd.nobitsgram.util.ResearchGeocode;
-import java.io.IOException;
-import java.io.PrintWriter;
+import ch.heigvd.nobitsgram.util.*;
+import java.io.*;
+import java.util.*;
 import javax.ejb.EJB;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.*;
+import javax.servlet.annotation.*;
+import javax.servlet.http.*;
 
 
 /**
+ * File: RegistrationServlet.java
  *
- * @author Eyram
+ * @author: Eyram DOVI
+ *
+ * Description: This class is used to controlled a client registration.
+ *
  */
 @WebServlet(name = "RegistrationServlet", urlPatterns = {"/RegistrationServlet"})
 
@@ -33,6 +31,24 @@ public class RegistrationServlet extends HttpServlet {
     private UsersManager usersManager;
     @EJB
     private TopicsManager topicsManager;
+
+    String firstname;
+    String lastname;
+    String country;
+    String email;
+    String username;
+    String password;
+    String passwordConfirm;
+    List<String> listTopicName = new ArrayList<String>();
+    String rawTopic;
+    String street;
+    String streetNumber;
+    String city;
+    String zip;
+    String access_token;
+    Long id;
+
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -76,6 +92,32 @@ public class RegistrationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        // We get the code of the client
+        String code = request.getQueryString();
+
+        // We extract the code of the expression
+        code = code.substring(code.indexOf("=")+1);
+
+        // This instance will permit us to communicate with instagram
+        InterrogatorInstagram intInstag = new InterrogatorInstagram();
+
+        // We  set the code of the client, which will permit us to get his
+        // acces token
+        intInstag.setCode(code);
+
+        // We set the callback of application, which permit to instagram to do
+        // redirection to our application
+        intInstag.setCallbackUrl(request.getRequestURL().toString());
+
+        // We get information about the client.
+        String informations = intInstag.getClientInformations();
+
+        MyParser pars = new MyParser();
+
+        // We extract access token, username and id to record them in the databases
+        access_token = pars.getValue(informations,"access_token");
+        username = pars.getValue(informations, "username");
+        id =Long.parseLong(pars.getValue(informations, "id"));
     }
 
     /**
@@ -90,20 +132,20 @@ public class RegistrationServlet extends HttpServlet {
             throws ServletException, IOException {
 
 
-        String firstname = request.getParameter("firstname");
-        String lastname = request.getParameter("lastname");
-        String country = request.getParameter("country");
-        String email = request.getParameter("email");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String topicName = request.getParameter("Topic");
-        String street = request.getParameter("street");
-        String streetNumber = request.getParameter("streetNumber");
-        String city = request.getParameter("city");
-        String zip = request.getParameter("zip");
+        firstname = request.getParameter("firstname");
+        lastname = request.getParameter("lastname");
+        country = request.getParameter("country");
+        email = request.getParameter("email");
+        password = request.getParameter("password");
+        passwordConfirm = request.getParameter("passwordConfirm");
+        rawTopic = request.getParameter("rawTopic");
+        street = request.getParameter("street");
+        streetNumber = request.getParameter("streetNumber");
+        city = request.getParameter("city");
+        zip = request.getParameter("zip");
 
-        UserBean userBean = new UserBean(firstname,lastname,country,username,
-                     password,email,streetNumber, street,city,zip);
+        UserBean userBean = new UserBean(firstname,lastname,country,password,
+                           passwordConfirm,email,streetNumber, street,city,zip);
 
 
         // If all informations about a user are valid and the username don't
@@ -117,6 +159,8 @@ public class RegistrationServlet extends HttpServlet {
             newUser.setEmail(email);
             newUser.setUsername(username);
             newUser.setPassword(password);
+            newUser.setId(id);
+            newUser.setAcces_token(access_token);
 
             if(userBean.isValidAddress()){
                 String address = streetNumber+"+"+street+"+"+city+"+"+zip;
@@ -130,34 +174,53 @@ public class RegistrationServlet extends HttpServlet {
                 newUser.setLatitude(Double.parseDouble(lat));
                 newUser.setLongitude(Double.parseDouble(lng));
             }
+
+            // We create an user with the value which the client has enter
             usersManager.create(newUser);
 
-            Topic topic;
 
-            // We try to get a topic which have the same name with
-            // which we get in parameter. If the topic get was null, then
+            // We fill the list of topic with topicName which was separate with ","
+            setListTopic(rawTopic);
+
+
+            int size = listTopicName.size();
+            Topic topic;
+            String topicName;
+
+            // We try to record all topic the user have enter in the field.
+            // For each topicName we try to get a topic which have the same name
+            // with which we get in parameter. If the topic get was null, then
             // it haven't any topic with the same name in database, else it
             // have one and we add new user to it.
-            try{
-                topic = topicsManager.getTopic(topicName);
-            }
-            catch(Exception ex){
-                topic = null;
-            }
+            // If the size = 0, any instruction in the loop (for) will not execute
+            for(int i = 0; i <size; i++){
+                topicName = listTopicName.get(i);
 
-            // It haven't any topic with the same name in database, then we
-            // can create a new with topicName.
-            if(topic == null){
-                topic = new Topic(topicName);
-                topicsManager.create(topic);
-            }
-            usersManager.addTopicToUser(newUser,topic);
+                try{
+                    topic = topicsManager.getTopic(topicName);
+                }
+                catch(Exception ex){
+                    topic = null;
+                }
 
+                // It haven't any topic with the same name in database, then we
+                // can create a new with topicName.
+                if(topic == null){
+                    topic = new Topic(topicName);
+                    topicsManager.create(topic);
+                }
+                usersManager.addTopicToUser(newUser,topic);
+            }
 
             ServletContext sc = getServletContext();
 
             request.setAttribute("username",username);
             sc.getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
+        }
+
+        else if(usersManager.isAllReadyRecord(username)){
+            // Redirect the username to a page which it's message is
+            // YOU HAVE ALREADY AN ACOUNT. YOU CAN'T REGISTER AGAIN
         }
 
         // Else, the client is rediret to an error page
@@ -174,8 +237,20 @@ public class RegistrationServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
+    public void setListTopic(String rawTopicName){
+        StringTokenizer st = new StringTokenizer(rawTopicName,",");
+        String s;
+
+        while(st.hasMoreTokens()){
+            s = st.nextToken().trim();
+            // If s is empty, we don't add it to listTopicName
+            if(!s.equals("")){
+                listTopicName.add(s);
+            }
+        }
+    }
 
 
 

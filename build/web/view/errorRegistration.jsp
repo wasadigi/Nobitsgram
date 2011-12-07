@@ -23,12 +23,11 @@
 
      <span style="color:#BF0B0B;margin-left:110px;">Required field *</span></br>
 
-    <br><label for="user_firstname" name="firstname">&nbsp;&nbsp;First name:</label>
-    <input name="firstname" size="30" type="text" /></br>
+   <br><label for="user_firstname" name="firstname">First name:</label>
+    <input id="user_login" name="firstname" size="30" type="text" /></br>
 
-    <br><label for="user_lastname" name="lastname">&nbsp;&nbsp;Last name:</label>
+    <br><label>Last name:</label>
     <input name="lastname" size="30" type="text" /></br>
-
 
      <br><label>Street number:</label>
     <input name="streetNumber" size="8" type="text" /></br>
@@ -42,8 +41,7 @@
     <br><label>ZIP/Postal Code:</label>
     <input name="zip" size="8" type="text" /></br>
 
-
-<br><label class="label" for="country">&nbsp;&nbsp;Country:&nbsp;&nbsp;&nbsp;</label>
+<br><label class="label" for="country">Country:&nbsp;&nbsp;&nbsp;</label>
 
                <select class="" id="country" name="country">
                     <option value="af"   >Afghanistan</option>
@@ -333,17 +331,17 @@
                     <option value="me"   >Montenegro</option>
                </select>
          </br>
-    <br><label  name="email">&nbsp;&nbsp;Email Address:</label>
+    <br><label  name="email">Email Address:</label>
     <input id="user_email" name="email" size="30" type="text" /></br>
 
-    <br><label for="username" name="username">&nbsp;&nbsp;Username:</label>
-    <input id="username" name="username" size="30" type="text" /> </br>
+    <br><label name="password">Password:</label>
+    <input id="username" name="password" size="30" type="password" /></br>
 
-    <br><label for="password" name="password">&nbsp;&nbsp;Password:</label>
-    <input id="password" name="password" size="30" type="password"/></br>
+    <br><label name="passwordConfirm">Password Confirm:</label>
+    <input id="password" name="passwordConfirm" size="30" type="password"/></br>
 
-    <br><label for="password" name="Topic">&nbsp;&nbsp;Topic:</label>
-    <input id="password" name="Topic" size="30" type="text"/></br>
+    <br><label name="Topic">Topic(for more than one topic, separate each with ","):</label>
+    <input name="rawTopic" size="30" type="text"/></br>
 
     <br><span style="margin-left:100px;">
         <button type="submit" style="border:1px solid #f6b22b;

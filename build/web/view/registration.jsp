@@ -16,7 +16,7 @@
     </head>
     <body>
 
-        <div style="width: 430px; margin: 0 auto; background-color:#DCDCDC;">
+        <div style="width: 500px; margin: 0 auto; background-color:#DCDCDC;">
             <form action="/nobitsgram/RegistrationServlet" method="POST" accept-charset="utf-8">
 
      </br></br> <h1 style="margin-left: 2.5em;">REGISTRATION</h1></br>
@@ -332,14 +332,14 @@
     <br><label  name="email">Email Address:</label>
     <input id="user_email" name="email" size="30" type="text" /></br>
 
-    <br><label for="username" name="username">Username:</label>
-    <input id="username" name="username" size="30" type="text" /> </br>
+    <br><label name="password">Password:</label>
+    <input id="username" name="password" size="30" type="password" /></br>
 
-    <br><label for="password" name="password">Password:</label>
-    <input id="password" name="password" size="30" type="password"/></br>
+    <br><label name="passwordConfirm">Password Confirm:</label>
+    <input id="password" name="passwordConfirm" size="30" type="password"/></br>
 
-    <br><label name="Topic">Topic:</label>
-    <input name="Topic" size="30" type="text"/></br>
+    <br><label name="Topic">Topic(for more than one topic, separate each with ","):</label>
+    <input name="rawTopic" size="30" type="text"/></br>
 
     <br><span style="margin-left:100px;">
         <button type="submit" style="border:1px solid #f6b22b;

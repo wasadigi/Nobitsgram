@@ -70,7 +70,7 @@
                                  <%
 
                 String client_id = "5e2a174a39804619840925781251b646";
-                String redirect_uri = request.getRequestURL().toString()+"sessionServlet";
+                String redirect_uri = request.getRequestURL().toString()+"RegistrationServlet";
 
                 String response_type = "code";
                 String oauth_url = "https://api.instagram.com/oauth/authorize/";

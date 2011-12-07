@@ -11,8 +11,8 @@ import java.util.ArrayList;
  *
  * @author:  Eyram DOVI
  *
- * description: This class is used to parse an expression which contain url
- *
+ * description: This class is used to parse any expression according to what
+ *              we want to get
  *
  */
 
@@ -93,8 +93,21 @@ public class MyParser {
 
         latlong =latlong+"#"+response.substring(i+lngDel1.length(), j);
 
-
-
         return latlong;
+    }
+
+
+    /*
+     * This method is used to get the value of "parameter" in the expression
+     * "information"
+     */
+    public String getValue(String information, String parameter){
+
+        String delimiter = "\" \"";
+        String tmp = information.substring(information.indexOf(parameter)
+                                           +parameter.length()+2);
+        StringTokenizer st = new StringTokenizer(tmp,delimiter);
+        return st.nextToken();
+
     }
 }

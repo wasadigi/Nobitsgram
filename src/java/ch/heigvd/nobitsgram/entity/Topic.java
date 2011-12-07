@@ -5,15 +5,8 @@
 package ch.heigvd.nobitsgram.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-
+import java.util.*;
+import javax.persistence.*;
 
 
 /**
@@ -108,7 +101,7 @@ public class Topic implements Serializable {
     }
 
 
-
+    
   /**
     *
     * This method is used to display the information about the topic. We can

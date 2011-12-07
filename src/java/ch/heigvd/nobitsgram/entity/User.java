@@ -54,9 +54,13 @@ public class User implements Serializable {
     //email of the user
     private String email;
 
+    // Access_token from instagram
+    private String acces_token;
+
     private Double latitude = null;
 
     private Double longitude = null;
+
 
 
     public User(String firstname, String lastname){
@@ -246,6 +250,14 @@ public class User implements Serializable {
         this.longitude = longitude;
     }
 
+    public String getAcces_token() {
+        return acces_token;
+    }
+
+    public void setAcces_token(String acces_token) {
+        this.acces_token = acces_token;
+    }
+
 
 
 
@@ -280,6 +292,7 @@ public class User implements Serializable {
         return true;
     }
 
+
     /**
     *
     * This method display the informations about a user
@@ -313,6 +326,23 @@ public class User implements Serializable {
        String hash = (new BASE64Encoder()).encode(raw);
 
       return hash;
+
+    }
+
+    /*
+     * This method is used to know if a certain topic was already record
+     * in the topic list of the user
+     */
+    public boolean isTopicRecord(Topic topic){
+        Iterator<Topic> it = topics.iterator();
+        Long tId;
+        while(it.hasNext()){
+            tId = it.next().getId();
+            if(tId == topic.getId()){
+                return true;
+            }
+        }
+        return false;
 
     }
 
