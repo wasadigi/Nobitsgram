@@ -5,6 +5,8 @@
 package ch.heigvd.nobitsgram.model;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * File: UserBean
@@ -34,6 +36,8 @@ public class UserBean {
     // The email of the user
     String email;
 
+    String username;
+
     // User's ID
     Long id;
 
@@ -55,7 +59,7 @@ public class UserBean {
 
     }
 
-    public UserBean(String firstName, String lastName, String country,
+    public UserBean(String firstName, String lastName,String username, String country,
                     String password,String passwordConfirm,String email,
                     String streetNumber, String street, String city,String zip){
         this.firstName = firstName;
@@ -68,6 +72,7 @@ public class UserBean {
         this.street = street;
         this.city = city;
         this.zip = zip;
+        this.username = username;
     }
 
 
@@ -157,13 +162,17 @@ public class UserBean {
             return false;
         }
 
-        if (email.trim().equals("") || (email.indexOf('@') == -1)) {
+        if (email.trim().equals("") || !isValidEmail(email) ){
             errors="Please enter a valid email address";
 
             return false;
         }
 
 
+        if (username.trim().equals("")) {
+            errors="Please enter your username";
+            return false;
+        }
 
         if (password.trim().equals("") ) {
             errors="Please enter a valid password";
@@ -177,6 +186,17 @@ public class UserBean {
         }
 
         return true;
+    }
+
+    public boolean isValidEmail(String email){
+        String mask = "^[a-zA-Z]+[a-zA-Z0-9\\._-]*[a-zA-Z0-9]@[a-zA-Z]+"
+                        + "[a-zA-Z0-9\\._-]*[a-zA-Z0-9]+\\.[a-zA-Z]{2,4}$";
+
+        Pattern pattern = Pattern.compile(mask);
+
+        Matcher controler = pattern.matcher(email);
+        return controler.matches();
+
     }
 
 }

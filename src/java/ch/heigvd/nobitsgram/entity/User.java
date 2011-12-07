@@ -57,6 +57,10 @@ public class User implements Serializable {
     // Access_token from instagram
     private String acces_token;
 
+    private long id_Instagram;
+
+    private String username_instagram;
+
     private Double latitude = null;
 
     private Double longitude = null;
@@ -256,6 +260,22 @@ public class User implements Serializable {
 
     public void setAcces_token(String acces_token) {
         this.acces_token = acces_token;
+    }
+
+    public long getId_Instagram() {
+        return id_Instagram;
+    }
+
+    public void setId_Instagram(long id_Instagram) {
+        this.id_Instagram = id_Instagram;
+    }
+
+    public String getUsername_instagram() {
+        return username_instagram;
+    }
+
+    public void setUsername_instagram(String username_instagram) {
+        this.username_instagram = username_instagram;
     }
 
 

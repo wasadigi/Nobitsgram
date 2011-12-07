@@ -332,6 +332,9 @@
     <br><label  name="email">Email Address:</label>
     <input id="user_email" name="email" size="30" type="text" /></br>
 
+    <br><label  name="username">Username:</label>
+    <input id="username" name="username" size="30" type="text" /></br>
+
     <br><label name="password">Password:</label>
     <input id="username" name="password" size="30" type="password" /></br>
 

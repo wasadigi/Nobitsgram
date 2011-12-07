@@ -46,8 +46,10 @@ public class RegistrationServlet extends HttpServlet {
     String city;
     String zip;
     String access_token;
+    String username_instagram;
+    Long id_instagram;
     Long id;
-
+    String error;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -116,8 +118,8 @@ public class RegistrationServlet extends HttpServlet {
 
         // We extract access token, username and id to record them in the databases
         access_token = pars.getValue(informations,"access_token");
-        username = pars.getValue(informations, "username");
-        id =Long.parseLong(pars.getValue(informations, "id"));
+        username_instagram = pars.getValue(informations, "username");
+        id_instagram =Long.parseLong(pars.getValue(informations, "id"));
     }
 
     /**
@@ -136,6 +138,7 @@ public class RegistrationServlet extends HttpServlet {
         lastname = request.getParameter("lastname");
         country = request.getParameter("country");
         email = request.getParameter("email");
+        username = request.getParameter("username");
         password = request.getParameter("password");
         passwordConfirm = request.getParameter("passwordConfirm");
         rawTopic = request.getParameter("rawTopic");
@@ -144,7 +147,7 @@ public class RegistrationServlet extends HttpServlet {
         city = request.getParameter("city");
         zip = request.getParameter("zip");
 
-        UserBean userBean = new UserBean(firstname,lastname,country,password,
+        UserBean userBean = new UserBean(firstname,lastname,username,country,password,
                            passwordConfirm,email,streetNumber, street,city,zip);
 
 
@@ -159,7 +162,8 @@ public class RegistrationServlet extends HttpServlet {
             newUser.setEmail(email);
             newUser.setUsername(username);
             newUser.setPassword(password);
-            newUser.setId(id);
+            newUser.setId_Instagram(id_instagram);
+            newUser.setUsername_instagram(username_instagram);
             newUser.setAcces_token(access_token);
 
             if(userBean.isValidAddress()){
@@ -167,6 +171,7 @@ public class RegistrationServlet extends HttpServlet {
 
                 String tmp = new ResearchGeocode(address).getLatLng();
                 String s = new MyParser().getLatLong(tmp);
+                
                 int i = s.indexOf("#");
                 String lat = s.substring(0, i);
                 String lng = s.substring(i+1);
@@ -225,7 +230,9 @@ public class RegistrationServlet extends HttpServlet {
 
         // Else, the client is rediret to an error page
         else{
-            response.sendRedirect("/nobitsgram/view/errorRegistration.jsp");
+            error = userBean.getError();
+            request.setAttribute("error",error);
+            getServletContext().getRequestDispatcher("/view/errorRegistration.jsp").forward(request, response);
         }
 
     }

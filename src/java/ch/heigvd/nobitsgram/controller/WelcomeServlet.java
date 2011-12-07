@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "WelcomeServlet", urlPatterns = {"/WelcomeServlet"})
 public class WelcomeServlet extends HttpServlet {
 // We create a list of url with the name nobits
-    List<String> listTopic = getListsUrl("Ferrari");
+    List<String> listTopic = getListsUrl("nobits");
 
     // This variable will be increment to scan the list
     static int i = 0;
