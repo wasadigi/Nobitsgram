@@ -143,6 +143,7 @@ public class RegistrationServlet extends HttpServlet {
                            passwordConfirm,email,streetNumber, street,city,zip);
 
 
+
         // If all informations about a user are valid and the username don't
         // exist yet, then the user can be record in Nobitsgram database
         if(userBean.isValid() && !usersManager.isAllReadyRecord(username)){
@@ -158,13 +159,33 @@ public class RegistrationServlet extends HttpServlet {
             newUser.setUsername_instagram(username_instagram);
             newUser.setAcces_token(access_token);
 
-            if(userBean.isValidAddress()){
+            // We check if one of the address field was fill or not
+            if(userBean.isAddress()){
+                // We check if the field of street number or zip code was filled
+                // and it value is a number
+                if((streetNumber!="" && !userBean.isNumber(streetNumber)) ||
+                   (zip!="" && !userBean.isNumber(zip))){
+                    error = "Error! your street number and/or zip code\n must be a number";
+                    redirectToRegisterForm(error, request, response);
+                }
+                // If all is ok, we create an address and we search its geocode
                 String address = streetNumber+"+"+street+"+"+city+"+"+zip;
+                ResearchGeocode researcheGeocode = new ResearchGeocode(address);
+                String tmp = researcheGeocode.getLatLng();
 
-                String tmp = new ResearchGeocode(address).getLatLng();
+                String status = null;
+                /*
+                 * It possible that googleapis don't response. In that case, tmp
+                 * will be null. If not, we can extract the status of the response
+                 * of googleapis.
+                 */
+                if(tmp != null){
+                    status = researcheGeocode.getStatusOfReasearch(tmp);
+                }
+
                 // If the address is not defined, then we return to the registration
                 // page with error message that invite the user to check his address
-                if(tmp == null){
+                if(status==null || !status.equalsIgnoreCase("ok")){
                     error = "Invalid address, please enter a valide one, or "
                             + "leave its fields blank";
                     // We redirect the user to register form with the according
@@ -172,15 +193,20 @@ public class RegistrationServlet extends HttpServlet {
                     redirectToRegisterForm(error, request, response);
 
                 }
+                // If the status of the response is ok, we extract latitude and
+                // longitude of the client address
+                else{
 
-                String s = new MyParser().getLatLong(tmp);
+                    String s = new MyParser().getLatLong(tmp);
+                    // We separate lat and lng with the caracter "#"
+                    int i = s.indexOf("#");
+                    String lat = s.substring(0, i);
+                    String lng = s.substring(i+1);
 
-                int i = s.indexOf("#");
-                String lat = s.substring(0, i);
-                String lng = s.substring(i+1);
-
-                newUser.setLatitude(Double.parseDouble(lat));
-                newUser.setLongitude(Double.parseDouble(lng));
+                    // We set lat and lng to the user
+                    newUser.setLatitude(Double.parseDouble(lat));
+                    newUser.setLongitude(Double.parseDouble(lng));
+                }
             }
 
             // We create an user with the value which the client has enter
@@ -227,8 +253,9 @@ public class RegistrationServlet extends HttpServlet {
         }
 
         else if(usersManager.isAllReadyRecord(username)){
-            // Redirect the username to a page which it's message is
-            // YOU HAVE ALREADY AN ACOUNT. YOU CAN'T REGISTER AGAIN
+            error = "The username \""+username+"\" is not available, "
+                    + "choose another one!";
+            redirectToRegisterForm(error, request, response);
         }
 
         // Else, the client is rediret to an error page

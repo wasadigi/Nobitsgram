@@ -75,27 +75,35 @@ public class UserBean {
         this.username = username;
     }
 
-
-    public boolean isValidAddress(){
-
-        if (city.trim().equals("") ) {
-            return false;
+    /*
+     * This method return boolean which tell us if one of the field of the address
+     * was fill or not.
+     */
+    public boolean isAddress(){
+        if(!city.trim().equals("") || !street.trim().equals("") ||
+           !streetNumber.trim().equals("") || !zip.trim().equals("")){
+            return true;
         }
+        return false;
 
-        if (street.trim().equals("") ) {
-            return false;
-        }
-
-        if (streetNumber.trim().equals("") ) {
-            return false;
-        }
-
-        if (zip.trim().equals("") ) {
-            return false;
-        }
-        return true;
     }
 
+    /*
+     * This method tell us if the expression which is the parameter was a number
+     * or not.
+     */
+    public boolean isNumber(String expression){
+        boolean cond = false;
+        try{
+            int nber = Integer.parseInt(expression);
+            cond = true;
+        }
+        catch(NumberFormatException exc){
+            exc.printStackTrace();
+        }
+        return cond;
+
+    }
 
     public String getCountry() {
         return country;

@@ -22,7 +22,7 @@
      </br><h1 style="margin-left: 1.5em; margin-top: 1.0em;">REGISTRATION</h1>
      <% String error=(String)request.getAttribute("error");%>
 
-     <span style="color:#BF0B0B;margin-left:110px;"><% out.print(error); %></span></br>
+     <span style="color:#BF0B0B;"><% out.print(error); %></span></br>
 
    <br><label for="user_firstname" name="firstname">First name:</label>
     <input id="user_login" name="firstname" size="30" type="text" /></br>

@@ -41,7 +41,6 @@ public class ResearchGeocode {
             String inputLine;
             searchResult = "";
             while ((inputLine = in.readLine()) != null){
-                //System.out.println(inputLine);
                 searchResult +=inputLine;
             }
             in.close();
@@ -55,5 +54,17 @@ public class ResearchGeocode {
         return searchResult;
     }
 
+    /*
+     * This method extract the status in the expression which is in the
+     * parameter
+     */
+    public String getStatusOfReasearch(String response){
+
+        String delimiter1 = "<status>";
+        int i = response.indexOf(delimiter1)+delimiter1.length();
+        String delimiter2 = "</status>";
+        int j = response.indexOf(delimiter2);
+        return response.substring(i,j);
+    }
 
 }
