@@ -66,17 +66,9 @@ public class RegistrationServlet extends HttpServlet {
         try {
 
             getServletContext().getRequestDispatcher("/view/registration.jsp").forward(request, response);
-            /* TODO output your page here
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ServletPageAccueil</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ServletPageAccueil at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-             */
-        } finally {
+
+        }
+        finally {
             out.close();
         }
     }
@@ -170,8 +162,19 @@ public class RegistrationServlet extends HttpServlet {
                 String address = streetNumber+"+"+street+"+"+city+"+"+zip;
 
                 String tmp = new ResearchGeocode(address).getLatLng();
+                // If the address is not defined, then we return to the registration
+                // page with error message that invite the user to check his address
+                if(tmp == null){
+                    error = "Invalid address, please enter a valide one, or "
+                            + "leave its fields blank";
+                    // We redirect the user to register form with the according
+                    // error.
+                    redirectToRegisterForm(error, request, response);
+
+                }
+
                 String s = new MyParser().getLatLong(tmp);
-                
+
                 int i = s.indexOf("#");
                 String lat = s.substring(0, i);
                 String lng = s.substring(i+1);
@@ -187,6 +190,7 @@ public class RegistrationServlet extends HttpServlet {
             // We fill the list of topic with topicName which was separate with ","
             setListTopic(rawTopic);
 
+            listTopicName = filterListTopic(listTopicName);
 
             int size = listTopicName.size();
             Topic topic;
@@ -200,7 +204,6 @@ public class RegistrationServlet extends HttpServlet {
             // If the size = 0, any instruction in the loop (for) will not execute
             for(int i = 0; i <size; i++){
                 topicName = listTopicName.get(i);
-
                 try{
                     topic = topicsManager.getTopic(topicName);
                 }
@@ -231,8 +234,7 @@ public class RegistrationServlet extends HttpServlet {
         // Else, the client is rediret to an error page
         else{
             error = userBean.getError();
-            request.setAttribute("error",error);
-            getServletContext().getRequestDispatcher("/view/errorRegistration.jsp").forward(request, response);
+            redirectToRegisterForm(error, request, response);
         }
 
     }
@@ -246,12 +248,31 @@ public class RegistrationServlet extends HttpServlet {
         return "Short description";
     }
 
+    /*
+     * This method is used to do a redirection to register form with the
+     * according error
+     */
+    private void redirectToRegisterForm(String error,HttpServletRequest request,
+                                       HttpServletResponse response){
+        try{
+        request.setAttribute("error",error);
+            getServletContext().getRequestDispatcher("/view/errorRegistration."
+                                           + "jsp").forward(request, response);
+        }
+        catch(Exception exc){
+            exc.printStackTrace();
+        }
+    }
+
     public void setListTopic(String rawTopicName){
         StringTokenizer st = new StringTokenizer(rawTopicName,",");
         String s;
 
+
         while(st.hasMoreTokens()){
-            s = st.nextToken().trim();
+            // All the topic the user give, will convert to upper case. This,
+            // will permit further to remove all double topic.
+            s = st.nextToken().trim().toUpperCase();
             // If s is empty, we don't add it to listTopicName
             if(!s.equals("")){
                 listTopicName.add(s);
@@ -259,6 +280,28 @@ public class RegistrationServlet extends HttpServlet {
         }
     }
 
+
+    /*
+     * This method is used to remove all double element in a list of string
+     */
+    public List<String> filterListTopic(List<String> myList){
+        List<String> tmp = myList;
+        int size = tmp.size();
+        int i = 0;
+        int j;
+        while(i<size){
+            j = tmp.lastIndexOf(tmp.get(i));
+
+            if(i != j){
+                tmp.remove(j);
+                size = tmp.size();
+            }
+            else{
+                i +=1;
+            }
+        }
+        return tmp;
+    }
 
 
 }

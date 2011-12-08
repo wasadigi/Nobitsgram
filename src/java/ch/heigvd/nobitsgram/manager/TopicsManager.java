@@ -14,8 +14,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
+ * File : TopicsManager.java
  *
  * @author Eyram
+ *
+ * description: This class is used to managed entity Topic.
  */
 @Stateless
 public class TopicsManager {
@@ -41,6 +44,9 @@ public class TopicsManager {
         em.remove(topic);
     }
 
+    /*
+     * This method return all the topic which is in the database
+     */
     public List<Topic> findAllTopic(){
         javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         cq.select(cq.from(topiClass));
@@ -48,7 +54,9 @@ public class TopicsManager {
     }
 
 
-
+    /*
+     * This method return the number of topic which is in the database
+     */
     public int count() {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         javax.persistence.criteria.Root<Topic> rt = cq.from(topiClass);
@@ -57,19 +65,23 @@ public class TopicsManager {
         return ((Long) q.getSingleResult()).intValue();
     }
 
+
+    /*
+     * This method return the entityManager of a topic
+     */
     public EntityManager getEntityManager(){
         return em;
     }
 
-    public void addUser(User user, Topic topic){
-        topic.addUser(user);
-        user.addTopic(topic);
-    }
 
 
+    /*
+     * This method is used to find a topic according to it id
+     */
      public Topic findTopic(int id) {
         return em.find(topiClass,(long )id);
     }
+
 
    /*
     * This method return the topic which have the same name with the String
@@ -78,13 +90,11 @@ public class TopicsManager {
     public Topic getTopic(String topicName)throws EJBException{
          Query q = em.createQuery("SELECT top FROM Topic top WHERE top.name='"+topicName+"'");
          List<Topic> top = q.getResultList();
-         System.out.println("TOPIC TOPIC ====> "+top.isEmpty());
 
          // If the list of resul is empty, we return null
          if(top.isEmpty()){
              return null;
          }
-         System.out.println("TOPIC VALUE VALUE TOPIC VALUE ====> "+top.get(0));
          return top.get(0);
     }
 

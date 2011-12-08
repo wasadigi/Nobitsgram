@@ -29,7 +29,7 @@ public class ResearchGeocode {
 
     public String getLatLng(){
         URL myUrl;
-        String searchResult = "";
+        String searchResult = null;
 
         try{
             myUrl = new URL(url);
@@ -39,7 +39,7 @@ public class ResearchGeocode {
                                 new InputStreamReader(
                                 yc.getInputStream()));
             String inputLine;
-
+            searchResult = "";
             while ((inputLine = in.readLine()) != null){
                 //System.out.println(inputLine);
                 searchResult +=inputLine;

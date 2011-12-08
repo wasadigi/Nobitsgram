@@ -79,9 +79,9 @@
                 "&redirect_uri="+redirect_uri+
                 "&response_type="+response_type;
                     %>
-                <a href="<%out.print(url);%>" ><img src="images/instagram_2.jpg"  style="border:0; height:30px; width:150px"  target="cadre1"/></a>
+                <a href="<%out.print(url);%>" ><img src="images/register_1.jpg"  style="border:0; height:30px; width:150px"  target="cadre1"/></a>
 
-                        <input type="submit" hidden="true" value="Register" class="button" style="border:1px solid #f6b22b;background:#fbe26eE;width:100px;background-color:#F7D92E;height: 35px;font-size:18px " />
+                       
                         </span>
                     </div>
                 </form>
