@@ -96,15 +96,17 @@ private UsersManager usersManager;
             // If password don't match with the username we redirect the
             // user to login error page
             if(!usersManager.isPasswordOK(user,password)){
-                response.sendRedirect("/nobitsgram/view/errorLogin.jsp");
+                response.sendRedirect(request.getContextPath()+"/view/errorLogin.jsp");
             }
             else{
                 HttpSession session = request.getSession();
                 session.setAttribute("username", username);
                 session.setAttribute("id", user.getId());
+                session.setAttribute("user", user);
                 ServletContext sc = getServletContext();
                 request.setAttribute("username", username);
-                sc.getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
+                //sc.getRequestDispatcher("/view/client.jsp").forward(request, response);
+                response.sendRedirect(request.getContextPath()+"/view/client.jsp");
             }
         }
         // Return a jsp page error where the username don't exist in the

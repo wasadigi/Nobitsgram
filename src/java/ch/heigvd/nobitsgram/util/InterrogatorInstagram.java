@@ -24,7 +24,7 @@ public class InterrogatorInstagram {
     // The beginig of the research url
     private String urlBegin = "https://api.instagram.com/v1/tags/";
     // The end of the url
-    private String acces_token = "10840565.f59def8.778aab0dc2d64a8ca9c27694ed9444bc";
+    private String access_token = "10840565.f59def8.778aab0dc2d64a8ca9c27694ed9444bc";
 
     private String urlPart = "/media/recent?access_token=";
 
@@ -53,7 +53,7 @@ public class InterrogatorInstagram {
      * Complete the url with the search tag
      */
     public void setSearchUrl(String tagSearch){
-       url = urlBegin+tagSearch+urlPart+acces_token;
+       url = urlBegin+tagSearch+urlPart;
     }
 
     /*
@@ -179,8 +179,11 @@ public class InterrogatorInstagram {
     /*
      * This method set the acces token of the client
      */
-     public void setAccesToken(String acces_token){
-        this.acces_token = acces_token;
+     public void setAccesToken(String access_token){
+        if(access_token != null && access_token.trim() !=""){
+                this.access_token = access_token;
+        }
+        else access_token = "10840565.f59def8.778aab0dc2d64a8ca9c27694ed9444bc";
      }
 
 
@@ -188,6 +191,6 @@ public class InterrogatorInstagram {
       * This method get the access token of the client
       */
       public String getAccessToken(){
-          return acces_token;
+          return access_token;
       }
 }

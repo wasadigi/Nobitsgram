@@ -66,7 +66,7 @@ public class RegistrationServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         session = request.getSession();
         try {
-            System.out.println("USERNAME USERNAME ====> "+username);
+            
             if(session.isNew()){
 
                getServletContext().getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
@@ -264,6 +264,8 @@ public class RegistrationServlet extends HttpServlet {
             // We send the client id and his username to the redirect page
             session.setAttribute("id",newUser.getId());
             session.setAttribute("username", username);
+            session.setAttribute("user",newUser);
+
 
             // The register is ok, we redirect the client to his client page
             sc.getRequestDispatcher("/view/clientPage.jsp").forward(request, response);
