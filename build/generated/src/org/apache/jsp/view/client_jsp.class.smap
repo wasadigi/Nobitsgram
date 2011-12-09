@@ -1,0 +1,22 @@
+SMAP
+client_jsp.java
+JSP
+*S JSP
+*F
++ 0 client.jsp
+view/client.jsp
++ 1 headPage.jspf
+view/tools/headPage.jspf
++ 2 footPage.jspf
+view/tools/footPage.jspf
+*L
+5,2:50
+1#1,14:52
+15:66,3
+16,18:69
+34:87,3
+35,15:90
+7#0,2:104
+1#2,5:106
+9#0:111
+*E

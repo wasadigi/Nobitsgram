@@ -15,13 +15,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Eyram
  *
  *
- * 
+ *
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
@@ -89,14 +90,8 @@ private UsersManager usersManager;
            user = null;
         }
 
-
-           System.out.println("\t####### USER11 ===> "+user);
-
         if((!username.trim().equals("") && !password.trim().equals(""))&&
              user != null){
-
-
-           System.out.println("\t####### USER ===> "+user);
 
             // If password don't match with the username we redirect the
             // user to login error page
@@ -104,18 +99,22 @@ private UsersManager usersManager;
                 response.sendRedirect("/nobitsgram/view/errorLogin.jsp");
             }
             else{
+                HttpSession session = request.getSession();
+                session.setAttribute("username", username);
+                session.setAttribute("id", user.getId());
                 ServletContext sc = getServletContext();
                 request.setAttribute("username", username);
                 sc.getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
             }
         }
+        // Return a jsp page error where the username don't exist in the
+        // database or the password don't match with the username
         else{
            response.sendRedirect("/nobitsgram/view/errorLogin.jsp");
         }
 
 
-        // Return a jsp page error where the username don't exist in the
-        // database or the password don't match with the username
+
 
             // We redirect to the session.jsp which represent login error page
 

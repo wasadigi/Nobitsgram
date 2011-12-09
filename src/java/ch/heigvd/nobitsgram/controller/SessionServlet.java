@@ -21,6 +21,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -42,6 +43,7 @@ public class SessionServlet extends HttpServlet {
     List<List<String>>listTopicUrl = getList();
     List<String> listTopic = getListTopic();
     int curIndex = 0;
+    List<String> urlList;
 
 
 
@@ -79,20 +81,15 @@ public class SessionServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        processRequest(request, response);
+       ServletContext sc = getServletContext();
 
-        // We get the code of the client
-        String code = request.getQueryString();
+       topic = request.getParameter("searchTopic");
+       urlList = getListsUrl(topic);
+       request.setAttribute("urlList", urlList);
+       sc.getRequestDispatcher("/view/searchPage.jsp").forward(request, response);
 
-        // We extract the code of the expression
-        code = code.substring(code.indexOf("=")+1);
 
-        InterrogatorInstagram intInstag = new InterrogatorInstagram();
-        // We  set the oauth url to do the request
 
-        intInstag.setCode(code);
-        // We get information about the client.
-        String information = intInstag.getClientInformations();
 
         //getServletContext().getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
 
@@ -108,39 +105,6 @@ public class SessionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        ServletContext sc = getServletContext();
-
-        action = request.getParameter("action");
-        username = request.getParameter(username);
-
-
-
-
-        String username = request.getParameter("username");
-
-        request.setAttribute("username",username);
-
-        if(action.equals("Refresh") ){
-            sendUrl(request, response, sc);
-        }
-
-        else if(action.equals("Add Topic")){
-
-           /* int id = Integer.parseInt(request.getParameter("id"));
-            User user = usersManager.findUser(id);
-            Topic newTopic = new Topic(request.getParameter("Topic"));
-            usersManager.addTopic(user, newTopic);
-             *
-             */
-        }
-
-        else{
-            topic = request.getParameter("searchTopic");
-            if(getListsUrl(topic)!= null)
-                listTopicUrl.add(curIndex,getListsUrl(topic));
-            sendUrl(request, response, sc);
-        }
 
 
 
@@ -195,37 +159,8 @@ public class SessionServlet extends HttpServlet {
 
      public void sendUrl(HttpServletRequest request, HttpServletResponse response,
                          ServletContext sc)throws IOException, ServletException{
-         String url;
 
 
-         listTopic = listTopicUrl.get(j);
-         int tmp = 0;
-         boolean cond = false;
-         j  += 1;
-
-         if(j == listTopicUrl.size()){
-            i++;
-            j = 0;
-         }
-         curIndex = j;
-         if(i == listTopic.size()){
-             tmp = i;
-             i = 0;
-             cond = true;
-         }
-
-            try{
-                url = listTopic.get(i);
-                if(cond){
-                    i = tmp;
-                    cond = false;
-                }
-            }
-            catch(IndexOutOfBoundsException exc){
-                url = "";
-            }
-
-            request.setAttribute("url", url);
 
             sc.getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
 

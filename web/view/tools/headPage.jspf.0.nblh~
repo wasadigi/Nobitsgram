@@ -1,0 +1,51 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+
+<html>
+
+    <head>
+    <title>Nobitsgram</title>
+        <!-- client page css -->
+        <link rel="stylesheet" type="text/css" href="../css/style_client_page.css" />
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
+    </head>
+
+    <body id="body_bg" style="background-color:#DAEADB;" >
+        <% String root = request.getContextPath(); %>
+        <!--Positionnement du header et du formulaire de login-->
+        <div id ="header" style="">
+            <br/>
+            <img src ="../images/nobitsgramLogo3.jpg" style="margin-left:35%; "/>
+        </div>
+
+        <div class="bar" style="height:50px;">
+            <a href="" id="Home" class="selected">
+                <img class="" src="../images/home1.jpg"  style="top:7px;margin-right:10px;position: relative"/>Home</a>
+                <a href="" id="">
+                    <img class="" src="../images/account1.jpg" style="top:7px;margin-right:10px;position: relative" />My account</a>
+            <a href="" id="Gallery" style="margin-top: -3px;" >
+                <img class="" src="../images/gallery.jpg" style="top:7px;margin-right:10px;position: relative"/>Gallery</a>
+            <a href="" id="">
+                <img class="" src="../images/friends3.jpg" style="top:7px;margin-right:10px;position: relative" />Friend</a>
+            <a href="" id=""><img class="" src="../images/map.jpg" style="top:7px;margin-right:10px;position: relative"  />Map</a>
+            <a href="" id=""><img class="" src="../images/logout1.jpg" style="top:7px;margin-right:10px;position: relative" />Logout</a>
+
+
+        <!--Bare menu-->
+
+            <form action="<% out.print(root+ "/sessionServlet"); %>" method="get" id="posearch">
+                <input type="text" name="searchTopic" value="search" size="25"
+                  onfocus="javascript:if(this.value == 'search') this.value='';"
+                  onblur="javascript:if(this.value == '') this.value='search';">
+
+                 <input type="submit" name="Submit" value="find">
+
+            </form>
+
+
+        </div>
+
+
+
+
+        <br/>

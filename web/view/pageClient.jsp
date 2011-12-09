@@ -19,12 +19,12 @@
     </head>
     <body>
 
-        <form action="/nobitsgram/sessionServlet" method="POST" accept-charset="utf-8">
+        <form action="/nobitsgram/sessionServlet" method="GET" accept-charset="utf-8">
 
             <jsp:useBean id="url" class ="java.lang.String"  scope="session" />
             <jsp:useBean id="username" class ="java.lang.String"  scope="session" />
             <% url =(String)request.getAttribute("url");%>
-            <% username =(String)request.getAttribute("username");%>
+            <% username =(String)request.getSession().getAttribute("username");%>
 
 
         <h2 style="margin-left: 500px;"> Wellcome <% out.println(username); %> </h2>
@@ -64,6 +64,6 @@
           </table>
 
        </form>
-             
+
     </body>
 </html>

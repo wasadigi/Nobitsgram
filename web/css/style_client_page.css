@@ -14,44 +14,43 @@ margin-left : auto;
 margin-right : auto;
 }
 #header {
-    margin-bottom: 0px;
-height : 150px;
+margin-top: 0px;
+height : 128px;
 background : url(../images/bg-header.jpg) repeat-x ;
 margin-left : auto;
 margin-right : auto;
 }
-#formlogin {
-position : absolute;
-top : 7.5px;
-right : 300px;
-width : 300px;
-}
+
 #body_bg {
-background : url("../images/body-bg.jpg") repeat-x;
+    margin-top: 0px;
+    background : url("../images/body-bg.jpg") repeat-x;
 }
 #body1 {
 background : url("../images/background.jpg") repeat-x;
 }
-div.menu {
-background : url(../images/menubg.gif) repeat-x ;
-font-size : 170%;
-text-align : center;
-width : 100%;
-margin-left : auto;
-margin-right : auto;
-}
-.menu a:hover, .menu a.current {
-background : url(../images/blockactive1.gif) repeat-x ;
+
+
+
+
+.bar a:hover {
+color: white;
 text-decoration : none;
 }
+
+.bar a.selected{
+    background-color: #2B2B2B;
+    color: #f6b22b;
+}
+
 a {
-color : green;
-text-decoration : none;
-}
-a:hover {
 color : blue;
 text-decoration : none;
 }
+.bar a:hover {
+color : blue;
+text-decoration : none;
+}
+
 .chromemenu ul li a:hover, .chromemenu ul li a.current {
 background : url(media/chromebg2.gif) repeat-x ;
 }
@@ -84,7 +83,7 @@ height : 100%;
 }
 #posearch {
 position : absolute;
-top : 220px;
+top : 130px;
 right : 100px;
 }
 .btn_search {
@@ -92,3 +91,46 @@ background : url(../images/btn-search.png);
 width : 10px;
 height : 10px;
 }
+
+.bar{
+    font-size : 130%;
+    width: 100%;
+    padding: -5px -5px;
+    margin-right: 0;
+
+    border-bottom:1px solid gray;
+    list-style-type: none;
+    text-align: center;
+    display:inline;
+
+}
+
+.tab li{
+    display:inline;
+    margin: 0;
+}
+
+.bar a {
+    display:inline-table;
+
+    text-decoration: none;
+    text-align: center;
+    top: -5px;
+    margin-right: -4.5px;
+    background-color: gray;
+    color: black;
+}
+
+.tab li a:visited{
+    color: blue;
+}
+
+.tab li a:hover{
+    background : url(../images/background.jpg);
+    color : green;
+}
+
+.tab li a:active{
+    color : red;
+}
+

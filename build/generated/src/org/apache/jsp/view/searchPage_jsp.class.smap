@@ -1,0 +1,37 @@
+SMAP
+searchPage_jsp.java
+JSP
+*S JSP
+*F
++ 0 searchPage.jsp
+view/searchPage.jsp
++ 1 headPage.jspf
+view/tools/headPage.jspf
++ 2 footPage.jspf
+view/tools/footPage.jspf
+*L
+5,4:51
+1#1,13:54
+14:67,3
+15,21:70
+36:91,3
+37,16:94
+8#0,4:109
+11:112,2
+12:114,3
+13:117
+14,2:118,10
+16:138
+16,2:139
+17:141
+18:142,3
+19,3:145
+22:148,3
+23:151
+24:152,3
+25,2:155
+27:157,3
+28,6:160
+1#2,5:165
+33#0,2:170
+*E

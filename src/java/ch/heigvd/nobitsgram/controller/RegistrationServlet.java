@@ -32,24 +32,25 @@ public class RegistrationServlet extends HttpServlet {
     @EJB
     private TopicsManager topicsManager;
 
-    String firstname;
-    String lastname;
-    String country;
-    String email;
-    String username;
-    String password;
-    String passwordConfirm;
-    List<String> listTopicName = new ArrayList<String>();
-    String rawTopic;
-    String street;
-    String streetNumber;
-    String city;
-    String zip;
-    String access_token;
-    String username_instagram;
-    Long id_instagram;
-    Long id;
-    String error;
+    private String firstname;
+    private String lastname;
+    private String country;
+    private String email;
+    private String username;
+    private String password;
+    private String passwordConfirm;
+    private List<String> listTopicName = new ArrayList<String>();
+    private String rawTopic;
+    private String street;
+    private String streetNumber;
+    private String city;
+    private String zip;
+    private String access_token;
+    private String username_instagram;
+    private Long id_instagram;
+    private Long id;
+    private HttpSession session;
+    private String error;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -63,9 +64,16 @@ public class RegistrationServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        session = request.getSession();
         try {
+            System.out.println("USERNAME USERNAME ====> "+username);
+            if(session.isNew()){
 
-            getServletContext().getRequestDispatcher("/view/registration.jsp").forward(request, response);
+               getServletContext().getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
+            }
+            else{
+                getServletContext().getRequestDispatcher("/view/registration.jsp").forward(request, response);
+            }
 
         }
         finally {
@@ -125,6 +133,11 @@ public class RegistrationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        // Get the curent session
+        session = request.getSession();
+        ServletContext sc = getServletContext();;
+        // If the client session is already open, then the client is directly
+        // redirect to his client page
 
         firstname = request.getParameter("firstname");
         lastname = request.getParameter("lastname");
@@ -246,10 +259,14 @@ public class RegistrationServlet extends HttpServlet {
                 usersManager.addTopicToUser(newUser,topic);
             }
 
-            ServletContext sc = getServletContext();
 
-            request.setAttribute("username",username);
-            sc.getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
+
+            // We send the client id and his username to the redirect page
+            session.setAttribute("id",newUser.getId());
+            session.setAttribute("username", username);
+
+            // The register is ok, we redirect the client to his client page
+            sc.getRequestDispatcher("/view/clientPage.jsp").forward(request, response);
         }
 
         else if(usersManager.isAllReadyRecord(username)){

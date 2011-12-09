@@ -181,15 +181,23 @@ public class UserBean {
             errors="Please enter your username";
             return false;
         }
+        else if(username.trim().length()<6){
+            errors="Your username is too short, it must be at least 6 caracters";
+        }
 
+        
         if (password.trim().equals("") ) {
             errors="Please enter a valid password";
-
             return false;
         }
-        if (passwordConfirm.trim().equals("") && !passwordConfirm.equals(password) ) {
-            errors="Please enter a valid password";
 
+        else if (password.trim().length()<6){
+            errors="Your password length must be at least 6 caracters!";
+            return false;
+        }
+
+        if (passwordConfirm.trim().equals("") && !passwordConfirm.equals(password) ) {
+            errors="Your password confirm is not the same of your password! Retry";
             return false;
         }
 
