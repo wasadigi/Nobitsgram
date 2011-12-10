@@ -4,8 +4,11 @@
     Author     : Eyram
 --%>
 
+<%@page import="java.util.Random"%>
 <%@page import="java.util.List"%>
 <%@include file="tools/headPage.jspf" %>
+<% root =request.getContextPath();%>
+<form action="<% out.print(root+ "/sessionServlet"); %>" method="get" id="posearch">
 <div class="bar" style="height:50px;">
        <a href="client.jsp" id="Home" >
                 <img class="" src="../images/home1.jpg"  style="top:10px;margin-left: -5px;position: relative"/>Home</a>
@@ -20,29 +23,33 @@
             <a href="logout.jsp" id=""><img class="" src="../images/logout1.jpg" style="top:10px;margin-left: -5px;position: relative" />Logout</a>
     <!--Bare menu-->
 
-        <form action="<% out.print(root+ "/sessionServlet"); %>" method="get" id="posearch">
-            <input type="text" name="searchTopic" value="search" size="25">
+
+            <input type="text" name="searchTopic" value="" size="25">
              <input type="submit" name="Submit" value="find">
 
-        </form>
+
 
 
     </div>
+
 <br/>
-<% root =request.getContextPath();%>
-<form action="<% out.print(root+ "/sessionServlet"); %>" method="GET" accept-charset="utf-8">
+
+
 
     <jsp:useBean id="url" class ="java.lang.String"  scope="session" />
     <jsp:useBean id="username" class ="java.lang.String"  scope="session" />
     <% List<String> urlList =(List<String>)request.getAttribute("urlList");
-       int size = urlList.size();%>
+       int size = urlList.size(); Random random = new Random(); int j;%>
     <% username =(String)request.getSession().getAttribute("username");%>
 
     <table style="margin-left:25%;top:25%" >
         <tr>
-            <% for(int i = 0; i < 3; i++) {%>
+            <%  
+                for(int i = 0; i < 3; i++) {
+                    j = random.nextInt(size);
+             %>
             <td>
-                <img src="<%out.print(urlList.get(i));%>" style="width: 200px;height:150px;" />
+                <img src="<%out.print(urlList.get(j));%>" style="width: 200px;height:150px;" />
 
             </td>
             <% }%>

@@ -5,6 +5,7 @@
 --%>
 
 <%@include file="tools/headPage.jspf" %>
+
 <div class="bar" id="positionbar">
             <a href="client.jsp" id="Home" class="selected">
                 <img class="" src="../images/home1.jpg"  style="top:10px;margin-left: -5px;position: relative"/>Home</a>

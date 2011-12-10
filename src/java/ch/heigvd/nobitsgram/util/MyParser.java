@@ -60,7 +60,7 @@ public class MyParser {
 
             int j = tmp.indexOf(endExpression, i);
             url = tmp.substring(i,j+endExpression.length());
-
+           
             listUrl.add(url);
             tmp = tmp.substring(j+endExpression.length());
         }
@@ -110,4 +110,6 @@ public class MyParser {
         return st.nextToken();
 
     }
+
+
 }

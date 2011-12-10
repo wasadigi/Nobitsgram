@@ -66,14 +66,7 @@ public class RegistrationServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         session = request.getSession();
         try {
-            
-            if(session.isNew()){
 
-               getServletContext().getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
-            }
-            else{
-                getServletContext().getRequestDispatcher("/view/registration.jsp").forward(request, response);
-            }
 
         }
         finally {
@@ -268,7 +261,7 @@ public class RegistrationServlet extends HttpServlet {
 
 
             // The register is ok, we redirect the client to his client page
-            sc.getRequestDispatcher("/view/clientPage.jsp").forward(request, response);
+            sc.getRequestDispatcher("/view/client.jsp").forward(request, response);
         }
 
         else if(usersManager.isAllReadyRecord(username)){

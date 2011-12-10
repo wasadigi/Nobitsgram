@@ -41,7 +41,7 @@ public class SessionServlet extends HttpServlet {
     // Topic" , the topic which will be research is "snow"
     private String topic; // = "snow";
     private List<List<String>>listTopicUrl = getList();
-    private List<String> listTopic = getListTopic();
+    private List<String> listTopic = null;
     private int curIndex = 0;
     private List<String> urlList;
     private String error;
@@ -66,6 +66,7 @@ public class SessionServlet extends HttpServlet {
             getServletContext().getRequestDispatcher("/view/client.jsp").forward(request, response);
             //response.sendRedirect(request.getContextPath()+"/view/client.jsp");
 
+
         }
         finally {
             out.close();
@@ -81,23 +82,29 @@ public class SessionServlet extends HttpServlet {
        user = (User)session.getAttribute("user");
        String submit = request.getParameter("Submit");
 
-       System.out.println("USER USER =====> "+user);
-       System.out.println("Submit Submit ====> "+submit);
 
        if(submit.equals("find")){
-               if(user != null){
+           if(user != null && urlList == null){
                access_token = user.getAcces_token();
-               System.out.println("Access TOKEN =======> =====> "+access_token);
+
            }
 
            topic = request.getParameter("searchTopic");
-           if(topic.trim().equals("")){
-               error = "You must enter a value to search";
-           }
 
-           else{
-               urlList = getListsUrl(topic,access_token);
+           if(urlList == null && topic.trim().equals("")){
+                error = "You must enter a value to search";
+
+
            }
+           else{
+                if(urlList!=null && urlList.isEmpty()){
+                    urlList.clear();
+                }
+                if(topic.trim()!= ""){
+                    urlList = getListsUrl(topic,access_token);
+                }
+
+            }
 
            if(urlList.isEmpty() && topic.trim()!=""){
                urlList = null;
@@ -105,11 +112,13 @@ public class SessionServlet extends HttpServlet {
            }
 
            request.setAttribute("urlList", urlList);
-           //sc.getRequestDispatcher("/view/searchPage.jsp").forward(request, response);
+           sc.getRequestDispatcher("/view/searchPage.jsp").forward(request, response);
+           //response.sendRedirect(request.getContextPath()+"/view/searchPage.jsp");
 
        }
        else{
-           sc.getRequestDispatcher("/view/client.jsp").forward(request, response);
+           //sc.getRequestDispatcher("/view/client.jsp").forward(request, response);
+           response.sendRedirect(request.getContextPath()+"/view/client.jsp");
        }
 
 
@@ -155,7 +164,7 @@ public class SessionServlet extends HttpServlet {
             interrogator.setSearchUrl(topicName);
 
             String resultResearch = interrogator.getSearcResult();
-            System.out.println("Result ====> "+resultResearch);
+
             listUrl = parser.getListUrls(resultResearch);
 
             return listUrl;

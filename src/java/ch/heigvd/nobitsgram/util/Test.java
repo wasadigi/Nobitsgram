@@ -19,28 +19,28 @@ import java.util.*;
  */
 public class Test {
     public static void main(String[] args){
-        //MyParser parser = new MyParser();
-
-        /*System.out.println("Veuillez saisir votre texte:");
+        MyParser parser = new MyParser();
+        Scanner sc;
+        String saisie;
+        /* System.out.println("Veuillez saisir votre texte:");
         Scanner sc = new Scanner(System.in);
         String saisie = sc.nextLine();
-         *
-         */
+        */
 
         /*
         List<String> list = parser.getListUrls(saisie);
         parser.displayList(list);
-
+         */
         InterrogatorInstagram rt = new InterrogatorInstagram();
         System.out.println("\n\n\nTag à rechercher:");
         sc = new Scanner(System.in);
         saisie = sc.nextLine();
 
         System.out.println("\n\t\tSAISI ==> "+saisie);
-        rt.setUrl(saisie);
+        rt.setSearchUrl(saisie);
         String s = rt.getSearcResult();
-         *
-         */
+        parser.getListUrls(s);
+
 
        // System.out.println("REPONSE SERVEUR ==> "+s);
        //List<String> list1 = parser.getListUrls(s);
@@ -53,11 +53,8 @@ public class Test {
          *
          */
 
-        System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-        InterrogatorInstagram rs = new InterrogatorInstagram();
-        String s = rs.getSearcResult();
 
-        System.out.println(" ======> "+s);
+        System.out.println(" =================================\n"+s);
 
     }
 

@@ -53,8 +53,16 @@ public class InterrogatorInstagram {
      * Complete the url with the search tag
      */
     public void setSearchUrl(String tagSearch){
-       url = urlBegin+tagSearch+urlPart;
+       url = urlBegin+tagSearch+urlPart+access_token;
     }
+
+    /*
+     * This method is used to add end point to a url
+     */
+    public void addEndPoint(String parameter, String value){
+        url +="&"+parameter+"="+value;
+    }
+
 
     /*
      * This method is used to set the code which was get during the logging of
@@ -183,7 +191,7 @@ public class InterrogatorInstagram {
         if(access_token != null && access_token.trim() !=""){
                 this.access_token = access_token;
         }
-        else access_token = "10840565.f59def8.778aab0dc2d64a8ca9c27694ed9444bc";
+
      }
 
 
