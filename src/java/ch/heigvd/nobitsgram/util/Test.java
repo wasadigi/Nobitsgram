@@ -38,7 +38,7 @@ public class Test {
 
         System.out.println("\n\t\tSAISI ==> "+saisie);
         rt.setSearchUrl(saisie);
-        String s = rt.getSearcResult();
+        String s = rt.getSearcResult(rt.getUrl());
         parser.getListUrls(s);
 
 

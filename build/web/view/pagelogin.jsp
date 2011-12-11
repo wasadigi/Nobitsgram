@@ -10,21 +10,22 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
+    <% String root = request.getContextPath(); %>
 
     <head>
+
         <title>Welcome to Nobitsgram</title>
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
+         <link rel="stylesheet" type="text/css" href="/nobitsgram/css/style.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
         <title>Nobitsgram</title>
     </head>
 
 
     <body id="body_bg" style="background-color:#DAEADB;">
-
         <!--Positionnement du header et du formulaire de login-->
         <div id ="header">
-            <% String root = request.getContextPath(); %>
             <div style="width: 300px;">
+
                 <form id = "formlogin" action="<% out.print(root+ "/LoginServlet"); %>" method="POST" accept-charset="utf-8" name ="Login" class="table-style" align="right">
 
                     <h1 style="width:250px; margin:0em auto;color:#F9FBFF">
@@ -47,7 +48,7 @@
                     </table>
 
                     <span style="margin-left:160px;">
-                        <input style="border:0;width:70px; height:25px" src="images/login1.jpg"  type="image" value="submit" align="middle" />
+                        <input style="border:0;width:70px; height:25px" src="<% out.print(root+ "/images/login1.jpg"); %>"  type="image" value="submit" align="middle" />
 
                     </span>
 
@@ -79,9 +80,9 @@
                 "&redirect_uri="+redirect_uri+
                 "&response_type="+response_type;
                     %>
-                <a href="<%out.print(url);%>" ><img src="images/register_1.jpg"  style="border:0; height:30px; width:150px"  target="cadre1"/></a>
+                <a href="<%out.print(url);%>" ><img src="<% out.print(root+ "/images/register_1.jpg"); %>"  style="border:0; height:30px; width:150px"  target="cadre1"/></a>
 
-                       
+
                         </span>
                     </div>
                 </form>
@@ -92,7 +93,7 @@
             </div>
 
         </div>
-
+<form action="<% out.print(root+ "/WelcomeServlet"); %>" method="POST" id="RefreshUrl" accept-charset="utf-8">
         <!--Texte instagram-->
         <div id="cadretexteInstagram">
                 <font style ="font-size: 75px; color: #330099; margin-left: 100px;"> Nobitsgram</font>
@@ -100,7 +101,7 @@
 
         <!--Mise en place du cadre pour l'image-->
 
-        <form action="<% out.print(root+ "/WelcomeServlet"); %>" method="POST" id="RefreshUrl" accept-charset="utf-8">
+
             <script language="JavaScript">
                 setInterval( "RefreshImage();", 5000 );
 
@@ -126,10 +127,9 @@
               <th> <img src="<%out.print(url);%>" name="image" style="width:300px; height:240px;"/></th>
              </tr>
             </table>
-        </form>
-
-
+</form>
 
     </body>
+
 </html>
 

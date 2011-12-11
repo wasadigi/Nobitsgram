@@ -8,16 +8,4 @@
     <welcome-file-list>
         <welcome-file>view/pagelogin.jsp</welcome-file>
     </welcome-file-list>
-    <ejb-ref>
-        <ejb-ref-name>nobitsgramPU</ejb-ref-name>
-        <ejb-ref-type>Entity</ejb-ref-type>
-        <home/>
-        <remote>f</remote>
-    </ejb-ref>
-    <resource-ref>
-        <res-ref-name>data_source_notbitsg</res-ref-name>
-        <res-type>javax.sql.DataSource</res-type>
-        <res-auth>Container</res-auth>
-        <res-sharing-scope>Shareable</res-sharing-scope>
-    </resource-ref>
 </web-app>

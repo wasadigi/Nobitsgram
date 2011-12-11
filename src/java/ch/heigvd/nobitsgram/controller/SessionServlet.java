@@ -43,12 +43,6 @@ public class SessionServlet extends HttpServlet {
     private List<List<String>>listTopicUrl = getList();
     private List<String> listTopic = null;
     private int curIndex = 0;
-    private List<String> urlList;
-    private String error;
-
-    private HttpSession session;
-    private String access_token = null;
-    private User user=null;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -78,51 +72,6 @@ public class SessionServlet extends HttpServlet {
             throws ServletException, IOException {
 
        ServletContext sc = getServletContext();
-       session = request.getSession();
-       user = (User)session.getAttribute("user");
-       String submit = request.getParameter("Submit");
-
-
-       if(submit.equals("find")){
-           if(user != null && urlList == null){
-               access_token = user.getAcces_token();
-
-           }
-
-           topic = request.getParameter("searchTopic");
-
-           if(urlList == null && topic.trim().equals("")){
-                error = "You must enter a value to search";
-
-
-           }
-           else{
-                if(urlList!=null && urlList.isEmpty()){
-                    urlList.clear();
-                }
-                if(topic.trim()!= ""){
-                    urlList = getListsUrl(topic,access_token);
-                }
-
-            }
-
-           if(urlList.isEmpty() && topic.trim()!=""){
-               urlList = null;
-               error = "Nothing find!";
-           }
-
-           request.setAttribute("urlList", urlList);
-           sc.getRequestDispatcher("/view/searchPage.jsp").forward(request, response);
-           //response.sendRedirect(request.getContextPath()+"/view/searchPage.jsp");
-
-       }
-       else{
-           //sc.getRequestDispatcher("/view/client.jsp").forward(request, response);
-           response.sendRedirect(request.getContextPath()+"/view/client.jsp");
-       }
-
-
-
 
         //getServletContext().getRequestDispatcher("/view/pageClient.jsp").forward(request, response);
 
@@ -156,19 +105,7 @@ public class SessionServlet extends HttpServlet {
     /*
      * This method return a list of url.
      */
-     public List<String> getListsUrl(String topicName,String access_token){
-            List<String> listUrl = null;
-            MyParser parser = new MyParser();
-            InterrogatorInstagram interrogator = new InterrogatorInstagram();
-            interrogator.setAccesToken(access_token);
-            interrogator.setSearchUrl(topicName);
 
-            String resultResearch = interrogator.getSearcResult();
-
-            listUrl = parser.getListUrls(resultResearch);
-
-            return listUrl;
-     }
 
      public List<String> getListTopic(){
          List<String> tmp = new ArrayList<String>();

@@ -26,7 +26,9 @@ public class InterrogatorInstagram {
     // The end of the url
     private String access_token = "10840565.f59def8.778aab0dc2d64a8ca9c27694ed9444bc";
 
-    private String urlPart = "/media/recent?access_token=";
+    private String urlPart2 = "?access_token=";
+    private String urlPart1 = "/media/recent";
+    private String nofilter = "nofilter";
 
     private String url ;
 
@@ -53,7 +55,24 @@ public class InterrogatorInstagram {
      * Complete the url with the search tag
      */
     public void setSearchUrl(String tagSearch){
-       url = urlBegin+tagSearch+urlPart+access_token;
+       url = urlBegin+tagSearch+urlPart1+urlPart2+access_token;
+
+    }
+
+
+    /*
+     * This method return the url
+     */
+    public String getUrl(){
+        return url;
+    }
+
+    /*
+     * This method is used to set url to get information about
+     * that tag which is in parameter
+     */
+    public void setSearchInfoUrl(String tagSearch){
+        url = urlBegin+nofilter+urlPart2+access_token;
     }
 
     /*
@@ -139,7 +158,7 @@ public class InterrogatorInstagram {
     /*
      * This method is use to get the result of research of tag
      */
-    public String getSearcResult(){
+    public String getSearcResult(String url){
         String searchResult = null;
         URL myUrl;
 

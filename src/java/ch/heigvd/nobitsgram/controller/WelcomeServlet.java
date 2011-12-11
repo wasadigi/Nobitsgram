@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -24,9 +25,10 @@ import javax.servlet.http.HttpServletResponse;
 public class WelcomeServlet extends HttpServlet {
 // We create a list of url with the name nobits
     List<String> listTopic = getListsUrl("nobits");
+    static int i = 0;
 
     // This variable will be increment to scan the list
-    static int i = 0;
+    private HttpSession session;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -41,7 +43,6 @@ public class WelcomeServlet extends HttpServlet {
         try {
 
             getServletContext().getRequestDispatcher("/view/pagelogin.jsp").forward(request, response);
-
         }
         finally {
             out.close();
@@ -59,12 +60,17 @@ public class WelcomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         ServletContext sc = getServletContext();
-        sendUrlToJSP(request, response, sc);
-        String s = request.getRequestURI();
-        System.out.println("REQUEST LINE ===> "+s);
-        s = request.getRequestURL().toString();
-        System.out.println("REQUEST LINE 1 ===> "+s);
+        session = request.getSession();
+        System.out.append("Session ====> "+session.getId());
+        if(session == null){
+            getServletContext().getRequestDispatcher("/view/client.jsp").forward(request, response);
+        }
+
+        else{
+            getServletContext().getRequestDispatcher("/view/pagelogin.jsp").forward(request, response);
+        }
 
 
     }
@@ -101,29 +107,18 @@ public class WelcomeServlet extends HttpServlet {
      */
     public List<String> getListsUrl(String topicName){
             List<String> listUrl = null;
-            MyParser parser = new MyParser();
-            InterrogatorInstagram research = new InterrogatorInstagram();
-            research.setSearchUrl(topicName);
+            InterrogatorInstagram interrogator = new InterrogatorInstagram();
+            interrogator.setSearchUrl(topicName);
+            String url = interrogator.getUrl();
+
 
             // Get the result when an instance of InterrogatorInstagram do a request
             // to the instagram site.
-            String resultResearch = research.getSearcResult();
+            String resultResearch = interrogator.getSearcResult(url);
 
-            listUrl = parser.getListUrls(resultResearch);
+            listUrl = MyParser.getListUrls(resultResearch);
 
             return listUrl;
      }
-
-
-    /**
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-
-
 
 }

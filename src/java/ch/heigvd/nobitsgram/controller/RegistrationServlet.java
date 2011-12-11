@@ -51,6 +51,7 @@ public class RegistrationServlet extends HttpServlet {
     private Long id;
     private HttpSession session;
     private String error;
+    private String delimiter ="\"\"";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -110,9 +111,9 @@ public class RegistrationServlet extends HttpServlet {
         MyParser pars = new MyParser();
 
         // We extract access token, username and id to record them in the databases
-        access_token = pars.getValue(informations,"access_token");
-        username_instagram = pars.getValue(informations, "username");
-        id_instagram =Long.parseLong(pars.getValue(informations, "id"));
+        access_token = pars.getValue(informations,"access_token",delimiter);
+        username_instagram = pars.getValue(informations, "username",delimiter);
+        id_instagram =Long.parseLong(pars.getValue(informations, "id",delimiter));
     }
 
     /**

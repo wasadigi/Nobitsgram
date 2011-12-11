@@ -4,18 +4,20 @@
 <html>
 
     <head>
+        <% String root = request.getContextPath(); %>
     <title>Nobitsgram</title>
         <!-- client page css -->
-        <link rel="stylesheet" type="text/css" href="../css/style_client_page.css" />
+
+        <link rel="stylesheet" type="text/css" href="<% out.print(root+ "/css/style_client_page.css"); %>" />
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
     </head>
 
     <body id="body_bg" style="background-color:#DAEADB;" >
-        <% String root = request.getContextPath(); %>
+
         <!--Positionnement du header et du formulaire de login-->
         <div id ="header" style="">
             <br/>
-            <img src ="../images/nobitsgramLogo3.jpg" style="margin-left:35%; "/>
+            <img src ="<% out.print(root+"/images/nobitsgramLogo3.jpg");%>" style="margin-left:35%; "/>
         </div>
 
 

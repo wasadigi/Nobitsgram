@@ -185,7 +185,13 @@ public class UserBean {
             errors="Your username is too short, it must be at least 6 caracters";
         }
 
-        
+        isValidPassword(password, passwordConfirm);
+
+
+        return true;
+    }
+
+    public boolean isValidPassword(String password, String passwordConfirm){
         if (password.trim().equals("") ) {
             errors="Please enter a valid password";
             return false;
@@ -200,7 +206,6 @@ public class UserBean {
             errors="Your password confirm is not the same of your password! Retry";
             return false;
         }
-
         return true;
     }
 

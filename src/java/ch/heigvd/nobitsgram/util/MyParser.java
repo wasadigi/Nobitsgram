@@ -21,12 +21,6 @@ import java.util.*;
 public class MyParser {
 
 
-
-
-    public MyParser(){
-
-    }
-
     /*
      * This method return a list of url. Those url are contained in the
      * parameter var
@@ -34,7 +28,7 @@ public class MyParser {
      * image. Default, we choose the bigger image which have his url end by "_7"
      *
      */
-    public List<String> getListUrls(String var){
+    public static List<String> getListUrls(String var){
         String url="";
 
         // List of url which is return;
@@ -60,7 +54,7 @@ public class MyParser {
 
             int j = tmp.indexOf(endExpression, i);
             url = tmp.substring(i,j+endExpression.length());
-           
+
             listUrl.add(url);
             tmp = tmp.substring(j+endExpression.length());
         }
@@ -73,7 +67,7 @@ public class MyParser {
      *
      *
      */
-    public String getLatLong(String response){
+    public static String getLatLong(String response){
         String tmp = response;
         String latDel1 = "<lat>";
         String latDel2 = "</lat>";
@@ -101,15 +95,15 @@ public class MyParser {
      * This method is used to get the value of "parameter" in the expression
      * "information"
      */
-    public String getValue(String information, String parameter){
-
-        String delimiter = "\" \"";
+    public static String getValue(String information, String parameter,String delimiter){
         String tmp = information.substring(information.indexOf(parameter)
                                            +parameter.length()+2);
         StringTokenizer st = new StringTokenizer(tmp,delimiter);
         return st.nextToken();
 
     }
+
+    
 
 
 }
