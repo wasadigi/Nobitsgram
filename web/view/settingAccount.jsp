@@ -49,9 +49,9 @@
         %>
         <div>
 		<form  method="POST"  action="<% out.print(root+ "/ServletPersonnalPage"); %>">
-            <% if(error != null && error != ""){
-                    out.print(error);
-               }
+                    <% if(error != null && error != ""){%><br/></br><br/>
+            <span style="margin-left: 20%; margin-top: 100px;"><% out.print(error); %> </span>
+              <% }
                else{
             %>
                   <h2 style="margin-left: 20%; margin-top: 100px;">

@@ -47,8 +47,8 @@
         %>
         <div>
 		<form  method="post"  action="<% out.print(root+ "/ServletPersonnalPage"); %>">
-                    <h2 style="margin-left: 20%; margin-top: 100px;"><% out.print(username); %>, your data! </h2>
-        <table cellspacing="50"  bgcolor='#38B0DE' style="margin-left: 5%; margin-top: 20px;margin-bottom: 5%">
+                    <h2 style="margin-left: 40%; margin-top: 100px;"><% out.print(username); %>, your data! </h2>
+        <table cellspacing="80"  bgcolor='#38B0DE' style="margin-left: 30%; margin-top: 20px;margin-bottom: 5%">
 
             <tr>
 				<td><label for="lastname" >Last name</label></td>
@@ -82,7 +82,6 @@
                             %>
                             <tr>
                             <td><label name="Topic">Topic <% out.print(" "+(i+1)); %></label></td>
-                            <td><input name="topic<%out.print(i);%>" size="30" type="text"/></td>
                             <td><label name="Topic"><% out.print(topics.get(i).getName()); %></label></td>
 
                         </tr>

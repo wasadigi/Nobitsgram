@@ -73,9 +73,19 @@ public class ServletPersonnalPage extends HttpServlet {
 
             String action = request.getParameter("action");
 
-            if(action.equals("Submit")){
+
+            if(action != null && action.equals("Submit")){
                 setUser(request,response);
+
             }
+
+            // When action is not null, then it seem that the client want to
+            // remove a topic in his topic list
+            else if(action != null){
+
+            }
+
+
 
 
     }
@@ -96,7 +106,7 @@ public class ServletPersonnalPage extends HttpServlet {
                                        HttpServletResponse response){
         try{
         request.setAttribute("error",error);
-            getServletContext().getRequestDispatcher("/view/settingAcount."
+            getServletContext().getRequestDispatcher("/view/settingAccount."
                                            + "jsp").forward(request, response);
         }
         catch(Exception exc){
@@ -164,18 +174,19 @@ public class ServletPersonnalPage extends HttpServlet {
             }
 
             // We check the validity of the password
-            if(userBean.isValidPassword(password, passwordConfirm)){
-                user.setPassword(password);
-            }
-
-            else{
-                if(error.trim() !=""){
-                    error += ", ";
+            if(password != "" || passwordConfirm != ""){
+                if(userBean.isValidPassword(password, passwordConfirm)){
+                    user.setPassword(password);
                 }
 
-                error += userBean.getError();
-            }
+                else{
+                    if(error.trim() !=""){
+                        error += ", ";
+                    }
 
+                    error += userBean.getError()+" =====>"+password+"******";
+                }
+            }
              // We check if one of the address field was fill or not
             if(userBean.isAddress(city, street, streetNumber, zip)){
                 // We check if the field of street number or zip code was filled
@@ -273,8 +284,7 @@ public class ServletPersonnalPage extends HttpServlet {
                 redirectToSettingAccount(error, request, response);
             }
             else{
-                usersManager.update(user);
-                topicsManager.update(topic);
+
                getServletContext().getRequestDispatcher("/view/displayUserData."
                                            + "jsp").forward(request, response);
             }
