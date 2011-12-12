@@ -33,6 +33,10 @@ public class UsersManager {
         em.persist(user);
     }
 
+    public void update(User user){
+        em.refresh(user);
+    }
+
     public void edit(User user){
         em.merge(user);
     }

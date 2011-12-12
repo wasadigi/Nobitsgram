@@ -35,6 +35,10 @@ public class TopicsManager {
         em.persist(topic);
     }
 
+    public void update(Topic topic){
+        em.refresh(topic);
+    }
+
     public void edit(Topic topic){
         em.merge(topic);
     }

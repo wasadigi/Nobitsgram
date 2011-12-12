@@ -79,7 +79,7 @@ public class UserBean {
      * This method return boolean which tell us if one of the field of the address
      * was fill or not.
      */
-    public boolean isAddress(){
+    public boolean isAddress(String city, String street, String streetNumber, String zip){
         if(!city.trim().equals("") || !street.trim().equals("") ||
            !streetNumber.trim().equals("") || !zip.trim().equals("")){
             return true;

@@ -43,10 +43,20 @@
             String email = user.getEmail();
             List <Topic> topics = user.getTopicList();
             String username = user.getUsername();
+            String error = (String)request.getAttribute("error");
+
 
         %>
-		<form  method="post"  action="<% out.print(root+ "/ServletPersonnalPage"); %>">
-                    <h2 style="margin-left: 20%; margin-top: 100px;"><% out.print(username); %>, you can set your nobitsgram data here! </h2>
+        <div>
+		<form  method="POST"  action="<% out.print(root+ "/ServletPersonnalPage"); %>">
+            <% if(error != null && error != ""){
+                    out.print(error);
+               }
+               else{
+            %>
+                  <h2 style="margin-left: 20%; margin-top: 100px;">
+                   <% out.print(username); %>, you can set your nobitsgram data here! </h2>
+                <% } %>
         <table cellspacing="50"  bgcolor='#38B0DE' style="margin-left: 5%; margin-top: 20px;margin-bottom: 5%">
 
             <tr>
@@ -58,6 +68,7 @@
 				<td><label for="firstname" >First name</label></td>
 				<td><input type="text" name="firstname" /></td>
                                 <td><label><% out.print(firstname); %></label></td>
+                                <td></td>
 			</tr>
 
                         <tr>
@@ -66,7 +77,7 @@
                             <td><input name="streetNumber" size="8" type="text" /></td>
                         </tr>
                         <tr>
-                            <td><label>Street address:</label</td>
+                            <td><label>Street address:</label></td>
                             <td><input name="street" size="30" type="text" /></td>
                         </tr>
 
@@ -395,31 +406,33 @@
                          <%
                             int size = topics.size();
                             for(int i = 0; i < size; i++){
-                                
+
                             %>
                             <tr>
                             <td><label name="Topic">Topic <% out.print(" "+(i+1)); %></label></td>
                             <td><input name="topic<%out.print(i);%>" size="30" type="text"/></td>
                             <td><label name="Topic"><% out.print(topics.get(i).getName()); %></label></td>
+                            <td>
+                                <button type="submit" name="removeTop<%out.print(i);%>">
+                                    remove</button>
+
+                            </td>
 
                         </tr>
                         <% } %>
 
                         <tr>
                              <td>
-				<button type="submit" style="border:1px solid #f6b22b; margin-left: 50px;
-                                    background:#fbe26eE;width:200px;
-                                    background-color:#F7D92E;
-                                    height: 35px;font-size:18px " >Exit</button>
+
 				</td>
                                 <td>
-
-                                </td>
-				<td>
-                                    <button type="submit" style="border:1px solid #f6b22b;
+                                    <input type="submit" style="border:1px solid #f6b22b;
                                     background:#fbe26eE;width:200px;
                                     background-color:#F7D92E;
-                                    height: 35px;font-size:18px " >Accept</button>
+                                    height: 35px;font-size:18px;" name="action" value="Submit" />
+                                </td>
+				<td>
+
                                 </td>
 			</tr>
 		</table>

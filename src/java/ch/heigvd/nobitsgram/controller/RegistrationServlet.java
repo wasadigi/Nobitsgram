@@ -167,7 +167,7 @@ public class RegistrationServlet extends HttpServlet {
             newUser.setAcces_token(access_token);
 
             // We check if one of the address field was fill or not
-            if(userBean.isAddress()){
+            if(userBean.isAddress(city, street, streetNumber, zip)){
                 // We check if the field of street number or zip code was filled
                 // and it value is a number
                 if((streetNumber!="" && !userBean.isNumber(streetNumber)) ||
