@@ -55,13 +55,13 @@
         List<String> urlList =(List<String>)request.getSession().getAttribute("urlList");
         %>
 
-        <div style="margin-left: 35%">
+        <div style="text-align: center;">
 
-                   <h2><% out.print(message); %></h2>
+            <h2><% out.print(message); %></h2>
 
         </div>
 
-        <% if( urlList !=null){
+        <% if( urlList !=null && !urlList.isEmpty()){
            int size = urlList.size(); Random random = new Random(); int j;
            String username =(String)request.getSession().getAttribute("username");%>
 

@@ -75,23 +75,19 @@ public class SearchServlet extends HttpServlet {
        }
 
 
-       if(urlList!=null && urlList.isEmpty() && topic.trim()!=""){
-            urlList = null;
-            message = "Nothing find!";
-       }
 
-        else if(topic.trim()!= ""){
-            tagInfo = getInfoTopic(topic,access_token);
+      if(topic.trim()!= ""){
+
             urlList = getListsUrl(topic,access_token);
-            message = "Result for \""+topic +"\" : "+tagInfo;
+            if(urlList.isEmpty()){
+                message = "No matching topic for \""+topic+"\"";
+            }
+            else{
+                tagInfo = getInfoTopic(topic,access_token);
+                message = "Result for \""+topic +"\" : "+tagInfo;
+            }
        }
-
-       System.out.println("URLLIST Null =====> "+urlList==null);
-       System.out.println("URLLIST =====> "+urlList.isEmpty());
-
-       System.out.println("MESSAGE =====> "+message);
-       System.out.println("URLlist.size ==> "+urlList.size());
-
+      
        session.setAttribute("urlList", urlList);
        session.setAttribute("message",message);
        sc.getRequestDispatcher("/view/searchPage.jsp").forward(request, response);
@@ -115,7 +111,7 @@ public class SearchServlet extends HttpServlet {
     }
 
     public List<String> getListsUrl(String topicName,String access_token){
-            List<String> listUrl = null;
+            List<String> listUrl = new ArrayList<String>();
 
             InterrogatorInstagram interrogator = new InterrogatorInstagram();
             interrogator.setAccesToken(access_token);
@@ -125,8 +121,10 @@ public class SearchServlet extends HttpServlet {
 
             String resultResearch = interrogator.getSearcResult(url);
 
-            listUrl = MyParser.getListUrls(resultResearch);
-
+            //We check if the result is not null before we affect it to listUrl
+            if(resultResearch != null){
+                listUrl = MyParser.getListUrls(resultResearch);
+            }
             return listUrl;
      }
 

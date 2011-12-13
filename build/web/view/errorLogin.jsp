@@ -28,7 +28,21 @@
 
         <p><span style="margin-left:140px;"><input type="submit" value="Log in" class="button" style="border:1px solid #f6b22b;background:#fbe26eE;width:100px;background-color:#F7D92E;height: 35px;font-size:18px ">
             </span></p>
-        <p><h4>Do you have already an acount? <a href="/nobitsgram/view/registration.jsp" style="margin-left:150px;">Create on here!</h4> </a>
+
+                <%
+                String client_id = "5e2a174a39804619840925781251b646";
+                String redirect_uri = request.getRequestURL().toString();
+                String removePath = request.getServletPath();
+                redirect_uri = redirect_uri.replaceAll(removePath,"/") + "RegistrationServlet";
+
+                String response_type = "code";
+                String oauth_url = "https://api.instagram.com/oauth/authorize/";
+
+                String url =oauth_url+"?client_id="+client_id+
+                "&redirect_uri="+redirect_uri+
+                "&response_type="+response_type;
+                 %>
+                <p><h4>Do you have already an acount?<a href="<%out.print(url);%>" >Create on here!</h4> </a>
         </form>
 
 </div>

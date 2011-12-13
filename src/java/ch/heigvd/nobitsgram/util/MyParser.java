@@ -98,9 +98,8 @@ public class MyParser {
     public static String getValue(String information, String parameter,String delimiter){
         String tmp = information.substring(information.indexOf(parameter)
                                            +parameter.length()+3);
-        System.out.println("Tmp ====> "+tmp);
-        StringTokenizer st = new StringTokenizer(tmp,delimiter);
 
+        StringTokenizer st = new StringTokenizer(tmp,delimiter);
         return st.nextToken();
 
     }
