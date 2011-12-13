@@ -61,17 +61,6 @@ public class WelcomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        ServletContext sc = getServletContext();
-        session = request.getSession();
-        System.out.append("Session ====> "+session.getId());
-        if(session == null){
-            getServletContext().getRequestDispatcher("/view/client.jsp").forward(request, response);
-        }
-
-        else{
-            getServletContext().getRequestDispatcher("/view/pagelogin.jsp").forward(request, response);
-        }
-
 
     }
 

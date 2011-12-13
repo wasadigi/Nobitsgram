@@ -24,6 +24,16 @@
     <body id="body_bg" style="background-color:#DAEADB;">
         <!--Positionnement du header et du formulaire de login-->
         <div id ="header">
+
+            <!-- We try to redirect the user to the client page when the session is still open -->
+            <% if(request.getSession().getAttribute("id") != null){
+            out.println(request.getSession().toString());%>
+            <jsp:forward page="client.jsp">
+                <jsp:param name="transfert" value="ok" />
+            </jsp:forward>
+            <%}%>
+
+            <!-- Else we show the welcome page -->
             <div style="width: 300px;">
 
                 <form id = "formlogin" action="<% out.print(root+ "/LoginServlet"); %>" method="POST" accept-charset="utf-8" name ="Login" class="table-style" align="right">

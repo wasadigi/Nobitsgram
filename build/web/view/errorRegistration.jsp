@@ -3,48 +3,62 @@
     Created on : 17 nov. 2011, 13:11:15
     Author     : Eyram
 --%>
+<%@include file="tools/headPage.jspf" %>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page language="java" %>
-<%@page session="true" import="ch.heigvd.nobitsgram.controller.RegistrationServlet"%>
+        <form action="/nobitsgram/RegistrationServlet" method="POST"
+              style="margin-left: 20%;margin-top: -40px; width:750px; background-color:#DCDCDC;" accept-charset="utf-8">
+            <h1 style="margin-left: 30%">REGISTRATION</h1>
+            <% String error=(String)request.getAttribute("error");%>
+            <br/><h3 style="color:#BF0B0B; margin-top: -10px;
+                text-align: center; "><% out.print(error); %></h3>
+                <%
+                    String firstname = (String)session.getAttribute("firstname");
+                    String lastname = (String)session.getAttribute("lastname");
+                    String username = (String)session.getAttribute("username");
+                    String email = (String)session.getAttribute("email");
+                    String street = (String)session.getAttribute("street");
+                    String streetNumber = (String)session.getAttribute("streetNumber");
+                    String zip = (String)session.getAttribute("zip");
+                    String city = (String)session.getAttribute("city");
+                    String topicRaw = (String)session.getAttribute("topicRaw");
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Application Registration</title>
-    </head>
-    <body>
+                 %>
 
-        <div style="width: 430px; margin: 0 auto; background-color:#DCDCDC;">
-       <form action="/nobitsgram/RegistrationServlet" method="POST" accept-charset="utf-8">
+                <table cellspacing="40" >
+                <tr>
+                    <td><label>First name:</label></td>
+                    <td><input name="firstname" value="<% out.print(firstname); %>" size="30" type="text" /></td>
+                </tr>
 
-     </br><h1 style="margin-left: 1.5em; margin-top: 1.0em;">REGISTRATION</h1>
-     <% String error=(String)request.getAttribute("error");%>
+                <tr>
+                    <td><label>Last name:</label></td>
+                    <td><input name="lastname" value="<% out.print(lastname); %>" size="30" type="text" /></td>
+                </tr>
 
-     <span style="color:#BF0B0B;"><% out.print(error); %></span></br>
+                <tr>
+                    <td><label>Street number:</label></td>
+                    <td><input name="streetNumber" value="<% out.print(streetNumber); %>" size="8" type="text" /></td>
+                </tr>
 
-   <br><label for="user_firstname" name="firstname">First name:</label>
-    <input id="user_login" name="firstname" size="30" type="text" /></br>
+                <tr>
+                    <td><label>Street address:</label></td>
+                    <td><input name="street" value="<% out.print(street); %>" size="30" type="text" /></td>
+                </tr>
 
-    <br><label>Last name:</label>
-    <input name="lastname" size="30" type="text" /></br>
+                <tr>
+                    <td><label>city:</label></td>
+                    <td><input name="city" value="<% out.print(city); %>" size="30" type="text" /></td>
+                </tr>
 
-     <br><label>Street number:</label>
-    <input name="streetNumber" size="8" type="text" /></br>
+                <tr>
+                    <td><label>ZIP/Postal Code:</label></td>
+                    <td><input name="zip" value="<% out.print(zip); %>" size="8" type="text" /></td>
+                </tr>
 
-    <br><label>Street address:</label>
-    <input name="street" size="30" type="text" /></br>
+                <tr>
+                    <td><label class="label" for="country">Country:</label></td>
 
-    <br><label>city:</label>
-    <input name="city" size="30" type="text" /></br>
-
-    <br><label>ZIP/Postal Code:</label>
-    <input name="zip" size="8" type="text" /></br>
-
-<br><label class="label" for="country">Country:&nbsp;&nbsp;&nbsp;</label>
-
-               <select class="" id="country" name="country">
+                    <td><select class="" id="country" name="country">
                     <option value="af"   >Afghanistan</option>
                     <option value="ax"   >Aland Islands</option>
                     <option value="al"   >Albania</option>
@@ -330,30 +344,44 @@
                     <option value="rs"   >Serbia</option>
 
                     <option value="me"   >Montenegro</option>
-               </select>
-         </br>
-    <br><label  name="email">Email Address:</label>
-    <input id="user_email" name="email" size="30" type="text" /></br>
+                    </select></td>
+                </tr>
 
-    <br><label  name="username">Username:</label>
-    <input id="username" name="username" size="30" type="text" /></br>
+                <tr>
+                    <td><label>Email Address:</label></td>
+                    <td><input name="email" value="<% out.print(email); %>" size="30" type="text" /></td>
+                </tr>
 
-    <br><label name="password">Password:</label>
-    <input id="username" name="password" size="30" type="password" /></br>
+                <tr>
+                    <td><label>Username:</label></td>
+                    <td><input name="username" value="<% out.print(username); %>" size="30" type="text" /></td>
+                </tr>
 
-    <br><label name="passwordConfirm">Password Confirm:</label>
-    <input id="password" name="passwordConfirm" size="30" type="password"/></br>
+                <tr>
+                    <td><label name="password">Password:</label></td>
+                    <td><input id="username" name="password" size="30" type="password" /></td>
+                </tr>
 
-    <br><label name="Topic">Topic(for more than one topic, separate each with ","):</label>
-    <input name="rawTopic" size="30" type="text"/></br>
+                <tr>
+                    <td><label name="passwordConfirm">Password Confirm:</label></td>
+                    <td><input id="password" name="passwordConfirm" size="30" type="password"/></td>
+                </tr>
 
-    <br><span style="margin-left:100px;">
-        <button type="submit" style="border:1px solid #f6b22b;
-                background:#fbe26eE;width:200px;
-                background-color:#F7D92E;
-                height: 35px;font-size:18px "
-            id="signup_button">Create an account</button></span></br></br>
+                <tr>
+                    <td><label name="Topic">Topic(for more than one topic, separate each with ","):</label></td>
+                    <td><input name="rawTopic" value="<% out.print(topicRaw); %>" size="30" type="text"/></td>
+                </tr>
+
+                <tr>
+                    <td> <span style="margin-left:150px;">
+                        <button type="submit" style="border:1px solid #f6b22b;
+                         background:#fbe26eE;width:200px;
+                         background-color:#F7D92E;
+                         height: 35px;font-size:18px "
+                         id="signup_button">Create an account</button></span></td>
+                </tr>
+            </table>
+
         </form>
-        </div>
     </body>
 </html>

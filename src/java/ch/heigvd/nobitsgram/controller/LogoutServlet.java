@@ -70,9 +70,13 @@ public class LogoutServlet extends HttpServlet {
      */
     public void toDisconnect(HttpServletRequest request, HttpServletResponse response)
          throws IOException, ServletException{
-        HttpSession session = request.getSession();
-        session.invalidate();
-        response.sendRedirect(request.getContextPath()+"/view/pagelogin.jsp");
+        HttpSession session = null;
+        // We destruct the session and redirect the user to the welcome page
+       session =request.getSession();
+       session.invalidate();
+
+       response.sendRedirect(request.getContextPath()+"/view/pagelogin.jsp");
+
     }
 
 }

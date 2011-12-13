@@ -259,7 +259,7 @@ public class ServletPersonnalPage extends HttpServlet {
 
                 // If it haven't any topic with the same name in database, then we
                 // can create a new with topicName.
-                if(topic == null){
+                if(topic == null && topicName != null && topicName !=""){
                     topic = new Topic(topicName);
                     topicsManager.create(topic);
                 }

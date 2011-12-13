@@ -11,6 +11,7 @@
 <%@include file="tools/headPage.jspf" %>
 
 <div class="bar" id="positionbar">
+
            <a href="<% out.print(root+ "/view/client.jsp"); %>" id="Home" class="">
             <img class="" src="<% out.print(root+"/images/home1.jpg");%>" style="top:10px;margin-left: -5px;position: relative"/>Home</a>
      <a href="<% out.print(root+ "/view/settingAccount.jsp"); %>" id="" class ="selected">
@@ -49,14 +50,8 @@
         %>
         <div>
 		<form  method="POST"  action="<% out.print(root+ "/ServletPersonnalPage"); %>">
-                    <% if(error != null && error != ""){%><br/></br><br/>
-            <span style="margin-left: 20%; margin-top: 100px;"><% out.print(error); %> </span>
-              <% }
-               else{
-            %>
-                  <h2 style="margin-left: 20%; margin-top: 100px;">
+                <h2 style="margin-left: 20%; margin-top: 100px;">
                    <% out.print(username); %>, you can set your nobitsgram data here! </h2>
-                <% } %>
         <table cellspacing="50"  bgcolor='#38B0DE' style="margin-left: 5%; margin-top: 20px;margin-bottom: 5%">
 
             <tr>

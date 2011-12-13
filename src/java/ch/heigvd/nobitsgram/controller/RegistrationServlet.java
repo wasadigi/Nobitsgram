@@ -32,88 +32,52 @@ public class RegistrationServlet extends HttpServlet {
     @EJB
     private TopicsManager topicsManager;
 
-    private String firstname;
-    private String lastname;
-    private String country;
-    private String email;
-    private String username;
-    private String password;
-    private String passwordConfirm;
-    private List<String> listTopicName = new ArrayList<String>();
-    private String rawTopic;
-    private String street;
-    private String streetNumber;
-    private String city;
-    private String zip;
-    private String access_token;
-    private String username_instagram;
-    private Long id_instagram;
-    private Long id;
-    private HttpSession session;
-    private String error;
-    private String delimiter ="\"\"";
+
+
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-
-     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        session = request.getSession();
-        try {
-
-
-        }
-        finally {
-            out.close();
-        }
-    }
-
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     *
+     * This method redirect the user to formular page and set the parameter code
+     * to the code its receive from instagram
+     *
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
         // We get the code of the client
-        String code = request.getQueryString();
+        String codeInstagram = request.getQueryString();
+
 
         // We extract the code of the expression
-        code = code.substring(code.indexOf("=")+1);
+        codeInstagram = codeInstagram.substring(codeInstagram.indexOf("=")+1);
 
-        // This instance will permit us to communicate with instagram
-        InterrogatorInstagram intInstag = new InterrogatorInstagram();
+        HttpSession session = request.getSession();
 
-        // We  set the code of the client, which will permit us to get his
-        // acces token
-        intInstag.setCode(code);
+        // We create a hash table according to the code we get from instagram
+        Hashtable<String,String> tableInfoInstagram = getInstagramInfo(codeInstagram, request);
 
-        // We set the callback of application, which permit to instagram to do
-        // redirection to our application
-        intInstag.setCallbackUrl(request.getRequestURL().toString());
+        // We get the value of access_token in the hash table
+        String access_token = tableInfoInstagram.get("access_token");
+        System.out.println("access_token =====> "+access_token);
 
-        // We get information about the client.
-        String informations = intInstag.getClientInformations();
+        // We get the value of username of instagram in the hash table
+        String usernameInstagram = tableInfoInstagram.get("username_instagram");
+        System.out.println("Username instagram =====> "+usernameInstagram);
 
-        MyParser pars = new MyParser();
+        // We get the value of instagram id in the hash table
+        //Long id_instagram = Long.parseLong(tableInfoInstagram.get("id_instagram"));
+        String idInstagram = tableInfoInstagram.get("id_instagram");
+        System.out.println("Id ====> "+idInstagram);
 
-        // We extract access token, username and id to record them in the databases
-        access_token = pars.getValue(informations,"access_token",delimiter);
-        username_instagram = pars.getValue(informations, "username",delimiter);
-        id_instagram =Long.parseLong(pars.getValue(informations, "id",delimiter));
+        setInfoInstagramToSession(access_token, usernameInstagram, idInstagram,session);
+
+        session.setAttribute("codeInstagram", codeInstagram);
+
+        getServletContext().getRequestDispatcher("/view/registration.jsp").
+                                                    forward(request, response);
+
+
     }
 
     /**
@@ -127,24 +91,42 @@ public class RegistrationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Get the curent session
-        session = request.getSession();
+        HttpSession session = request.getSession();
+        String code = (String)session.getAttribute("codeInstagram");
+
+
+
+        String access_token = (String)session.getAttribute("access_token");
+        String usernameInstagram = (String)session.getAttribute("usernameInstagram");
+        String idInstagram = (String)session.getAttribute("idInstagram");
+
+
+
+
+        String error;
+
+
         ServletContext sc = getServletContext();;
         // If the client session is already open, then the client is directly
         // redirect to his client page
 
-        firstname = request.getParameter("firstname");
-        lastname = request.getParameter("lastname");
-        country = request.getParameter("country");
-        email = request.getParameter("email");
-        username = request.getParameter("username");
-        password = request.getParameter("password");
-        passwordConfirm = request.getParameter("passwordConfirm");
-        rawTopic = request.getParameter("rawTopic");
-        street = request.getParameter("street");
-        streetNumber = request.getParameter("streetNumber");
-        city = request.getParameter("city");
-        zip = request.getParameter("zip");
+
+
+
+        String firstname = request.getParameter("firstname");
+        String lastname = request.getParameter("lastname");
+        String country = request.getParameter("country");
+        String email = request.getParameter("email");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String passwordConfirm = request.getParameter("passwordConfirm");
+        String rawTopic = request.getParameter("rawTopic");
+        String street = request.getParameter("street");
+        String streetNumber = request.getParameter("streetNumber");
+        String city = request.getParameter("city");
+        String zip = request.getParameter("zip");
+
+        List<String> listTopicName = setListTopic(rawTopic);
 
         UserBean userBean = new UserBean(firstname,lastname,username,country,password,
                            passwordConfirm,email,streetNumber, street,city,zip);
@@ -162,8 +144,10 @@ public class RegistrationServlet extends HttpServlet {
             newUser.setEmail(email);
             newUser.setUsername(username);
             newUser.setPassword(password);
-            newUser.setId_Instagram(id_instagram);
-            newUser.setUsername_instagram(username_instagram);
+
+           // newUser.setId_Instagram(id_instagram);
+
+            newUser.setUsername_instagram(usernameInstagram);
             newUser.setAcces_token(access_token);
 
             // We check if one of the address field was fill or not
@@ -172,7 +156,11 @@ public class RegistrationServlet extends HttpServlet {
                 // and it value is a number
                 if((streetNumber!="" && !userBean.isNumber(streetNumber)) ||
                    (zip!="" && !userBean.isNumber(zip))){
+                    streetNumber ="";
+                    zip ="";
                     error = "Error! your street number and/or zip code\n must be a number";
+                    setUserInput(firstname, lastname, username, email, street,
+                                 streetNumber, zip, city, zip, session);
                     redirectToRegisterForm(error, request, response);
                 }
                 // If all is ok, we create an address and we search its geocode
@@ -185,6 +173,7 @@ public class RegistrationServlet extends HttpServlet {
                  * It possible that googleapis don't response. In that case, tmp
                  * will be null. If not, we can extract the status of the response
                  * of googleapis.
+                 *
                  */
                 if(tmp != null){
                     status = researcheGeocode.getStatusOfReasearch(tmp);
@@ -197,6 +186,12 @@ public class RegistrationServlet extends HttpServlet {
                             + "leave its fields blank";
                     // We redirect the user to register form with the according
                     // error.
+                    street="";
+                    streetNumber="";
+                    zip="";
+                    city ="";
+                    setUserInput(firstname, lastname, username, email, street,
+                                 streetNumber, zip, city, tmp, session);
                     redirectToRegisterForm(error, request, response);
 
                 }
@@ -221,7 +216,7 @@ public class RegistrationServlet extends HttpServlet {
 
 
             // We fill the list of topic with topicName which was separate with ","
-            setListTopic(rawTopic);
+            listTopicName = setListTopic(rawTopic);
 
             listTopicName = filterListTopic(listTopicName);
 
@@ -268,12 +263,17 @@ public class RegistrationServlet extends HttpServlet {
         else if(usersManager.isAllReadyRecord(username)){
             error = "The username \""+username+"\" is not available, "
                     + "choose another one!";
+            username = "";
+            setUserInput(firstname, lastname, username, email, street,
+                         streetNumber, zip, city, zip, session);
             redirectToRegisterForm(error, request, response);
         }
 
         // Else, the client is rediret to an error page
         else{
             error = userBean.getError();
+            setUserInput(firstname, lastname, username, email, street,
+                          streetNumber, zip, city, zip, session);
             redirectToRegisterForm(error, request, response);
         }
 
@@ -295,6 +295,8 @@ public class RegistrationServlet extends HttpServlet {
     private void redirectToRegisterForm(String error,HttpServletRequest request,
                                        HttpServletResponse response){
         try{
+            HttpSession session = request.getSession();
+
         request.setAttribute("error",error);
             getServletContext().getRequestDispatcher("/view/errorRegistration."
                                            + "jsp").forward(request, response);
@@ -304,8 +306,9 @@ public class RegistrationServlet extends HttpServlet {
         }
     }
 
-    public void setListTopic(String rawTopicName){
+    public List<String> setListTopic(String rawTopicName){
         StringTokenizer st = new StringTokenizer(rawTopicName,",");
+        List<String> listTopicName = new ArrayList<String>();
         String s;
 
 
@@ -318,6 +321,8 @@ public class RegistrationServlet extends HttpServlet {
                 listTopicName.add(s);
             }
         }
+        
+        return listTopicName;
     }
 
 
@@ -341,6 +346,76 @@ public class RegistrationServlet extends HttpServlet {
             }
         }
         return tmp;
+    }
+
+
+    private Hashtable<String,String> getInstagramInfo(String code,HttpServletRequest request){
+        List<String> infoList = new ArrayList<String>();
+        Hashtable<String,String> table = new Hashtable<String, String>();
+        String delimiter ="\"";
+
+        // This instance will permit us to communicate with instagram
+        InterrogatorInstagram intInstag = new InterrogatorInstagram();
+
+        // We  set the code of the client, which will permit us to get his
+        // acces token
+        intInstag.setCode(code);
+
+        // We set the callback of application, which permit to instagram to do
+        // redirection to our application
+        intInstag.setCallbackUrl(request.getRequestURL().toString());
+
+        System.out.println("request.getRequestUrl =====> "+request.getRequestURL());
+
+        // We get information about the client.
+        String informations = intInstag.getClientInformations();
+
+        System.out.println("Informations =====> "+informations);
+
+        // We extract access token, username and id to record them in the databases
+        String access_token = MyParser.getValue(informations,"access_token",delimiter);
+
+        // We insert the key access_token and its value to the hashtable
+        table.put("access_token", access_token);
+
+
+        // We insert the key username of instagram and its value to the hashtable
+        String username_instagram = MyParser.getValue(informations, "username",delimiter);
+        table.put("username_instagram", username_instagram);
+
+        // We insert id of instagram and its value to the hash table
+        String id_instagram = MyParser.getValue(informations, "id",delimiter);
+        table.put("id_instagram",id_instagram);
+
+        return table;
+
+    }
+
+
+    public void setInfoInstagramToSession(String access_token,
+                  String usernameInstagram, String idInstagram,HttpSession session){
+
+        session.setAttribute("access_token", access_token);
+        session.setAttribute("usernameInstagram", usernameInstagram);
+        session.setAttribute("idInstagram", idInstagram);
+
+    }
+
+    public void setUserInput(String firstname, String lastname, String username,String email,
+                     String street, String streetNumber, String zip, String city,
+                     String topicRaw,HttpSession session){
+
+        session.setAttribute("firstname", firstname);
+        session.setAttribute("lastname", lastname);
+        session.setAttribute("username", username);
+        session.setAttribute("email", email);
+        session.setAttribute("street", street);
+        session.setAttribute("streetNumber", streetNumber);
+        session.setAttribute("zip", zip);
+        session.setAttribute("city", city);
+        session.setAttribute("topicRaw", topicRaw);
+
+
     }
 
 
