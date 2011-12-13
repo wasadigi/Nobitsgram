@@ -100,7 +100,8 @@ public class UsersManager {
             // of that topic
             topic = em.merge(topic);
             user = em.merge(user);
-
+            System.out.println("Topic:\n"+topic);
+            System.out.println("\nAdd to user "+user);
             user.addTopic(topic);
             topic.addUser(user);
         }
@@ -120,6 +121,19 @@ public class UsersManager {
     // "Insert Code > Add Business Method")
     public Query createQuery(String qlString) {
         return em.createQuery(qlString);
+    }
+
+    public boolean removeTopicOfUser(User user, Topic topic){
+        user = em.merge(user);
+        topic = em.merge(topic);
+        user.removeTopic(topic);
+        topic.removeUser(user);
+
+        // We check if the users list is empty, and then we remove the topic
+        if(topic.getUsers().isEmpty()){
+           return true;
+        }
+        return false;
     }
 
 

@@ -332,6 +332,15 @@ public class User implements Serializable {
         return topics;
     }
 
+
+    public void removeTopic(Topic topic){
+        topics.remove(topic);
+    }
+
+    public void removeTopic(int index){
+        topics.remove(index);
+    }
+
     /*
      *
      * This method hash a password which was given by parameter

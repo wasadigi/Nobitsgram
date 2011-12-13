@@ -34,16 +34,6 @@ public class ServletPersonnalPage extends HttpServlet {
     private TopicsManager topicsManager;
 
 
-    private String firstname="";
-    private String lastname="";
-    private String password="";
-    private String passwordConfirm="";
-    private String country="";
-    private String email="";
-    private String streetNumber="";
-    private String street="";
-    private String city="";
-    private String zip="";
 
 
 
@@ -71,21 +61,27 @@ public class ServletPersonnalPage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+            User user =(User)request.getSession().getAttribute("user");
             String action = request.getParameter("action");
+            System.out.println("ACTION ACTION ====> "+action);
 
 
             if(action != null && action.equals("Submit")){
-                setUser(request,response);
+                setUser(request,response,user);
 
             }
 
             // When action is not null, then it seem that the client want to
             // remove a topic in his topic list
-            else if(action != null){
-
+            else if(action != null && !action.equals("Submit")){
+                int index = Integer.parseInt(action);
+                Topic topic = user.getTopicList().get(index);
+                if(usersManager.removeTopicOfUser(user, topic)){
+                    topicsManager.remove(topic);
+                }
             }
 
-
+          getServletContext().getRequestDispatcher("/view/client.jsp").forward(request, response);
 
 
     }
@@ -116,8 +112,18 @@ public class ServletPersonnalPage extends HttpServlet {
 
 
     private void setUser(HttpServletRequest request,
-            HttpServletResponse response)throws IOException, ServletException{
+            HttpServletResponse response, User user)throws IOException, ServletException{
 
+        String firstname="";
+        String lastname="";
+        String password="";
+        String passwordConfirm="";
+        String country="";
+        String email="";
+        String streetNumber="";
+        String street="";
+        String city="";
+        String zip="";
         if(request.getParameter("firstname") != null){
                 firstname = request.getParameter("firstname");
             }
@@ -147,7 +153,6 @@ public class ServletPersonnalPage extends HttpServlet {
             String error="";
             String message ="";
 
-            User user = (User)request.getSession().getAttribute("user");
             UserBean userBean = new UserBean();
 
             int size = user.getTopicList().size();
@@ -184,7 +189,6 @@ public class ServletPersonnalPage extends HttpServlet {
                         error += ", ";
                     }
 
-                    error += userBean.getError()+" =====>"+password+"******";
                 }
             }
              // We check if one of the address field was fill or not
@@ -270,8 +274,6 @@ public class ServletPersonnalPage extends HttpServlet {
             // the client to setting account page with the according error
             if(error != ""){
                 message = "error found";
-
-
             }
 
             // If every thing is ok, then we redirect the client to setting account
@@ -285,8 +287,7 @@ public class ServletPersonnalPage extends HttpServlet {
             }
             else{
 
-               getServletContext().getRequestDispatcher("/view/displayUserData."
-                                           + "jsp").forward(request, response);
+               getServletContext().getRequestDispatcher("/view/client.jsp").forward(request, response);
             }
     }
 

@@ -42,7 +42,7 @@
             String lastname = user.getLastname();
             String country = user.getCountry();
             String email = user.getEmail();
-            List <Topic> topics = user.getTopicList();
+            List<Topic> topics = user.getTopicList();
             String username = user.getUsername();
             String error = (String)request.getAttribute("error");
 
@@ -397,7 +397,7 @@
 
 
                          <%
-                            int size = topics.size();
+                            int size = topics.size(); System.out.println("Topics.size ======> "+size);
                             for(int i = 0; i < size; i++){
 
                             %>
@@ -407,13 +407,36 @@
                                        value="<% out.print(topics.get(i).getName()); %>" /></td>
 
                             <td>
-                                <button type="submit" name="removeTop<%out.print(i);%>">
+                                <button type="submit" name="action" value="<%out.print(i);%>">
                                     remove</button>
 
                             </td>
 
                         </tr>
                         <% } %>
+
+
+                                <tr>
+
+
+                                    <td>
+
+                                    </td>
+                                    <td><label>(for more than one topic, separate each with ",")</label></td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label>Topics:</label>
+                                    </td>
+                                    <td><input name="rawTopic" size="30" type="text" /></td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+
 
                         <tr>
                              <td>
@@ -429,7 +452,7 @@
 
                                 </td>
 			</tr>
-		</table>
+                    </table>
 
 		</form>
 

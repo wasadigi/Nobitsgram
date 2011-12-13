@@ -60,6 +60,9 @@ public class Topic implements Serializable {
         this.id = id;
     }
 
+    public void removeUser(User user){
+        users.remove(user);
+    }
 
   /**
     *
@@ -101,7 +104,7 @@ public class Topic implements Serializable {
     }
 
 
-    
+
   /**
     *
     * This method is used to display the information about the topic. We can
@@ -121,7 +124,9 @@ public class Topic implements Serializable {
         users.add(user);
     }
 
-
+    public List<User> getUsers(){
+        return users;
+    }
 
 
 }

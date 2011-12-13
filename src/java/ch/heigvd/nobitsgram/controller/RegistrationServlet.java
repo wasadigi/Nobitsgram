@@ -138,18 +138,18 @@ public class RegistrationServlet extends HttpServlet {
         if(userBean.isValid() && userBean.isValidPassword(password, passwordConfirm)
                 && !usersManager.isAllReadyRecord(username)){
 
-            User newUser = new User();
-            newUser.setFirstname(firstname);
-            newUser.setLastname(lastname);
-            newUser.setCountry(country);
-            newUser.setEmail(email);
-            newUser.setUsername(username);
-            newUser.setPassword(password);
+            User user = new User();
+            user.setFirstname(firstname);
+            user.setLastname(lastname);
+            user.setCountry(country);
+            user.setEmail(email);
+            user.setUsername(username);
+            user.setPassword(password);
 
-           // newUser.setId_Instagram(id_instagram);
+           // user.setId_Instagram(id_instagram);
 
-            newUser.setUsername_instagram(usernameInstagram);
-            newUser.setAcces_token(access_token);
+            user.setUsername_instagram(usernameInstagram);
+            user.setAcces_token(access_token);
 
             // We check if one of the address field was fill or not
             if(userBean.isAddress(city, street, streetNumber, zip)){
@@ -207,19 +207,24 @@ public class RegistrationServlet extends HttpServlet {
                     String lng = s.substring(i+1);
 
                     // We set lat and lng to the user
-                    newUser.setLatitude(Double.parseDouble(lat));
-                    newUser.setLongitude(Double.parseDouble(lng));
+                    user.setLatitude(Double.parseDouble(lat));
+                    user.setLongitude(Double.parseDouble(lng));
                 }
             }
 
             // We create an user with the value which the client has enter
-            usersManager.create(newUser);
+            usersManager.create(user);
 
 
             // We fill the list of topic with topicName which was separate with ","
             listTopicName = setListTopic(rawTopic);
 
+            System.out.println("LIST WITH RAW TOPIC !!");
+            MyParser.displayList(listTopicName);
+
             listTopicName = filterListTopic(listTopicName);
+            System.out.println("LIST AFTER FILTER !!");
+            MyParser.displayList(listTopicName);
 
             int size = listTopicName.size();
             Topic topic;
@@ -246,15 +251,15 @@ public class RegistrationServlet extends HttpServlet {
                     topic = new Topic(topicName);
                     topicsManager.create(topic);
                 }
-                usersManager.addTopicToUser(newUser,topic);
+                usersManager.addTopicToUser(user,topic);
             }
 
 
 
             // We send the client id and his username to the redirect page
-            session.setAttribute("id",newUser.getId());
+            session.setAttribute("id",user.getId());
             session.setAttribute("username", username);
-            session.setAttribute("user",newUser);
+            session.setAttribute("user",user);
 
 
             // The register is ok, we redirect the client to his client page
@@ -414,6 +419,7 @@ public class RegistrationServlet extends HttpServlet {
 
 
     }
+
 
 
 }

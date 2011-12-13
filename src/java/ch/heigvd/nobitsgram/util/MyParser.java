@@ -105,6 +105,15 @@ public class MyParser {
     }
 
 
+    public static void displayList(List<String> list){
+        Iterator it = list.iterator();
+        int i = 0;
+        System.out.println("**************************************");
+        while(it.hasNext()){
+            System.out.println("element["+(i++)+"] = "+it.next());
+        }
+        System.out.println("**************************************");
 
+    }
 
 }
