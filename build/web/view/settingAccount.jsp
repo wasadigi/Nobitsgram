@@ -52,23 +52,20 @@
 		<form  method="POST"  action="<% out.print(root+ "/ServletPersonnalPage"); %>">
                 <h2 style="margin-left: 20%; margin-top: 100px;">
                    <% out.print(username); %>, you can set your nobitsgram data here! </h2>
-        <table cellspacing="50"  bgcolor='#38B0DE' style="margin-left: 5%; margin-top: 20px;margin-bottom: 5%">
+        <table cellspacing="50"  bgcolor='#38B0DE' style="margin-left: 15%; margin-top: 20px;margin-bottom: 5%">
 
-            <tr>
+                        <tr>
 				<td><label for="lastname" >Last name</label></td>
-				<td><input type="text" name="lastname" /></td>
-                                <td><label><% out.print(lastname); %></label></td>
+				<td><input type="text" name="lastname" value="<% out.print(lastname); %>" /></td>
+
 			</tr>
 			<tr>
 				<td><label for="firstname" >First name</label></td>
-				<td><input type="text" name="firstname" /></td>
-                                <td><label><% out.print(firstname); %></label></td>
-                                <td></td>
+                                <td><input type="text" name="firstname" value="<% out.print(firstname); %>" /></td>
 			</tr>
 
                         <tr>
                             <td><label>Street number:</label></td>
-
                             <td><input name="streetNumber" size="8" type="text" /></td>
                         </tr>
                         <tr>
@@ -91,6 +88,7 @@
                 <td><label class="label" for="country">Country</label></td>
 
                 <td><select class="" id="country" name="country">
+                    <option value="<% out.print(country); %>"></option>
                     <option value="af"   >Afghanistan</option>
                     <option value="ax"   >Aland Islands</option>
                     <option value="al"   >Albania</option>
@@ -335,7 +333,7 @@
 
                     <option value="sz"   >Swaziland</option>
                     <option value="se"   >Sweden</option>
-                    <option value="ch"   SELECTED >Switzerland</option>
+                    <option value="ch"   >Switzerland</option>
                     <option value="sy"   >Syria</option>
                     <option value="tw"   >Taiwan</option>
                     <option value="tj"   >Tajikistan</option>
@@ -378,13 +376,13 @@
                     <option value="me"   >Montenegro</option>
                </select>
         </td>
-        <td><label><% out.print(country); %></label></td>
+        <td><label></label></td>
             </tr>
 
             <tr>
 				<td><label for="email" id="email">Email </label></td>
-				<td><input type="text"/></td>
-                                <td><label><% out.print(email); %></label></td>
+				<td><input type="text" name="email"
+                                           value="<% out.print(email); %>" /></td>
 			</tr>
 			<tr>
 				<td><label>Password </label></td>
@@ -405,8 +403,9 @@
                             %>
                             <tr>
                             <td><label name="Topic">Topic <% out.print(" "+(i+1)); %></label></td>
-                            <td><input name="topic<%out.print(i);%>" size="30" type="text"/></td>
-                            <td><label name="Topic"><% out.print(topics.get(i).getName()); %></label></td>
+                            <td><input name="topic<%out.print(i);%>" type="text"
+                                       value="<% out.print(topics.get(i).getName()); %>" /></td>
+
                             <td>
                                 <button type="submit" name="removeTop<%out.print(i);%>">
                                     remove</button>

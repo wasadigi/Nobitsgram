@@ -23,7 +23,6 @@ public class ResearchGeocode {
 
     public ResearchGeocode(String address){
         url = url+address+sensor;
-        System.out.println(url);
     }
 
 

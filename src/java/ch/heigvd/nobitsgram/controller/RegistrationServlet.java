@@ -59,16 +59,16 @@ public class RegistrationServlet extends HttpServlet {
 
         // We get the value of access_token in the hash table
         String access_token = tableInfoInstagram.get("access_token");
-        System.out.println("access_token =====> "+access_token);
+
 
         // We get the value of username of instagram in the hash table
         String usernameInstagram = tableInfoInstagram.get("username_instagram");
-        System.out.println("Username instagram =====> "+usernameInstagram);
+
 
         // We get the value of instagram id in the hash table
         //Long id_instagram = Long.parseLong(tableInfoInstagram.get("id_instagram"));
         String idInstagram = tableInfoInstagram.get("id_instagram");
-        System.out.println("Id ====> "+idInstagram);
+
 
         setInfoInstagramToSession(access_token, usernameInstagram, idInstagram,session);
 
@@ -126,7 +126,7 @@ public class RegistrationServlet extends HttpServlet {
         String city = request.getParameter("city");
         String zip = request.getParameter("zip");
 
-        List<String> listTopicName = setListTopic(rawTopic);
+        List<String> listTopicName;
 
         UserBean userBean = new UserBean(firstname,lastname,username,country,password,
                            passwordConfirm,email,streetNumber, street,city,zip);
@@ -135,7 +135,8 @@ public class RegistrationServlet extends HttpServlet {
 
         // If all informations about a user are valid and the username don't
         // exist yet, then the user can be record in Nobitsgram database
-        if(userBean.isValid() && !usersManager.isAllReadyRecord(username)){
+        if(userBean.isValid() && userBean.isValidPassword(password, passwordConfirm)
+                && !usersManager.isAllReadyRecord(username)){
 
             User newUser = new User();
             newUser.setFirstname(firstname);
@@ -160,7 +161,7 @@ public class RegistrationServlet extends HttpServlet {
                     zip ="";
                     error = "Error! your street number and/or zip code\n must be a number";
                     setUserInput(firstname, lastname, username, email, street,
-                                 streetNumber, zip, city, zip, session);
+                                 streetNumber, zip, city, rawTopic, session);
                     redirectToRegisterForm(error, request, response);
                 }
                 // If all is ok, we create an address and we search its geocode
@@ -191,7 +192,7 @@ public class RegistrationServlet extends HttpServlet {
                     zip="";
                     city ="";
                     setUserInput(firstname, lastname, username, email, street,
-                                 streetNumber, zip, city, tmp, session);
+                                 streetNumber, zip, city, rawTopic, session);
                     redirectToRegisterForm(error, request, response);
 
                 }
@@ -265,7 +266,7 @@ public class RegistrationServlet extends HttpServlet {
                     + "choose another one!";
             username = "";
             setUserInput(firstname, lastname, username, email, street,
-                         streetNumber, zip, city, zip, session);
+                         streetNumber, zip, city,rawTopic, session);
             redirectToRegisterForm(error, request, response);
         }
 
@@ -273,7 +274,7 @@ public class RegistrationServlet extends HttpServlet {
         else{
             error = userBean.getError();
             setUserInput(firstname, lastname, username, email, street,
-                          streetNumber, zip, city, zip, session);
+                          streetNumber, zip, city, rawTopic, session);
             redirectToRegisterForm(error, request, response);
         }
 
@@ -321,7 +322,7 @@ public class RegistrationServlet extends HttpServlet {
                 listTopicName.add(s);
             }
         }
-        
+
         return listTopicName;
     }
 
@@ -365,12 +366,8 @@ public class RegistrationServlet extends HttpServlet {
         // redirection to our application
         intInstag.setCallbackUrl(request.getRequestURL().toString());
 
-        System.out.println("request.getRequestUrl =====> "+request.getRequestURL());
-
         // We get information about the client.
         String informations = intInstag.getClientInformations();
-
-        System.out.println("Informations =====> "+informations);
 
         // We extract access token, username and id to record them in the databases
         String access_token = MyParser.getValue(informations,"access_token",delimiter);

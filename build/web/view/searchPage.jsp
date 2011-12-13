@@ -48,20 +48,24 @@
 
 <br/>
      <br/>
+
      <%
-        String message = (String)request.getAttribute("message");
 
-        if(request.getAttribute("urlList")!=null){
-            List<String> urlList =(List<String>)request.getAttribute("urlList");
+        String message = (String)session.getAttribute("message");
+        List<String> urlList =(List<String>)request.getSession().getAttribute("urlList");
+        %>
+
+        <div style="margin-left: 35%">
+
+                   <h2><% out.print(message); %></h2>
+
+        </div>
+
+        <% if( urlList !=null){
            int size = urlList.size(); Random random = new Random(); int j;
-          String username =(String)request.getSession().getAttribute("username");%>
-
-          <div style="margin-left: 40%">
-
-                   <h2>Result for <% out.print(message); %></h2>
+           String username =(String)request.getSession().getAttribute("username");%>
 
 
-          </div>
 <div>
     <br/>
     <br/>

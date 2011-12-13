@@ -183,11 +183,8 @@ public class UserBean {
         }
         else if(username.trim().length()<6){
             errors="Your username is too short, it must be at least 6 caracters";
+            return false;
         }
-
-        isValidPassword(password, passwordConfirm);
-
-
         return true;
     }
 

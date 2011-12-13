@@ -18,13 +18,6 @@ import javax.servlet.http.*;
  */
 @WebServlet(name = "SearchServlet", urlPatterns = {"/SearchServlet"})
 public class SearchServlet extends HttpServlet {
-    private List<String> urlList;
-    private String message="";
-    private String topic;
-    private HttpSession session;
-    private String access_token = null;
-    private User user=null;
-    private String tagInfo;
 
 
 
@@ -56,17 +49,27 @@ public class SearchServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-       ServletContext sc = getServletContext();
-       session = request.getSession();
-       user = (User)session.getAttribute("user");
+        HttpSession session = request.getSession();
+        // We get the urlList from the session
+        List<String> urlList =(List<String>)session.getAttribute("urlList");
+        // We set the message to empty always the jsp page call this servlet
+        String message="";
+        String topic;
+        String access_token = null;
+        User user=(User)session.getAttribute("user");
+        String tagInfo;
 
+       ServletContext sc = getServletContext();
+
+
+       // We get the acces token unless if the urlList was not yet set
        if(user != null && urlList == null){
             access_token = user.getAcces_token();
        }
 
        topic = request.getParameter("searchTopic");
 
-       if(urlList == null && topic.trim().equals("")){
+       if(topic.trim().equals("") && urlList == null){
             message = "Please type some words in the search box!";
 
        }
@@ -78,15 +81,19 @@ public class SearchServlet extends HttpServlet {
        }
 
         else if(topic.trim()!= ""){
-            tagInfo = getInfoTopic(topic);
+            tagInfo = getInfoTopic(topic,access_token);
             urlList = getListsUrl(topic,access_token);
-            message = topic +" : "+tagInfo;
+            message = "Result for \""+topic +"\" : "+tagInfo;
        }
 
-       System.out.println("MESSAGE =====> "+message);
+       System.out.println("URLLIST Null =====> "+urlList==null);
+       System.out.println("URLLIST =====> "+urlList.isEmpty());
 
-       request.setAttribute("urlList", urlList);
-       request.setAttribute("message",message);
+       System.out.println("MESSAGE =====> "+message);
+       System.out.println("URLlist.size ==> "+urlList.size());
+
+       session.setAttribute("urlList", urlList);
+       session.setAttribute("message",message);
        sc.getRequestDispatcher("/view/searchPage.jsp").forward(request, response);
 
 
@@ -97,7 +104,7 @@ public class SearchServlet extends HttpServlet {
     /*
      * This method return the informations about a topic which is in parameter
      */
-    public String getInfoTopic(String topicName){
+    public String getInfoTopic(String topicName,String access_token){
        InterrogatorInstagram interrogator = new InterrogatorInstagram();
        interrogator.setAccesToken(access_token);
        interrogator.setSearchInfoUrl(topicName);
