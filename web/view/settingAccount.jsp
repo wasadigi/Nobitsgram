@@ -43,13 +43,11 @@
             String country = user.getCountry();
             String email = user.getEmail();
             List<Topic> topics = user.getTopicList();
-            String username = user.getUsername();
+            String username = user.getUsername();            
             String error = (String)request.getAttribute("error");
-
-
         %>
         <div>
-		<form  method="POST"  action="<% out.print(root+ "/ServletPersonnalPage"); %>">
+		<form  method="GET"  action="<% out.print(root+ "/ServletPersonnalPage"); %>">
                 <h2 style="margin-left: 20%; margin-top: 100px;">
                    <% out.print(username); %>, you can set your nobitsgram data here! </h2>
         <table cellspacing="50"  bgcolor='#38B0DE' style="margin-left: 15%; margin-top: 20px;margin-bottom: 5%">
@@ -88,7 +86,7 @@
                 <td><label class="label" for="country">Country</label></td>
 
                 <td><select class="" id="country" name="country">
-                    <option value="<% out.print(country); %>"></option>
+                    
                     <option value="af"   >Afghanistan</option>
                     <option value="ax"   >Aland Islands</option>
                     <option value="al"   >Albania</option>
@@ -397,7 +395,7 @@
 
 
                          <%
-                            int size = topics.size(); System.out.println("Topics.size ======> "+size);
+                            int size = topics.size();
                             for(int i = 0; i < size; i++){
 
                             %>

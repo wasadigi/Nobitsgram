@@ -13,7 +13,7 @@
 <div class="bar" id="positionbar">
            <a href="<% out.print(root+ "/view/client.jsp"); %>" id="Home" class="">
             <img class="" src="<% out.print(root+"/images/home1.jpg");%>" style="top:10px;margin-left: -5px;position: relative"/>Home</a>
-     <a href="<% out.print(root+ "/view/settingAccount.jsp"); %>" id="" class ="selected">
+     <a href="<% out.print(root+ "/view/settingAccount.jsp"); %>" class ="selected">
             <img class="" src="<% out.print(root+"/images/account1.jpg");%>" style="top:10px;margin-left: -5px;position: relative" />My account</a>
      <a href="<% out.print(root+ "/view/gallery.jsp"); %>" id="Gallery"  >
             <img src="<% out.print(root+"/images/gallery.jpg");%>" style="top:10px;margin-left: -5px;position: relative"/>Gallery</a>

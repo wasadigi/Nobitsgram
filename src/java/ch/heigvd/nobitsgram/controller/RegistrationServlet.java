@@ -146,7 +146,7 @@ public class RegistrationServlet extends HttpServlet {
             user.setUsername(username);
             user.setPassword(password);
 
-           // user.setId_Instagram(id_instagram);
+            user.setId_Instagram(Long.parseLong(idInstagram));
 
             user.setUsername_instagram(usernameInstagram);
             user.setAcces_token(access_token);
@@ -217,14 +217,10 @@ public class RegistrationServlet extends HttpServlet {
 
 
             // We fill the list of topic with topicName which was separate with ","
-            listTopicName = setListTopic(rawTopic);
-
-            System.out.println("LIST WITH RAW TOPIC !!");
-            MyParser.displayList(listTopicName);
-
-            listTopicName = filterListTopic(listTopicName);
-            System.out.println("LIST AFTER FILTER !!");
-            MyParser.displayList(listTopicName);
+            listTopicName = MyParser.setListTopic(rawTopic,",");
+           
+            listTopicName = MyParser.filterListTopic(listTopicName);
+            
 
             int size = listTopicName.size();
             Topic topic;
@@ -253,12 +249,11 @@ public class RegistrationServlet extends HttpServlet {
                 }
                 usersManager.addTopicToUser(user,topic);
             }
+                       
 
 
 
-            // We send the client id and his username to the redirect page
-            session.setAttribute("id",user.getId());
-            session.setAttribute("username", username);
+            // We send the client to the redirect page
             session.setAttribute("user",user);
 
 
@@ -312,48 +307,8 @@ public class RegistrationServlet extends HttpServlet {
         }
     }
 
-    public List<String> setListTopic(String rawTopicName){
-        StringTokenizer st = new StringTokenizer(rawTopicName,",");
-        List<String> listTopicName = new ArrayList<String>();
-        String s;
 
-
-        while(st.hasMoreTokens()){
-            // All the topic the user give, will convert to upper case. This,
-            // will permit further to remove all double topic.
-            s = st.nextToken().trim().toUpperCase();
-            // If s is empty, we don't add it to listTopicName
-            if(!s.equals("")){
-                listTopicName.add(s);
-            }
-        }
-
-        return listTopicName;
-    }
-
-
-    /*
-     * This method is used to remove all double element in a list of string
-     */
-    public List<String> filterListTopic(List<String> myList){
-        List<String> tmp = myList;
-        int size = tmp.size();
-        int i = 0;
-        int j;
-        while(i<size){
-            j = tmp.lastIndexOf(tmp.get(i));
-
-            if(i != j){
-                tmp.remove(j);
-                size = tmp.size();
-            }
-            else{
-                i +=1;
-            }
-        }
-        return tmp;
-    }
-
+   
 
     private Hashtable<String,String> getInstagramInfo(String code,HttpServletRequest request){
         List<String> infoList = new ArrayList<String>();

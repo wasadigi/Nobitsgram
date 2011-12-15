@@ -62,8 +62,7 @@ public class ServletPersonnalPage extends HttpServlet {
             throws ServletException, IOException {
 
             User user =(User)request.getSession().getAttribute("user");
-            String action = request.getParameter("action");
-            System.out.println("ACTION ACTION ====> "+action);
+            String action = request.getParameter("action");           
 
 
             if(action != null && action.equals("Submit")){
@@ -79,10 +78,12 @@ public class ServletPersonnalPage extends HttpServlet {
                 if(usersManager.removeTopicOfUser(user, topic)){
                     topicsManager.remove(topic);
                 }
+                getServletContext().getRequestDispatcher("/view/client.jsp").forward(request, response);
             }
 
-          getServletContext().getRequestDispatcher("/view/client.jsp").forward(request, response);
-
+          
+           
+           
 
     }
 
@@ -124,6 +125,9 @@ public class ServletPersonnalPage extends HttpServlet {
         String street="";
         String city="";
         String zip="";
+        String rawTopic =request.getParameter("rawTopic");
+        List<String> listTopicName = new ArrayList<String>();
+        
         if(request.getParameter("firstname") != null){
                 firstname = request.getParameter("firstname");
             }
@@ -155,7 +159,7 @@ public class ServletPersonnalPage extends HttpServlet {
 
             UserBean userBean = new UserBean();
 
-            int size = user.getTopicList().size();
+            
             // if the firstname field was fill, then we set the first name of user
             // by the new first name he has typed
             if(firstname.trim()!=""){
@@ -244,32 +248,40 @@ public class ServletPersonnalPage extends HttpServlet {
                 }
             }
 
+            // We fill the list of topic with topicName which was separate with ","
+            listTopicName = MyParser.setListTopic(rawTopic,",");         
+
+            listTopicName = MyParser.filterListTopic(listTopicName);
+            
+            int size = listTopicName.size();
+            Topic topic;
             String topicName;
-            Topic topic = null;
-            for(int i = 0; i < size; i++){
-                topicName = request.getParameter("topic"+i).trim();
 
-                // If the topicName is not empty, then we try to check
-                // if the topicName is already the attribute of one topic
-                if(topicName != null && topicName != "" ){
-                    try{
-                        topic = topicsManager.getTopic(topicName);
-                    }
-                    catch(Exception ex){
-                        topic = null;
-                    }
-
+            // We try to record all topic the user have enter in the field.
+            // For each topicName we try to get a topic which have the same name
+            // with which we get in parameter. If the topic get was null, then
+            // it haven't any topic with the same name in database, else it
+            // have one and we add new user to it.
+            // If the size = 0, any instruction in the loop (for) will not execute
+            for(int i = 0; i <size; i++){
+                topicName = listTopicName.get(i);
+                
+                try{
+                    topic = topicsManager.getTopic(topicName);
+                }
+                catch(Exception ex){
+                    topic = null;
                 }
 
-                // If it haven't any topic with the same name in database, then we
+                // It haven't any topic with the same name in database, then we
                 // can create a new with topicName.
-                if(topic == null && topicName != null && topicName !=""){
+                if(topic == null){                                        
                     topic = new Topic(topicName);
                     topicsManager.create(topic);
                 }
                 usersManager.addTopicToUser(user,topic);
             }
-
+           
             // If error is not empty, then some error was found, and we redirect
             // the client to setting account page with the according error
             if(error != ""){

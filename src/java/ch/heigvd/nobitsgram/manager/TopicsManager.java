@@ -44,7 +44,7 @@ public class TopicsManager {
     }
 
     public void remove(Topic topic){
-
+        topic = em.merge(topic);
         em.remove(topic);
     }
 

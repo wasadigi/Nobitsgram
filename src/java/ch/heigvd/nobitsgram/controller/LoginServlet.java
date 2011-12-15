@@ -45,7 +45,7 @@ private UsersManager usersManager;
         PrintWriter out = response.getWriter();
 
         try {
-            response.sendRedirect("/nobitsgram/view/login.jsp");
+            response.sendRedirect(request.getContextPath()+"/view/login.jsp");
         }
         finally {
             out.close();

@@ -17,6 +17,7 @@ import java.util.ArrayList;
  */
 
 import java.util.*;
+import java.util.Collection;
 
 public class MyParser {
 
@@ -105,15 +106,66 @@ public class MyParser {
     }
 
 
-    public static void displayList(List<String> list){
+    
+    public static List<String> setListTopic(String rawTopicName, String delimiter){
+        StringTokenizer st = new StringTokenizer(rawTopicName,delimiter);
+        List<String> listTopicName = new ArrayList<String>();
+        String s;
+
+
+        while(st.hasMoreTokens()){
+            // All the topic the user give, will convert to upper case. This,
+            // will permit further to remove all double topic.
+            s = st.nextToken().trim().toUpperCase();
+            // If s is empty, we don't add it to listTopicName
+            if(!s.equals("")){
+                listTopicName.add(s);
+            }
+        }
+
+        return listTopicName;
+    }
+
+    
+    
+     /*
+     * This method is used to remove all double element in a list of string
+     */
+    public static List<String> filterListTopic(List<String> myList){
+        List<String> tmp = myList;
+        
+        int size = tmp.size();
+        int i = 0;
+        int j;
+        while(i<size){
+            j = tmp.lastIndexOf(tmp.get(i));
+
+            if(i != j){
+                tmp.remove(j);
+                size = tmp.size();
+            }
+            else{
+                i +=1;
+            }
+        }
+        return tmp;
+    }
+
+    
+    
+    
+    public static String displayList(List<String> list){
         Iterator it = list.iterator();
+        String s ="";
         int i = 0;
         System.out.println("**************************************");
         while(it.hasNext()){
-            System.out.println("element["+(i++)+"] = "+it.next());
+            s += " # element["+(i++)+"] = "+it.next();
+            System.out.println(s);
         }
         System.out.println("**************************************");
 
+        return s;
     }
 
 }

@@ -98,12 +98,12 @@ public class UsersManager {
         if(!user.isTopicRecord(topic)){
             // If the topic is already in database, we add only user to userlist
             // of that topic
-            topic = em.merge(topic);
-            user = em.merge(user);
-            System.out.println("Topic:\n"+topic);
-            System.out.println("\nAdd to user "+user);
+
+            
             user.addTopic(topic);
             topic.addUser(user);
+            topic = em.merge(topic);
+            user = em.merge(user);
         }
     }
 
@@ -124,10 +124,11 @@ public class UsersManager {
     }
 
     public boolean removeTopicOfUser(User user, Topic topic){
+                
+        user.removeTopic(topic);        
+        topic.removeUser(user);        
         user = em.merge(user);
-        topic = em.merge(topic);
-        user.removeTopic(topic);
-        topic.removeUser(user);
+        topic = em.merge(topic);        
 
         // We check if the users list is empty, and then we remove the topic
         if(topic.getUsers().isEmpty()){

@@ -1,5 +1,6 @@
 package ch.heigvd.nobitsgram.entity;
 
+import ch.heigvd.nobitsgram.util.MyParser;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -287,7 +288,6 @@ public class User implements Serializable {
     *
     */
     public void addTopic(Topic topic){
-
         topics.add(topic);
 
     }
@@ -299,20 +299,7 @@ public class User implements Serializable {
         return hash;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof User)) {
-            return false;
-        }
-        User other = (User) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-
+    
     /**
     *
     * This method display the informations about a user
@@ -320,9 +307,17 @@ public class User implements Serializable {
     */
     public String toString() {
         return "User: [ id=" + id +  " ; first name ="+firstname+"; lastname="
-                +lastname+" ;country="+country+" ;username="+username+" ]";
+                +lastname+" ;country="+country+" ;username="+username+ "topics:\n"+MyParser.displayList(getListString())+" ]";
     }
 
+    public List<String> getListString(){
+        int size = topics.size();
+        List<String> list = new ArrayList<String>();
+        for(int i=0; i<size;i++){
+            list.add(topics.get(i).getName());
+        }
+        return list;
+    }
 
 
     /*
