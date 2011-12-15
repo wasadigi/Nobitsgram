@@ -45,12 +45,19 @@
             List<Topic> topics = user.getTopicList();
             String username = user.getUsername();            
             String error = (String)request.getAttribute("error");
+            
+            
         %>
         <div>
 		<form  method="GET"  action="<% out.print(root+ "/ServletPersonnalPage"); %>">
-                <h2 style="margin-left: 20%; margin-top: 100px;">
-                   <% out.print(username); %>, you can set your nobitsgram data here! </h2>
-        <table cellspacing="50"  bgcolor='#38B0DE' style="margin-left: 15%; margin-top: 20px;margin-bottom: 5%">
+                
+                    <% if(error != null && error!="") { %>
+                   <h3 style=" color:#BF0B0B; margin-top: 100px;text-align: center"> 
+                       <% out.print(error);%> </h3>
+                 <%}else{%>
+                      <h2 style="margin-top: 100px;text-align: center"> 
+                          <% out.print(username);%>, you can set your nobitsgram data here!<%}%> </h2>
+        <table cellspacing="50"  bgcolor='#38B0DE' style="margin-left: 20%; margin-top: 20px;margin-bottom: 5%">
 
                         <tr>
 				<td><label>Last name</label></td>

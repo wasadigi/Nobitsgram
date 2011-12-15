@@ -199,8 +199,8 @@ public class UserBean {
             return false;
         }
 
-        if (passwordConfirm.trim().equals("") && !passwordConfirm.equals(password) ) {
-            errors="Your password confirm is not the same of your password! Retry";
+        if (passwordConfirm.trim().equals("") || !passwordConfirm.equals(password) ) {
+            errors="Your password confirm doesn't match with your password! Retry";
             return false;
         }
         return true;

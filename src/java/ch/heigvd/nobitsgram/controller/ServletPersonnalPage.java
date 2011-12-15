@@ -102,7 +102,7 @@ public class ServletPersonnalPage extends HttpServlet {
     private void redirectToSettingAccount(String error,HttpServletRequest request,
                                        HttpServletResponse response){
         try{
-        request.setAttribute("error",error);
+            request.setAttribute("error",error);
             getServletContext().getRequestDispatcher("/view/settingAccount."
                                            + "jsp").forward(request, response);
         }
@@ -153,7 +153,14 @@ public class ServletPersonnalPage extends HttpServlet {
                 zip = request.getParameter("zip");
             }
 
-
+            if(request.getParameter("password") != null){
+                password = request.getParameter("password").trim();
+            }
+            if(request.getParameter("passwordConfirm") != null){
+                passwordConfirm = request.getParameter("passwordConfirm").trim();
+            }
+            
+            
             String error="";
             String message ="";
 
@@ -178,22 +185,21 @@ public class ServletPersonnalPage extends HttpServlet {
                     user.setEmail(email);
                 }
                 else{
-                    error = userBean.getError();
+                    error = "Invalid email! Please try again";
+                    redirectToSettingAccount(error, request, response);
                 }
             }
 
             // We check the validity of the password
             if(password != "" || passwordConfirm != ""){
                 if(userBean.isValidPassword(password, passwordConfirm)){
+                    
                     user.setPassword(password);
                 }
 
-                else{
+                else{                                   
                     error = userBean.getError();
-                    if(error.trim() !=""){
-                        error += ", ";
-                    }
-
+                    redirectToSettingAccount(error, request, response);
                 }
             }
              // We check if one of the address field was fill or not
@@ -201,11 +207,9 @@ public class ServletPersonnalPage extends HttpServlet {
                 // We check if the field of street number or zip code was filled
                 // and it value is a number
                 if((streetNumber!="" && !userBean.isNumber(streetNumber)) ||
-                   (zip!="" && !userBean.isNumber(zip))){
-                    if(error.trim() !=""){
-                        error += ", ";
-                    }
+                   (zip!="" && !userBean.isNumber(zip))){                   
                     error += "Error! your street number and/or zip code\n must be a number";
+                    redirectToSettingAccount(error, request, response);
 
                 }
                 // If all is ok, we create an address and we search its geocode
@@ -225,12 +229,10 @@ public class ServletPersonnalPage extends HttpServlet {
 
                 // If the address is not defined, then we return to the registration
                 // page with error message that invite the user to check his address
-                if(status==null || !status.equalsIgnoreCase("ok")){
-                    if(error.trim() !=""){
-                        error += ", ";
-                    }
+                if(status==null || !status.equalsIgnoreCase("ok")){                   
                     error += "Invalid address, please enter a valide one, or "
                             + "leave its fields blank";
+                    redirectToSettingAccount(error, request, response);
 
                 }
                 // If the status of the response is ok, we extract latitude and
@@ -282,27 +284,11 @@ public class ServletPersonnalPage extends HttpServlet {
                 }
                 usersManager.addTopicToUser(user,topic);
             }
-           
-            // If error is not empty, then some error was found, and we redirect
-            // the client to setting account page with the according error
-            if(error != ""){
-                message = "error found";
-            }
-
-            // If every thing is ok, then we redirect the client to setting account
-            // page with the message that setting is ok
-            else{
-                message ="setting ok";
-            }
-            request.setAttribute("message", message);
-            if(error != ""){
-                System.out.println("ERRRORR!!");
-                redirectToSettingAccount(error, request, response);
-            }
-            else{
-               usersManager.edit(user);
-               getServletContext().getRequestDispatcher("/view/client.jsp").forward(request, response);
-            }
+            
+            
+            usersManager.edit(user);
+            getServletContext().getRequestDispatcher("/view/client.jsp").forward(request, response);
+            
     }
 
 }
