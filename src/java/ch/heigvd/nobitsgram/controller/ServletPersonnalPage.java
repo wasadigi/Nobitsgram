@@ -162,7 +162,7 @@ public class ServletPersonnalPage extends HttpServlet {
             
             // if the firstname field was fill, then we set the first name of user
             // by the new first name he has typed
-            if(firstname.trim()!=""){
+            if(firstname.trim()!=""){                
                 user.setFirstname(firstname);
             }
 
@@ -189,6 +189,7 @@ public class ServletPersonnalPage extends HttpServlet {
                 }
 
                 else{
+                    error = userBean.getError();
                     if(error.trim() !=""){
                         error += ", ";
                     }
@@ -295,10 +296,11 @@ public class ServletPersonnalPage extends HttpServlet {
             }
             request.setAttribute("message", message);
             if(error != ""){
+                System.out.println("ERRRORR!!");
                 redirectToSettingAccount(error, request, response);
             }
             else{
-
+               usersManager.edit(user);
                getServletContext().getRequestDispatcher("/view/client.jsp").forward(request, response);
             }
     }

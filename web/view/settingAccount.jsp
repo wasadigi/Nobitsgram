@@ -53,12 +53,12 @@
         <table cellspacing="50"  bgcolor='#38B0DE' style="margin-left: 15%; margin-top: 20px;margin-bottom: 5%">
 
                         <tr>
-				<td><label for="lastname" >Last name</label></td>
+				<td><label>Last name</label></td>
 				<td><input type="text" name="lastname" value="<% out.print(lastname); %>" /></td>
 
 			</tr>
 			<tr>
-				<td><label for="firstname" >First name</label></td>
+				<td><label>First name</label></td>
                                 <td><input type="text" name="firstname" value="<% out.print(firstname); %>" /></td>
 			</tr>
 
