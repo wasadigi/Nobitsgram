@@ -103,7 +103,7 @@ public class RegistrationServlet extends HttpServlet {
 
 
 
-        String error;
+        String error=null;
 
 
         ServletContext sc = getServletContext();;
@@ -152,7 +152,7 @@ public class RegistrationServlet extends HttpServlet {
             user.setAcces_token(access_token);
 
             // We check if one of the address field was fill or not
-            if(userBean.isAddress(city, street, streetNumber, zip)){
+            if(userBean.isAddress(city, street, streetNumber, zip)){                
                 // We check if the field of street number or zip code was filled
                 // and it value is a number
                 if((streetNumber!="" && !userBean.isNumber(streetNumber)) ||
@@ -168,7 +168,7 @@ public class RegistrationServlet extends HttpServlet {
                 String address = streetNumber+"+"+street+"+"+city+"+"+zip;
                 ResearchGeocode researcheGeocode = new ResearchGeocode(address);
                 String tmp = researcheGeocode.getLatLng();
-
+     
                 String status = null;
                 /*
                  * It possible that googleapis don't response. In that case, tmp
@@ -178,7 +178,7 @@ public class RegistrationServlet extends HttpServlet {
                  */
                 if(tmp != null){
                     status = researcheGeocode.getStatusOfReasearch(tmp);
-                }
+                }              
 
                 // If the address is not defined, then we return to the registration
                 // page with error message that invite the user to check his address
@@ -193,8 +193,7 @@ public class RegistrationServlet extends HttpServlet {
                     city ="";
                     setUserInput(firstname, lastname, username, email, street,
                                  streetNumber, zip, city, rawTopic, session);
-                    redirectToRegisterForm(error, request, response);
-
+                                      
                 }
                 // If the status of the response is ok, we extract latitude and
                 // longitude of the client address
@@ -212,53 +211,58 @@ public class RegistrationServlet extends HttpServlet {
                 }
             }
 
-            // We create an user with the value which the client has enter
-            usersManager.create(user);
+            if(error == null){
+                // We create an user with the value which the client has enter
+                usersManager.create(user);
 
 
-            // We fill the list of topic with topicName which was separate with ","
-            listTopicName = MyParser.setListTopic(rawTopic,",");
-           
-            listTopicName = MyParser.filterListTopic(listTopicName);
-            
+                // We fill the list of topic with topicName which was separate with ","
+                listTopicName = MyParser.setListTopic(rawTopic,",");
 
-            int size = listTopicName.size();
-            Topic topic;
-            String topicName;
+                listTopicName = MyParser.filterListTopic(listTopicName);
 
-            // We try to record all topic the user have enter in the field.
-            // For each topicName we try to get a topic which have the same name
-            // with which we get in parameter. If the topic get was null, then
-            // it haven't any topic with the same name in database, else it
-            // have one and we add new user to it.
-            // If the size = 0, any instruction in the loop (for) will not execute
-            for(int i = 0; i <size; i++){
-                topicName = listTopicName.get(i);
-                try{
-                    topic = topicsManager.getTopic(topicName);
+
+                int size = listTopicName.size();
+                Topic topic;
+                String topicName;
+
+                // We try to record all topic the user have enter in the field.
+                // For each topicName we try to get a topic which have the same name
+                // with which we get in parameter. If the topic get was null, then
+                // it haven't any topic with the same name in database, else it
+                // have one and we add new user to it.
+                // If the size = 0, any instruction in the loop (for) will not execute
+                for(int i = 0; i <size; i++){
+                    topicName = listTopicName.get(i);
+                    try{
+                        topic = topicsManager.getTopic(topicName);
+                    }
+                    catch(Exception ex){
+                        topic = null;
+                    }
+
+                    // It haven't any topic with the same name in database, then we
+                    // can create a new with topicName.
+                    if(topic == null){
+                        topic = new Topic(topicName);
+                        topicsManager.create(topic);
+                    }
+                    usersManager.addTopicToUser(user,topic);
                 }
-                catch(Exception ex){
-                    topic = null;
-                }
 
-                // It haven't any topic with the same name in database, then we
-                // can create a new with topicName.
-                if(topic == null){
-                    topic = new Topic(topicName);
-                    topicsManager.create(topic);
-                }
-                usersManager.addTopicToUser(user,topic);
+
+
+
+                // We send the client to the redirect page
+                session.setAttribute("user",user);
+
+
+                // The register is ok, we redirect the client to his client page
+                sc.getRequestDispatcher("/view/client.jsp").forward(request, response);
             }
-                       
-
-
-
-            // We send the client to the redirect page
-            session.setAttribute("user",user);
-
-
-            // The register is ok, we redirect the client to his client page
-            sc.getRequestDispatcher("/view/client.jsp").forward(request, response);
+            else{
+                redirectToRegisterForm(error, request, response);
+            }
         }
 
         else if(usersManager.isAllReadyRecord(username)){
