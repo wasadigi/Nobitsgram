@@ -359,7 +359,7 @@
 
                 <tr>
                     <td><label name="password">Password:</label></td>
-                    <td><input id="username" name="password" size="30" type="password" /></td>
+                    <td><input name="password" size="30" type="password" /></td>
                 </tr>
 
                 <tr>
