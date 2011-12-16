@@ -23,12 +23,7 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "WelcomeServlet", urlPatterns = {"/WelcomeServlet"})
 public class WelcomeServlet extends HttpServlet {
-// We create a list of url with the name nobits
-    List<String> listTopic = getListsUrl("nobits");
-    static int i = 0;
 
-    // This variable will be increment to scan the list
-    private HttpSession session;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -82,7 +77,13 @@ public class WelcomeServlet extends HttpServlet {
      */
     public void sendUrlToJSP(HttpServletRequest request, HttpServletResponse response,
                          ServletContext sc)throws IOException, ServletException{
+        
+        // We create a list of url with the name nobits
+        List<String> listTopic = getListsUrl("nobits");
+        int i = 0;
 
+        // This variable will be increment to scan the list
+        HttpSession session;
         int size = listTopic.size();
         String url = listTopic.get((i++)%size);
         request.setAttribute("url", url);

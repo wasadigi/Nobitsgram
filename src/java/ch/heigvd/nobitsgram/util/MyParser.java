@@ -158,12 +158,11 @@ public class MyParser {
         Iterator it = list.iterator();
         String s ="";
         int i = 0;
-        System.out.println("**************************************");
+       
         while(it.hasNext()){
-            s += " # element["+(i++)+"] = "+it.next();
-            System.out.println(s);
+            s += " # element["+(i++)+"] = "+it.next();       
         }
-        System.out.println("**************************************");
+       
 
         return s;
     }
