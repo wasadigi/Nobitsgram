@@ -22,12 +22,13 @@ import java.net.*;
 public class InterrogatorInstagram {
 
     // The beginig of the research url
-    private String urlBegin = "https://api.instagram.com/v1/tags/";
+    private String urlBegin = "https://api.instagram.com/v1/";
     // The end of the url
     private String access_token = "10840565.f59def8.778aab0dc2d64a8ca9c27694ed9444bc";
 
     private String urlPart2 = "?access_token=";
     private String urlPart1 = "/media/recent";
+    private String urlPart3 = "/users/self/media/liked?access_token=";
     private String nofilter = "nofilter";
 
     private String url ;
@@ -55,7 +56,7 @@ public class InterrogatorInstagram {
      * Complete the url with the search tag
      */
     public void setSearchUrl(String tagSearch){
-       url = urlBegin+tagSearch+urlPart1+urlPart2+access_token;
+       url = urlBegin+"tags/"+tagSearch+urlPart1+urlPart2+access_token;
 
     }
 
@@ -67,6 +68,11 @@ public class InterrogatorInstagram {
         return url;
     }
 
+    
+   public void setLikeMediaUrl(String access_token){
+       url = urlBegin+urlPart3+access_token;               
+   }
+    
     /*
      * This method is used to set url to get information about
      * that tag which is in parameter
