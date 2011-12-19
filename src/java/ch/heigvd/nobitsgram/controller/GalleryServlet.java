@@ -52,11 +52,11 @@ public class GalleryServlet extends HttpServlet {
         User user = (User)session.getAttribute("user");        
         String access_token = user.getAcces_token();
         InterrogatorInstagram inter = new InterrogatorInstagram();
-        inter.setLikeMediaUrl(access_token);
+        
         
         // Here we get the url of the media which the user like
-        String likeUrl = inter.getUrl();
-        List<String> likeUrlList = getListURL(likeUrl,inter);                
+        String likeUrl = "https://api.instagram.com/v1/"+"/users/self/media/liked?access_token="+access_token;
+        List<String> likeUrlList = getListURL(likeUrl,inter);
         session.setAttribute("likeUrlList", likeUrlList);
         
         // Here we get the url of the media which is match of one of the 
@@ -67,14 +67,19 @@ public class GalleryServlet extends HttpServlet {
         if(size > 0){
             int i = new Random().nextInt(size);            
             String topic = user.getTopicList().get(i).getName();                   
-            inter.setSearchUrl(topic);
-            String topicUrl = inter.getUrl();                
+            String topicUrl = "https://api.instagram.com/v1/tags/"+topic+"/media/recent?access_token="+access_token;            
             topicUrlList = getListURL(topicUrl, inter);           
         }        
         session.setAttribute("topicUrlList",topicUrlList);
         // Here we get the url of the follower
-        List<String> followUrlList = new ArrayList<String>();       
-        session.setAttribute("followUrlList",followUrlList);        
+        String url = "https://api.instagram.com/v1/users/"+user.getId_Instagram()+"/follows";
+        List<String> followers = getfollowers(url, inter);
+        List<String> followUrlList = new ArrayList<String>();
+        
+        
+        
+        
+        session.setAttribute("followUrlList",followUrlList);       
         
         sc.getRequestDispatcher("/view/gallery.jsp").
                  forward(request, response);
@@ -91,13 +96,23 @@ public class GalleryServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
+    
+    
+    
+    private List<String> getfollowers(String url,InterrogatorInstagram inter){
+        List<String> followers = new ArrayList<String>();
+        
+        String result = inter.getSearcResult(url);
+        return followers;
+    }
+    
 
     /*
      * This method get the list 
      */
-    private List<String> getListURL(String url,InterrogatorInstagram inter){        
+    private List<String> getListURL(String url,InterrogatorInstagram inter){
         String response = inter.getSearcResult(url);
         return MyParser.getListUrls(response);         
     }

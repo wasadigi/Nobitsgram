@@ -107,8 +107,8 @@ public class SearchServlet extends HttpServlet {
     public String getInfoTopic(String topicName,String access_token){
        InterrogatorInstagram interrogator = new InterrogatorInstagram();
        interrogator.setAccesToken(access_token);
-       interrogator.setSearchInfoUrl(topicName);
-       String url = interrogator.getUrl();
+       
+       String url = "https://api.instagram.com/v1/"+"tags/"+topicName+"?access_token="+access_token;
        
      
 
@@ -127,9 +127,8 @@ public class SearchServlet extends HttpServlet {
 
             InterrogatorInstagram interrogator = new InterrogatorInstagram();
             interrogator.setAccesToken(access_token);
-            interrogator.setSearchUrl(topicName);
-
-            String url = interrogator.getUrl();
+            
+            String url = "https://api.instagram.com/v1/tags/"+topicName+"/media/recent?access_token="+access_token;
 
             String resultResearch = interrogator.getSearcResult(url);
 

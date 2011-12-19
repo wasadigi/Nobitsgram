@@ -6,6 +6,8 @@ package ch.heigvd.nobitsgram.util;
 
 import java.io.*;
 import java.net.*;
+import java.util.HashMap;
+import java.util.List;
 
 
 
@@ -20,45 +22,20 @@ import java.net.*;
  *
  */
 public class InterrogatorInstagram {
-
-    // The beginig of the research url
-    private String urlBegin = "https://api.instagram.com/v1/";
-    
-    // The end of the url
-    private String access_token = "10840565.f59def8.778aab0dc2d64a8ca9c27694ed9444bc";
-    
-    
-    private String urlPart2 = "?access_token=";
-    private String urlPart1 = "/media/recent";
-    private String urlPart3 = "/users/self/media/liked?access_token=";
-  
+                 
     private String url ;
-
-    private String oauthUrl = "https://api.instagram.com/oauth/access_token";
-
-    private String client_Id = "5e2a174a39804619840925781251b646";
-    private String client_secret ="26a951460081472fab2c0bb2f505a397";
-    private String callbackUrl;
-    private String grant_type = "authorization_code";
-    private String code;
-
-
+    
+    private String access_token;
 
     public InterrogatorInstagram(){
 
     }
 
-    public InterrogatorInstagram(String tagSearch){
-        setSearchUrl(tagSearch);
-    }
-
-
     /*
-     * Complete the url with the search tag
+     * This method set the url
      */
-    public void setSearchUrl(String tagSearch){
-       url = urlBegin+"tags/"+tagSearch+urlPart1+urlPart2+access_token;
-
+    public void setURL(String url){
+        this.url = url;
     }
 
 
@@ -69,68 +46,50 @@ public class InterrogatorInstagram {
         return url;
     }
 
-    
-   public void setLikeMediaUrl(String access_token){
-       url = urlBegin+urlPart3+access_token;               
-   }
-    
-    /*
-     * This method is used to set url to get information about
-     * that tag which is in parameter
-     */
-    public void setSearchInfoUrl(String tagSearch){
-        url = urlBegin+"tags/"+tagSearch+urlPart2+access_token;
-    }
+  
 
-    /*
-     * This method is used to add end point to a url
-     */
-    public void addEndPoint(String parameter, String value){
-        url +="&"+parameter+"="+value;
-    }
-
-
-    /*
-     * This method is used to set the code which was get during the logging of
-     * the client
-     */
-    public void setCode(String code){
-        this.code = code;
-    }
-
-    public void setCallbackUrl(String callbackUrl){
-        this.callbackUrl = callbackUrl;
-    }
-
+   
     /*
      * This method is use to receive client information according to his code.
      * The request is a post request
      */
-    public String getClientInformations(){
-
+    public String getClientInformations(String url,List<String> parameters, 
+                                        List<String> value){
+        
+        // If the both list hasn't the same size, then the request will not
+        // be possible. In that case, we return null for the response
+        if(parameters.size() != value.size()){
+            return null;
+        }
+        
         String response = null;
-        String parameters = "";
+        int i = 0;
+        int size = value.size();
+       
+        String reqParameters = "";
         OutputStreamWriter outWriter = null;
         URL myUrl;
-
+        
         try {
-            // We set the parameters of the request.
-            parameters = URLEncoder.encode("client_id", "UTF-8")+
-                            "="+URLEncoder.encode(client_Id, "UTF-8");
+            
+            // We set the parameters of the request. We scan both of the list
+            // and we set the parameters of request according to the index of
+            // both lists.
+            while(i < size){
+                if( i < 0){
+                    reqParameters = URLEncoder.encode(parameters.get(i), "UTF-8")+
+                                 "="+URLEncoder.encode(value.get(i), "UTF-8");
+                }
+                else{
+                    reqParameters +="&"+URLEncoder.encode(parameters.get(i), "UTF-8")+
+                                 "="+URLEncoder.encode(value.get(i), "UTF-8");
+                }
+                i += 1;
+            }
 
-            parameters += "&"+URLEncoder.encode("client_secret", "UTF-8")+
-                            "=" + URLEncoder.encode(client_secret, "UTF-8");
-
-            parameters += "&"+URLEncoder.encode("grant_type", "UTF-8")+
-                                "=" + URLEncoder.encode(grant_type, "UTF-8");
-
-            parameters += "&"+URLEncoder.encode("redirect_uri", "UTF-8")+
-                                "=" + URLEncoder.encode(callbackUrl, "UTF-8");
-
-            parameters += "&"+URLEncoder.encode("code", "UTF-8")+
-                                "=" + URLEncoder.encode(code, "UTF-8");
+            
             // We create the connection to instagram
-            myUrl = new URL(oauthUrl);
+            myUrl = new URL(url);
 
             // We open the connection
             URLConnection connect = myUrl.openConnection();
@@ -141,7 +100,7 @@ public class InterrogatorInstagram {
             // We send the request;
             outWriter = new OutputStreamWriter(connect.getOutputStream());
             // We add parameters to the request
-            outWriter.write(parameters);
+            outWriter.write(reqParameters);
 
             // We flush the stream
             outWriter.flush();

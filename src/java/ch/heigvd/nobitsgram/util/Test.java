@@ -37,7 +37,7 @@ public class Test {
         saisie = sc.nextLine();
 
         System.out.println("\n\t\tSAISI ==> "+saisie);
-        rt.setSearchUrl(saisie);
+       // rt.setSearchUrl(saisie);
         String s = rt.getSearcResult(rt.getUrl());
         //MyParser.getListUrls(s);
         String inf = MyParser.getInformation(s,"\"url\":");

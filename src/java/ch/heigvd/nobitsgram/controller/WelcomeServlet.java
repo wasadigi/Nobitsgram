@@ -98,7 +98,7 @@ public class WelcomeServlet extends HttpServlet {
     public List<String> getListsUrl(String topicName){
             List<String> listUrl = null;
             InterrogatorInstagram interrogator = new InterrogatorInstagram();
-            interrogator.setSearchUrl(topicName);
+            //interrogator.setSearchUrl(topicName);
             String url = interrogator.getUrl();
 
 
