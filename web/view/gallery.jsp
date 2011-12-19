@@ -14,7 +14,7 @@
             <img class="" src="<% out.print(root+"/images/account1.jpg");%>" style="top:10px;margin-left: -5px;position: relative" />My account</a>
      <a href="<% out.print(root+ "/GalleryServlet"); %>" id="Gallery" class="selected" >
             <img class="" src="<% out.print(root+"/images/gallery.jpg");%>" style="top:10px;margin-left: -5px;position: relative"/>Gallery</a>
-     <a href="<% out.print(root+ "/view/friendsPage.jsp"); %>" id="">
+     <a href="<% out.print(root+ "/FriendServlet"); %>" id="">
             <img class="" src="<% out.print(root+"/images/friends3.jpg");%>" style="top:10px;margin-left: -5px;position: relative" />Friends</a>
      <a href="<% out.print(root+ "/view/map.jsp"); %>" id="">
              <img class="" src="<% out.print(root+"/images/map.jpg");%>" style="top:10px;margin-left: -5px;position: relative"  />Map</a>
@@ -58,16 +58,24 @@
 </table>
 <br/>
 <table style="margin-left:25%;">
+    <% List<String> followUrlList = (List<String>)session.getAttribute("followUrlList");
+        Random random2 = new Random(); int k = 0; int size2 = followUrlList.size();
+     %>
     <tr>
+        <% if(size2 > 0){ k = random2.nextInt(size2); %>
         <td>
-            <img src="" style="background: #D3D3D3;width: 200px;height:150px;" />
+            <% j= random1.nextInt(size1); %>
+            <img src="<% out.print(topicUrlList.get(j)); %>"  style="background: #D3D3D3;width: 200px;height:150px;" />            
         </td>
         <td>
-            <img src="" style="background: #B9D3EE;width: 200px;height:150px;" />
+            <% j= random1.nextInt(size1); %>
+            <img src="<% out.print(topicUrlList.get(j)); %>" style="background: #B9D3EE;width: 200px;height:150px;" />
         </td>
         <td>
-            <img src="" style="background: #6C7B8B;width: 200px;height:150px;" />
+            <% j= random1.nextInt(size1); %>
+            <img src="<% out.print(topicUrlList.get(j)); %>"  style="background: #6C7B8B;width: 200px;height:150px;" />
         </td>
+        <% } %>
     </tr>
 </table>
 <br/>
@@ -76,7 +84,7 @@
         Random random3 = new Random(); int i = 0; int size3 = likeUrlList.size();
      %>
     <tr>
-        <td>
+        <td><% if(size3 > 0){ j= random3.nextInt(size1); %>
             <% i= random3.nextInt(size3); %>
             <img src="<% out.print(likeUrlList.get(i)); %>" style="background: #7D26CD;width: 200px;height:150px;" />
         </td>
@@ -86,6 +94,7 @@
         <td><% i= random3.nextInt(size3); %>
             <img src="<% out.print(likeUrlList.get(i)); %>" style="background: #00FFFF;width: 200px;height:150px;" />
         </td>
+        <% } %>
     </tr>
 </table>
 <%@include file="tools/footPage.jspf" %>

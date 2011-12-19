@@ -17,10 +17,18 @@ import java.util.ArrayList;
  */
 
 import java.util.*;
-import java.util.Collection;
+import org.apache.taglibs.standard.lang.jstl.test.beans.Factory;
+import org.codehaus.jackson.JsonFactory;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.JsonParser;
+import org.codehaus.jackson.JsonToken;
+import org.codehaus.jackson.map.MapperConfig;
+import org.codehaus.jackson.map.ObjectMapper;
 
 public class MyParser {
-
+    
+    
 
     /*
      * This method return a list of url. Those url are contained in the
@@ -104,6 +112,25 @@ public class MyParser {
 
     }
 
+    public static String getInformation(String message,String path){
+        String s = "NONENONE";
+        try{
+            ObjectMapper mapper = new ObjectMapper();
+            JsonFactory factory = mapper.getJsonFactory();
+            JsonParser parser = factory.createJsonParser(message);
+            JsonNode node = mapper.readTree(parser);
+            node = mapper.readTree(path);
+            s = node.getValueAsText();
+            s = mapper.readValue(parser, String.class);
+            
+            
+        }
+        catch(Exception excep){
+            excep.printStackTrace();
+        }
+        
+        return s;
+    }
 
     
     public static List<String> setListTopic(String rawTopicName, String delimiter){

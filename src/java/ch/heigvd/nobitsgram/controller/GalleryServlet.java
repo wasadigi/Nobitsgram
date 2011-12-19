@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.*;
+import javax.servlet.ServletContext;
 /**
  *
  * @author Eyram
@@ -46,6 +47,7 @@ public class GalleryServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        ServletContext sc = request.getServletContext();
         HttpSession session = request.getSession();        
         User user = (User)session.getAttribute("user");        
         String access_token = user.getAcces_token();
@@ -67,13 +69,14 @@ public class GalleryServlet extends HttpServlet {
             String topic = user.getTopicList().get(i).getName();                   
             inter.setSearchUrl(topic);
             String topicUrl = inter.getUrl();                
-            topicUrlList = getListURL(topicUrl, inter);
-            
-        }
-        
+            topicUrlList = getListURL(topicUrl, inter);           
+        }        
         session.setAttribute("topicUrlList",topicUrlList);
-                                   
-         getServletContext().getRequestDispatcher("/view/gallery.jsp").
+        // Here we get the url of the follower
+        List<String> followUrlList = new ArrayList<String>();       
+        session.setAttribute("followUrlList",followUrlList);        
+        
+        sc.getRequestDispatcher("/view/gallery.jsp").
                  forward(request, response);
         
     }
@@ -94,8 +97,7 @@ public class GalleryServlet extends HttpServlet {
     /*
      * This method get the list 
      */
-    private List<String> getListURL(String url,InterrogatorInstagram inter){
-        System.out.println("URL URL ====> "+url);
+    private List<String> getListURL(String url,InterrogatorInstagram inter){        
         String response = inter.getSearcResult(url);
         return MyParser.getListUrls(response);         
     }

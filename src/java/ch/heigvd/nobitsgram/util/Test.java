@@ -19,7 +19,7 @@ import java.util.*;
  */
 public class Test {
     public static void main(String[] args){
-        MyParser parser = new MyParser();
+        
         Scanner sc;
         String saisie;
         /* System.out.println("Veuillez saisir votre texte:");
@@ -39,7 +39,8 @@ public class Test {
         System.out.println("\n\t\tSAISI ==> "+saisie);
         rt.setSearchUrl(saisie);
         String s = rt.getSearcResult(rt.getUrl());
-        parser.getListUrls(s);
+        //MyParser.getListUrls(s);
+        String inf = MyParser.getInformation(s,"\"url\":");
 
 
        // System.out.println("REPONSE SERVEUR ==> "+s);

@@ -22,7 +22,7 @@
             <img class="" src="<% out.print(root+"/images/account1.jpg");%>" style="top:10px;margin-left: -5px;position: relative" />My account</a>
      <a href="<% out.print(root+ "/GalleryServlet"); %>" id="Gallery"  >
             <img class="" src="<% out.print(root+"/images/gallery.jpg");%>" style="top:10px;margin-left: -5px;position: relative"/>Gallery</a>
-     <a href="<% out.print(root+ "/view/friendsPage.jsp"); %>" id="">
+     <a href="<% out.print(root+ "/FriendServlet"); %>" id="">
             <img class="" src="<% out.print(root+"/images/friends3.jpg");%>" style="top:10px;margin-left: -5px;position: relative" />Friends</a>
      <a href="<% out.print(root+ "/view/map.jsp"); %>" id="">
              <img class="" src="<% out.print(root+"/images/map.jpg");%>" style="top:10px;margin-left: -5px;position: relative"  />Map</a>

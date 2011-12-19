@@ -84,12 +84,16 @@ public class SearchServlet extends HttpServlet {
             }
             else{
                 tagInfo = getInfoTopic(topic,access_token);
-                message = "Result for \""+topic +"\" : "+tagInfo;
+                if(tagInfo != "")
+                    message = "Result for \""+topic +"\" : "+tagInfo;
+                else{
+                    message = "An error occured when we try to get the number of topic";
+                }
             }
        }
       
        session.setAttribute("urlList", urlList);
-       session.setAttribute("message",message);
+       session.setAttribute("message",message);       
        sc.getRequestDispatcher("/view/searchPage.jsp").forward(request, response);
 
 
@@ -105,9 +109,17 @@ public class SearchServlet extends HttpServlet {
        interrogator.setAccesToken(access_token);
        interrogator.setSearchInfoUrl(topicName);
        String url = interrogator.getUrl();
+       
+     
 
        String resultResearch = interrogator.getSearcResult(url);
-       return MyParser.getValue(resultResearch,"media_count",":,").replace(":","");
+       String s = "";
+       if(resultResearch != null){
+            s = MyParser.getValue(resultResearch,"media_count",":,").replace(":","");
+                  
+       }
+        
+       return s;
     }
 
     public List<String> getListsUrl(String topicName,String access_token){

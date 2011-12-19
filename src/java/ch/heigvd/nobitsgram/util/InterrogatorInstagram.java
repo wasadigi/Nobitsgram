@@ -23,14 +23,15 @@ public class InterrogatorInstagram {
 
     // The beginig of the research url
     private String urlBegin = "https://api.instagram.com/v1/";
+    
     // The end of the url
     private String access_token = "10840565.f59def8.778aab0dc2d64a8ca9c27694ed9444bc";
-
+    
+    
     private String urlPart2 = "?access_token=";
     private String urlPart1 = "/media/recent";
     private String urlPart3 = "/users/self/media/liked?access_token=";
-    private String nofilter = "nofilter";
-
+  
     private String url ;
 
     private String oauthUrl = "https://api.instagram.com/oauth/access_token";
@@ -78,7 +79,7 @@ public class InterrogatorInstagram {
      * that tag which is in parameter
      */
     public void setSearchInfoUrl(String tagSearch){
-        url = urlBegin+nofilter+urlPart2+access_token;
+        url = urlBegin+"tags/"+tagSearch+urlPart2+access_token;
     }
 
     /*
