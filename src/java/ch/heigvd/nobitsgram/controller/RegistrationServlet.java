@@ -60,10 +60,8 @@ public class RegistrationServlet extends HttpServlet {
         // We get the value of access_token in the hash table
         String access_token = tableInfoInstagram.get("access_token");
 
-
         // We get the value of username of instagram in the hash table
         String usernameInstagram = tableInfoInstagram.get("username_instagram");
-
 
         // We get the value of instagram id in the hash table
         //Long id_instagram = Long.parseLong(tableInfoInstagram.get("id_instagram"));
@@ -179,7 +177,7 @@ public class RegistrationServlet extends HttpServlet {
                 // We get the status of request. It can be take only two values
                 // If the request succeed, it value is "OK",
                 // if not it take the value "ZERO_RESULT"
-                String status = MyParser.parseResponse(result, "status").replace("\"", "");
+                String status = MyParser.parseResponse(result, "status");
                 
 
                 // If the address is not defined, then we return to the registration
@@ -352,18 +350,20 @@ public class RegistrationServlet extends HttpServlet {
                 
 
         // We extract access token, username and id to record them in the databases
-        String access_token = MyParser.getValue(informations,"access_token",delimiter);
-
+        String access_token = MyParser.parseResponse(informations,"access_token");
+        System.out.println("ACCESS_TOKEN =====> "+access_token);
         // We insert the key access_token and its value to the hashtable
         table.put("access_token", access_token);
 
 
         // We insert the key username of instagram and its value to the hashtable
-        String username_instagram = MyParser.getValue(informations, "username",delimiter);
+        String username_instagram = MyParser.parseResponse(informations, "username");
+        System.out.println("USERNAME =====> "+username_instagram);
         table.put("username_instagram", username_instagram);
 
         // We insert id of instagram and its value to the hash table
-        String id_instagram = MyParser.getValue(informations, "id",delimiter);
+        String id_instagram = MyParser.parseResponse(informations, "id");
+        System.out.println("ID ID ID ====> "+id_instagram);
         table.put("id_instagram",id_instagram);
 
         return table;

@@ -71,10 +71,27 @@ public class GalleryServlet extends HttpServlet {
             topicUrlList = getListURL(topicUrl, inter);           
         }        
         session.setAttribute("topicUrlList",topicUrlList);
-        // Here we get the url of the follower
-        String url = "https://api.instagram.com/v1/users/"+user.getId_Instagram()+"/follows";
-        List<String> followers = getfollowers(url, inter);
+        
+        
+        
+        // We build the url which permit us to do a follower request to Instagram
+        String urlFollowers = "https://api.instagram.com/v1/users/"+
+             user.getId_Instagram()+"/followed-by?access_token="+access_token;
+        
+        // This list represente the list of followers id
+        List<String> followers = getfollowers(urlFollowers, inter);
         List<String> followUrlList = new ArrayList<String>();
+        
+        if(!followers.isEmpty()){
+            Random random = new Random();
+            int i = random.nextInt(followers.size());
+            String urlFolMedia = "https://api.instagram.com/v1/users/"
+                 +followers.get(i)+"/media/recent/?access_token="+access_token;
+            followUrlList = getListURL(urlFolMedia, inter);
+           
+        }
+        
+        
         
         
         
@@ -96,7 +113,7 @@ public class GalleryServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+            doGet(request, response);
     }
     
     
@@ -105,6 +122,7 @@ public class GalleryServlet extends HttpServlet {
         List<String> followers = new ArrayList<String>();
         
         String result = inter.getSearcResult(url);
+        followers = MyParser.parseResponse(result,"data","id", true);
         return followers;
     }
     

@@ -30,18 +30,7 @@ import org.codehaus.jettison.json.JSONObject;
 
 public class MyParser {
 
-    /*
-     * This method is used to get the value of "parameter" in the expression
-     * "information"
-     */
-    public static String getValue(String information, String parameter,String delimiter){
-        String tmp = information.substring(information.indexOf(parameter)
-                                           +parameter.length()+3);
-
-        StringTokenizer st = new StringTokenizer(tmp,delimiter);
-        return st.nextToken();
-
-    }
+    
 
     public static List<String> parseResponse(String message,String path,
             String value,boolean split){
@@ -99,7 +88,7 @@ public class MyParser {
         catch(Exception exc){
             exc.printStackTrace();
         }
-        return response;
+        return response.replace("\"", "");
     }
     
     

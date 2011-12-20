@@ -228,7 +228,7 @@ public class ServletPersonnalPage extends HttpServlet {
                 // We get the status of request. It can be take only two values
                 // If the request succeed, it value is "OK",
                 // if not it take the value "ZERO_RESULT"
-                String status = MyParser.parseResponse(result, "status").replace("\"", "");
+                String status = MyParser.parseResponse(result, "status");
                 
 
                 // If the address is not defined, then we return to the registration
