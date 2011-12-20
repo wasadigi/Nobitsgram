@@ -5,7 +5,6 @@
 --%>
 
 <%@page import="java.util.Random"%>
-<%@page import="java.util.*"%>
 <%@include file="tools/headPage.jspf" %>
     <div class="bar" id="positionbar">
        <a href="<% out.print(root+ "/view/client.jsp"); %>" id="Home">

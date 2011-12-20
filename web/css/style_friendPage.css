@@ -1,0 +1,53 @@
+/* 
+    Document   : style_friendPage
+    Created on : 20 déc. 2011, 14:29:26
+    Author     : Eyram
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+.menubarre{
+    background-color: #2B2B2B;
+    font-size : 120%;
+    width: 100%;
+    height:7%;
+    width: 48.45%;
+}
+
+
+.menubarre a{
+    display: inline-table;
+    color: #FF9E16;
+    margin-left: 6%;
+    text-decoration: none;
+    
+}
+
+.menubarre a:hover{
+    color : white;
+     border-bottom: 4px solid white;
+  
+    
+}
+
+.menubarre a.is_selected{    
+    color: white;
+    border-bottom: 4px solid white;
+
+}
+
+#position-menu-barre{
+    margin-top: 13px;
+    
+}
+
+#posearch1 {
+    position : absolute;
+    top : 15px;
+    right : 80px;
+}

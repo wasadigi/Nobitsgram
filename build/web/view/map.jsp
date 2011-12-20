@@ -4,7 +4,6 @@
     Author     : Eyram
 --%>
 
-<%@page import="ch.heigvd.nobitsgram.entity.User"%>
 <%@include file="tools/mapHead.jspf" %>
 
 <div class="bar" id="positionbar">
@@ -34,9 +33,12 @@
 <!-- Google Custom Search Element -->
 
 <% 
-   User user = (User)session.getAttribute("user");
+   User user = (User)session.getAttribute("user");   
    double lat = user.getLatitude();
    double lng = user.getLongitude();
+   System.out.println("user ====> "+user);
+   System.out.println("lat ====> "+lat);
+   System.out.println("lng ====> "+lng);
 %>
 
 

@@ -22,14 +22,29 @@
 
         <!--Bare menu-->
 
-            <form action="<% out.print(root+ "/SearchServlet"); %>" method="get" id="posearch">
+            <form action="<% out.print(root+ "/SearchServlet"); %>" method="get" id="posearch1">
                 <input type="text" name="searchTopic" value="" size="25">
                  <input type="submit" name="Submit" value="find">
 
             </form>
 
+    </div>
 
-        </div>
-
+    <div class="menubarre" id="position-menu-barre">
+    
+        <a href="<% out.print(root+ "/view/friendsPage.jsp"); %>" 
+           class="is_selected" style="margin-top: 10px;">
+                            My contacts
+        </a>
+           
+        <a href="<% out.print(root+ "/ListTopicUserServlet"); %>">
+                            My topics users
+        </a>
+        <a href="">Nobitsgram users</a>
+        <a href="">My followers</a>      
+            
+    
+    </div>           
+                
 <%@include file="tools/footPage.jspf" %>
 

@@ -65,6 +65,8 @@ public class User implements Serializable {
     private Double latitude = null;
 
     private Double longitude = null;
+    
+    private boolean isConnect = false;
 
 
 
@@ -174,7 +176,17 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public boolean isIsConnect() {
+        return isConnect;
+    }
 
+    public void setIsConnect(boolean isConnect) {
+        this.isConnect = isConnect;
+    }
+
+
+    
+    
 
     /**
     *

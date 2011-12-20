@@ -5,7 +5,6 @@
 --%>
 
 <%@page import="java.util.Random"%>
-<%@page import="java.util.List"%>
 <%@include file="tools/headPage.jspf" %>
 
 

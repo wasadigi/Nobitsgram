@@ -4,9 +4,7 @@
     Author     : Eyram
 --%>
 
-<%@page import="ch.heigvd.nobitsgram.entity.User"%>
-<%@page import="ch.heigvd.nobitsgram.entity.Topic"%>
-<%@page import="java.util.*"%>
+
 
 <%@include file="tools/headPage.jspf" %>
 

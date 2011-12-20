@@ -1,6 +1,6 @@
-<%--
-    Document   : friendsPage
-    Created on : 11 déc. 2011, 16:51:44
+<%-- 
+    Document   : pageListTopicUser
+    Created on : 20 déc. 2011, 16:41:35
     Author     : Eyram
 --%>
 
@@ -32,19 +32,38 @@
 
     <div class="menubarre" id="position-menu-barre">
     
-        <a href="<% out.print(root+ "/view/friendsPage.jsp"); %>" 
-           class="is_selected" style="margin-top: 10px;">
-                            My contacts
-        </a>
-           
-        <a href="<% out.print(root+ "/ListTopicUserServlet"); %>">
-                            My topics users
-        </a>
+        <a href="<% out.print(root+ "/view/friendsPage.jsp"); %>" style="margin-top: 10px;">My contacts</a>
+        <a href="<% out.print(root+ "/ListTopicUserServlet"); %>" class="is_selected" >My topics users</a>
         <a href="">Nobitsgram users</a>
-        <a href="">My followers</a>      
-            
-    
-    </div>           
+        <a href="">My followers</a>                  
+    </div>
+        <% List<Topic> topics = (List<Topic>)session.getAttribute("topics");
+           int size = 0;
+           if(topics != null){
+               size = topics.size();
+           }
+        %>
+        <div>
+            <% for(int i = 0; i < size; i++){ %>
+            <table>
+                <tr>
+                <% List<User> users = topics.get(i).getUsers();
+                   users.remove((User)session.getAttribute("user"));
+                   int size1 = users.size();
+                   for(int j = 0; j < size1; j++){                                        
+                %>
+                
+                    <td>
+                        <h3>
+                            <% out.print(users.get(j).getUsername()); %>
+                        </h3>
+                    </td>
+                    <% } %>
+                </tr>
+                
+            </table>
+            <% } %>
+        </div>
                 
 <%@include file="tools/footPage.jspf" %>
 
