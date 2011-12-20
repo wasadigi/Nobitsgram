@@ -146,7 +146,7 @@ public class RegistrationServlet extends HttpServlet {
             user.setUsername(username);
             user.setPassword(password);
 
-            user.setId_Instagram(Long.parseLong(idInstagram));
+            user.setId_Instagram(idInstagram);
 
             user.setUsername_instagram(usernameInstagram);
             user.setAcces_token(access_token);
@@ -166,19 +166,21 @@ public class RegistrationServlet extends HttpServlet {
                 }
                 // If all is ok, we create an address and we search its geocode
                 String address = streetNumber+"+"+street+"+"+city+"+"+zip;
-                ResearchGeocode researcheGeocode = new ResearchGeocode(address);
-                String tmp = researcheGeocode.getLatLng();
-     
-                String status = null;
-                /*
-                 * It possible that googleapis don't response. In that case, tmp
-                 * will be null. If not, we can extract the status of the response
-                 * of googleapis.
-                 *
-                 */
-                if(tmp != null){
-                    status = researcheGeocode.getStatusOfReasearch(tmp);
-                }              
+                InterrogatorInstagram interrogator = new InterrogatorInstagram();
+                
+                // We construct the url of request to googleapis
+                String url = "http://maps.googleapis.com/maps/api/geocode/json?address="
+                             + address + "&sensor=true";
+                
+                // we get the response of request
+                String result = interrogator.getSearcResult(url);
+                
+                
+                // We get the status of request. It can be take only two values
+                // If the request succeed, it value is "OK",
+                // if not it take the value "ZERO_RESULT"
+                String status = MyParser.parseResponse(result, "status").replace("\"", "");
+                
 
                 // If the address is not defined, then we return to the registration
                 // page with error message that invite the user to check his address
@@ -199,11 +201,15 @@ public class RegistrationServlet extends HttpServlet {
                 // longitude of the client address
                 else{
 
-                    String s = new MyParser().getLatLong(tmp);
-                    // We separate lat and lng with the caracter "#"
-                    int i = s.indexOf("#");
-                    String lat = s.substring(0, i);
-                    String lng = s.substring(i+1);
+                    // parseResponse return a list of String. In this case, only
+                    // one element will be on the list if the status of request
+                    // is ok; else it will be nothing.
+                    // We don't wont to remove all caracter "", because, we'll parse the result again
+                    String location = MyParser.parseResponse(result,"results","location",false).get(0);
+                    
+                    
+                    String lat = MyParser.parseResponse(location, "lat");
+                    String lng = MyParser.parseResponse(location, "lng");
 
                     // We set lat and lng to the user
                     user.setLatitude(Double.parseDouble(lat));

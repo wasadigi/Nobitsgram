@@ -53,7 +53,7 @@ public class SearchServlet extends HttpServlet {
         // We get the urlList from the session
         List<String> urlList =(List<String>)session.getAttribute("urlList");
         // We set the message to empty always the jsp page call this servlet
-        String message="";
+        String message= (String)session.getAttribute("message");
         String topic;
         String access_token = null;
         User user=(User)session.getAttribute("user");
@@ -61,11 +61,6 @@ public class SearchServlet extends HttpServlet {
 
        ServletContext sc = getServletContext();
 
-
-       // We get the acces token unless if the urlList was not yet set
-       if(user != null && urlList == null){
-            access_token = user.getAcces_token();
-       }
 
        topic = request.getParameter("searchTopic");
 
@@ -77,7 +72,7 @@ public class SearchServlet extends HttpServlet {
 
 
       if(topic.trim()!= ""){
-
+            access_token = user.getAcces_token();
             urlList = getListsUrl(topic,access_token);
             if(urlList.isEmpty()){
                 message = "No matching topic for \""+topic+"\"";
@@ -108,7 +103,7 @@ public class SearchServlet extends HttpServlet {
        InterrogatorInstagram interrogator = new InterrogatorInstagram();
        interrogator.setAccesToken(access_token);
        
-       String url = "https://api.instagram.com/v1/"+"tags/"+topicName+"?access_token="+access_token;
+       String url = "https://api.instagram.com/v1/tags/"+topicName+"?access_token="+access_token;
        
      
 
@@ -130,11 +125,13 @@ public class SearchServlet extends HttpServlet {
             
             String url = "https://api.instagram.com/v1/tags/"+topicName+"/media/recent?access_token="+access_token;
 
-            String resultResearch = interrogator.getSearcResult(url);
+            String resultResearch = interrogator.getSearcResult(url);           
 
             //We check if the result is not null before we affect it to listUrl
             if(resultResearch != null){
-                listUrl = MyParser.getListUrls(resultResearch);
+                // We indicate to parser to remove all carater "" at the begin
+                // and end of all result it will put in the list
+                listUrl = MyParser.parseResponse(resultResearch,"data","url",true);
             }
             return listUrl;
      }

@@ -55,7 +55,7 @@ public class GalleryServlet extends HttpServlet {
         
         
         // Here we get the url of the media which the user like
-        String likeUrl = "https://api.instagram.com/v1/"+"/users/self/media/liked?access_token="+access_token;
+        String likeUrl = "https://api.instagram.com/v1/users/self/media/liked?access_token="+access_token;
         List<String> likeUrlList = getListURL(likeUrl,inter);
         session.setAttribute("likeUrlList", likeUrlList);
         
@@ -114,7 +114,10 @@ public class GalleryServlet extends HttpServlet {
      */
     private List<String> getListURL(String url,InterrogatorInstagram inter){
         String response = inter.getSearcResult(url);
-        return MyParser.getListUrls(response);         
+         
+        // We indicate to parser to remove all carater "" at the begin
+        // and the end of all result it will put in the list
+        return MyParser.parseResponse(response,"data","url",true);
     }
             
 }

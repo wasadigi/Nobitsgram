@@ -25,79 +25,10 @@ import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.JsonToken;
 import org.codehaus.jackson.map.MapperConfig;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONObject;
 
 public class MyParser {
-    
-    
-
-    /*
-     * This method return a list of url. Those url are contained in the
-     * parameter var
-     * Instagram return 3 url for the same
-     * image. Default, we choose the bigger image which have his url end by "_7"
-     *
-     */
-    public static List<String> getListUrls(String var){
-        String url="";
-
-        // List of url which is return;
-        List<String> listUrl= new ArrayList<String>();
-
-        // Begining of the url
-        String beginExpression = "\"url\":";
-
-        // We want to extract url for image, then the extension is ".jpg"
-        String endExpression = "_7.jpg";
-
-
-        // Temporary variable is used to scan var
-        String tmp = var;
-
-        // Scan var until tmp don't contain any beginExpression or endExpression
-        while(tmp.contains(beginExpression) && tmp.contains(endExpression)){
-
-            int i = tmp.indexOf(beginExpression);
-
-            // We wont to extract the url, and url begin with "http://"
-            i = tmp.indexOf("http://", i);
-
-            int j = tmp.indexOf(endExpression, i);
-            url = tmp.substring(i,j+endExpression.length());            
-            listUrl.add(url);
-            tmp = tmp.substring(j+endExpression.length());
-        }
-        return listUrl;
-
-    }
-
-
-    /*
-     *
-     *
-     */
-    public static String getLatLong(String response){
-        String tmp = response;
-        String latDel1 = "<lat>";
-        String latDel2 = "</lat>";
-
-        String latlong;
-
-        String lngDel1 = "<lng>";
-        String lngDel2 = "</lng>";
-
-        int i = response.indexOf(latDel1);
-        int j = response.indexOf(latDel2);
-
-        latlong = response.substring(i+latDel1.length(), j);
-
-        i = response.indexOf(lngDel1);
-        j = response.indexOf(lngDel2);
-
-        latlong =latlong+"#"+response.substring(i+lngDel1.length(), j);
-
-        return latlong;
-    }
-
 
     /*
      * This method is used to get the value of "parameter" in the expression
@@ -112,26 +43,68 @@ public class MyParser {
 
     }
 
-    public static String getInformation(String message,String path){
-        String s = "NONENONE";
+    public static List<String> parseResponse(String message,String path,
+            String value,boolean split){
+        List<String> myList = new ArrayList<String>();
+        String s = "";
         try{
             ObjectMapper mapper = new ObjectMapper();
             JsonFactory factory = mapper.getJsonFactory();
-            JsonParser parser = factory.createJsonParser(message);
-            JsonNode node = mapper.readTree(parser);
-            node = mapper.readTree(path);
-            s = node.getValueAsText();
-            s = mapper.readValue(parser, String.class);
+            JsonParser parser;
+            JsonNode nodeRoot;
+            JsonNode node;
+            JSONObject js = new JSONObject(message);
+            JSONArray myArray = js.getJSONArray(path);
             
-            
+            int size = myArray.length();
+            String tmp;
+            for(int i = 0; i<size; i++){
+                tmp =myArray.getString(i);
+                parser = factory.createJsonParser(tmp);
+                nodeRoot = mapper.readTree(parser);
+                node = nodeRoot.findValue(value);
+                // If split, we remove all caractere ""
+                if(split){
+                    myList.add(node.toString().replace("\"", ""));
+                }
+                else{
+                    myList.add(node.toString());
+                }
+            }
+                 
+                 
+                 
+         
         }
         catch(Exception excep){
             excep.printStackTrace();
         }
         
-        return s;
+        return myList;
     }
 
+    
+    
+    public static String parseResponse(String message, String path){
+        ObjectMapper mapper = new ObjectMapper();
+        JsonFactory fact = mapper.getJsonFactory();
+        String response = "";
+        
+        try{
+            JsonNode root = mapper.readTree(message);
+            JsonNode node = root.findValue(path);
+            response = node.toString();
+            
+        }
+        catch(Exception exc){
+            exc.printStackTrace();
+        }
+        return response;
+    }
+    
+    
+       
+    
     
     public static List<String> setListTopic(String rawTopicName, String delimiter){
         StringTokenizer st = new StringTokenizer(rawTopicName,delimiter);
@@ -186,7 +159,7 @@ public class MyParser {
         int i = 0;
        
         while(it.hasNext()){
-            s += " # element["+(i++)+"] = "+it.next();       
+            s += "\n # element["+(i++)+"] = "+it.next();       
         }
        
 

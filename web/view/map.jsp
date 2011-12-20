@@ -5,7 +5,7 @@
 --%>
 
 <%@page import="ch.heigvd.nobitsgram.entity.User"%>
-<%@include file="tools/headPage.jspf" %>
+<%@include file="tools/mapHead.jspf" %>
 
 <div class="bar" id="positionbar">
            <a href="<% out.print(root+ "/view/client.jsp"); %>" id="Home" class="">

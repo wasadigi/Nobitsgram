@@ -106,7 +106,7 @@ public class WelcomeServlet extends HttpServlet {
             // to the instagram site.
             String resultResearch = interrogator.getSearcResult(url);
 
-            listUrl = MyParser.getListUrls(resultResearch);
+            listUrl = MyParser.parseResponse(resultResearch,"data","url",true);
 
             return listUrl;
      }

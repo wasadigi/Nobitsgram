@@ -58,7 +58,7 @@ public class User implements Serializable {
     // Access_token from instagram
     private String acces_token;
 
-    private long id_Instagram;
+    private String id_Instagram;
 
     private String username_instagram;
 
@@ -263,11 +263,11 @@ public class User implements Serializable {
         this.acces_token = acces_token;
     }
 
-    public long getId_Instagram() {
+    public String getId_Instagram() {
         return id_Instagram;
     }
 
-    public void setId_Instagram(long id_Instagram) {
+    public void setId_Instagram(String id_Instagram) {
         this.id_Instagram = id_Instagram;
     }
 
