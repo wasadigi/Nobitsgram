@@ -351,19 +351,17 @@ public class RegistrationServlet extends HttpServlet {
 
         // We extract access token, username and id to record them in the databases
         String access_token = MyParser.parseResponse(informations,"access_token");
-        System.out.println("ACCESS_TOKEN =====> "+access_token);
+       
         // We insert the key access_token and its value to the hashtable
         table.put("access_token", access_token);
 
 
         // We insert the key username of instagram and its value to the hashtable
-        String username_instagram = MyParser.parseResponse(informations, "username");
-        System.out.println("USERNAME =====> "+username_instagram);
+        String username_instagram = MyParser.parseResponse(informations, "username");       
         table.put("username_instagram", username_instagram);
 
         // We insert id of instagram and its value to the hash table
-        String id_instagram = MyParser.parseResponse(informations, "id");
-        System.out.println("ID ID ID ====> "+id_instagram);
+        String id_instagram = MyParser.parseResponse(informations, "id");       
         table.put("id_instagram",id_instagram);
 
         return table;

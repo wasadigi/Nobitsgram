@@ -91,7 +91,7 @@
             j = random2.nextInt(size2); }%>
         <td>
             <img src="<% if(j > -1){
-            out.print(topicUrlList.get(j));
+            out.print(followUrlList.get(j));
             }
             else{
             out.print("");}%>"  style="background: #D3D3D3;width: 200px;height:150px;" />
@@ -100,7 +100,7 @@
             
             <img src="<% if(j > -1){
                 j= random2.nextInt(size2);
-                out.print(topicUrlList.get(j));
+                out.print(followUrlList.get(j));
             }
             else{
             out.print("");}%>" style="background: #B9D3EE;width: 200px;height:150px;" />
@@ -109,7 +109,7 @@
             
             <img src="<% if(j > -1){
                 j= random2.nextInt(size2);
-                out.print(topicUrlList.get(j));
+                out.print(followUrlList.get(j));
             }
             else{
             out.print("");}%>"  style="background: #6C7B8B;width: 200px;height:150px;" />
