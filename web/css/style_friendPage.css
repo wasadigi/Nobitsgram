@@ -41,6 +41,7 @@
 
 }
 
+
 #position-menu-barre{
     margin-top: 13px;
     
@@ -50,4 +51,43 @@
     position : absolute;
     top : 15px;
     right : 80px;
+}
+
+
+.imageContener{    
+    position: inherit;
+    float: none;
+    width: 20%;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+
+.pictureContener{
+      
+      padding: 20px 10px 2px 10px;      
+      border-left: 2px solid #2B2B2B;
+      border-right: 2px solid #2B2B2B;
+      border-top: 2px solid #2B2B2B;
+      border-bottom: 2px solid #2B2B2B;
+      height: 70px;
+      width: 40px;
+     
+}
+
+.pictureContener .imageContener{    
+      margin-left: 20px;
+      padding-left: 20px;
+      padding-top: 4px;
+      height: 16px;
+}
+
+#nameposition{
+    margin-top: -10px;
+    text-align: center;
+    
+}
+
+#picturposition{    
+    margin-top: -15px;    
 }

@@ -67,6 +67,8 @@ public class User implements Serializable {
     private Double longitude = null;
     
     private boolean isConnect = false;
+    
+    private String profile_picture;
 
 
 
@@ -252,7 +254,12 @@ public class User implements Serializable {
 
 
     public double getLatitude() {
-        return latitude;
+        try{
+            return latitude;
+        }
+        catch(NullPointerException npexc){
+            return Double.NaN;
+        }
     }
 
     public void setLatitude(double latitude) {
@@ -260,7 +267,12 @@ public class User implements Serializable {
     }
 
     public double getLongitude() {
-        return longitude;
+        try{
+            return longitude;
+        }
+        catch(NullPointerException npexc){
+            return Double.NaN;
+        }
     }
 
     public void setLongitude(double longitude) {
@@ -291,6 +303,13 @@ public class User implements Serializable {
         this.username_instagram = username_instagram;
     }
 
+    public String getProfile_picture() {
+        return profile_picture;
+    }
+
+    public void setProfile_picture(String profile_picture) {
+        this.profile_picture = profile_picture;
+    }                
 
 
 

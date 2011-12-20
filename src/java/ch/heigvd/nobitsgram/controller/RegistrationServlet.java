@@ -55,7 +55,7 @@ public class RegistrationServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         // We create a hash table according to the code we get from instagram
-        Hashtable<String,String> tableInfoInstagram = getInstagramInfo(codeInstagram, request);
+        Hashtable<String,String> tableInfoInstagram = getInstagramInfo(codeInstagram, request);                        
 
         // We get the value of access_token in the hash table
         String access_token = tableInfoInstagram.get("access_token");
@@ -66,9 +66,11 @@ public class RegistrationServlet extends HttpServlet {
         // We get the value of instagram id in the hash table
         //Long id_instagram = Long.parseLong(tableInfoInstagram.get("id_instagram"));
         String idInstagram = tableInfoInstagram.get("id_instagram");
-
-
-        setInfoInstagramToSession(access_token, usernameInstagram, idInstagram,session);
+        
+        String profile_picture = tableInfoInstagram.get("profile_picture");
+        
+        setInfoInstagramToSession(access_token, usernameInstagram, idInstagram, 
+                                  profile_picture,session);
 
         session.setAttribute("codeInstagram", codeInstagram);
 
@@ -97,6 +99,7 @@ public class RegistrationServlet extends HttpServlet {
         String access_token = (String)session.getAttribute("access_token");
         String usernameInstagram = (String)session.getAttribute("usernameInstagram");
         String idInstagram = (String)session.getAttribute("idInstagram");
+        String profile_picture = (String)session.getAttribute("profile_picture");
 
 
 
@@ -145,9 +148,9 @@ public class RegistrationServlet extends HttpServlet {
             user.setPassword(password);
 
             user.setId_Instagram(idInstagram);
-
             user.setUsername_instagram(usernameInstagram);
             user.setAcces_token(access_token);
+            user.setProfile_picture(profile_picture);
 
             // We check if one of the address field was fill or not
             if(userBean.isAddress(city, street, streetNumber, zip)){                
@@ -350,11 +353,13 @@ public class RegistrationServlet extends HttpServlet {
                 
 
         // We extract access token, username and id to record them in the databases
-        String access_token = MyParser.parseResponse(informations,"access_token");
-       
+        String access_token = MyParser.parseResponse(informations,"access_token");       
         // We insert the key access_token and its value to the hashtable
         table.put("access_token", access_token);
 
+        
+        String profile_picture = MyParser.parseResponse(informations, "profile_picture");
+        table.put("profile_picture",profile_picture);
 
         // We insert the key username of instagram and its value to the hashtable
         String username_instagram = MyParser.parseResponse(informations, "username");       
@@ -370,11 +375,13 @@ public class RegistrationServlet extends HttpServlet {
 
 
     public void setInfoInstagramToSession(String access_token,
-                  String usernameInstagram, String idInstagram,HttpSession session){
+                  String usernameInstagram, String idInstagram, 
+                  String profile_picture, HttpSession session){
 
         session.setAttribute("access_token", access_token);
         session.setAttribute("usernameInstagram", usernameInstagram);
         session.setAttribute("idInstagram", idInstagram);
+        session.setAttribute("profile_picture", profile_picture);
 
     }
 

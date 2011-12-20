@@ -72,10 +72,9 @@ background : url("../images/background.jpg") repeat-x;
     margin-left: 0px;
 }
 
-#posearch {
-    position : absolute;
-    top : 15px;
-    right : 100px;
+#posearch { 
+    margin-top: -25px;
+    margin-left: 80%;
 }
 
 .chromemenu ul li a:hover, .chromemenu ul li a.current {

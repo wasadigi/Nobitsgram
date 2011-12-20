@@ -36,9 +36,10 @@
    User user = (User)session.getAttribute("user");   
    double lat = user.getLatitude();
    double lng = user.getLongitude();
-   System.out.println("user ====> "+user);
-   System.out.println("lat ====> "+lat);
-   System.out.println("lng ====> "+lng);
+   if(lat == Double.NaN){
+       lat = 0;
+       lng = 0;
+   }
 %>
 
 

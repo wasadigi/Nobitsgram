@@ -45,24 +45,41 @@
         %>
         <div>
             <% for(int i = 0; i < size; i++){ %>
-            <table>
-                <tr>
-                <% List<User> users = topics.get(i).getUsers();
+            <div class="imageContener">
+                                    
+              <h2 style="margin-bottom:-3px;">  <% out.print(topics.get(i).getName()); %>   </h2>
+                                        
+                
+              <table>  
+                    <tr>
+                        <% List<User> users = topics.get(i).getUsers();
                    users.remove((User)session.getAttribute("user"));
-                   int size1 = users.size();
-                   for(int j = 0; j < size1; j++){                                        
+                   int size1 = users.size(); User user;
+                   for(int j = 0; j < size1; j++){
+                       user = users.get(j);
                 %>
-                
-                    <td>
-                        <h3>
-                            <% out.print(users.get(j).getUsername()); %>
-                        </h3>
-                    </td>
-                    <% } %>
-                </tr>
-                
-            </table>
+                        <td class="pictureContener">
+                            <p id="picturposition">
+                                <img src="<% out.print(user.getProfile_picture()); %>" 
+                                         style="width: 80px;height:80px;" />
+                            </p>
+                            <p id="nameposition">
+                                        <% out.print(user.getUsername()); %> 
+                            </p>
+                        </td>
+                        <td>
+                    
+                        </td>
+                          <% } %>
+                    </tr>
+
+                    </table>
+                  
+                                    
+
+
             <% } %>
+            
         </div>
                 
 <%@include file="tools/footPage.jspf" %>
