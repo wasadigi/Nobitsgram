@@ -63,7 +63,7 @@ background : url("../images/body-bg.png") repeat-x;
 position : absolute;
 left : 170px;
 top : 300px;
-width : 300px;
+width : 240px;
 height : 200px;
 
 -webkit-border-top-left-radius: 20px;
@@ -79,7 +79,7 @@ border-top-right-radius: 20px;
 border-bottom-right-radius: 20px;
 border-bottom-left-radius: 20px;
 
-border : 7px solid #000;
+border : 4px solid #000;
 }
 #footer {
 color : #00b1d7;

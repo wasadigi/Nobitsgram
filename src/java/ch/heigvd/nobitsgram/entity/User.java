@@ -72,9 +72,9 @@ public class User implements Serializable {
 
 
 
-    public User(String firstname, String lastname){
-        this.firstname = firstname;
-        this.lastname = lastname;
+    public User(String username){
+        this.username = username;
+        
     }
 
     public User(){

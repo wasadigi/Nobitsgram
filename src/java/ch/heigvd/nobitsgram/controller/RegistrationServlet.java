@@ -31,6 +31,7 @@ public class RegistrationServlet extends HttpServlet {
     private UsersManager usersManager;
     @EJB
     private TopicsManager topicsManager;
+    
 
 
 
@@ -43,8 +44,8 @@ public class RegistrationServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+            throws ServletException, IOException {               
+        
         // We get the code of the client
         String codeInstagram = request.getQueryString();
 
@@ -247,7 +248,7 @@ public class RegistrationServlet extends HttpServlet {
                     // It haven't any topic with the same name in database, then we
                     // can create a new with topicName.
                     if(topic == null){
-                        topic = new Topic(topicName);
+                        topic = new Topic(topicName);                      
                         topicsManager.create(topic);
                     }
                     usersManager.addTopicToUser(user,topic);

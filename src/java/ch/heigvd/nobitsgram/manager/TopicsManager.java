@@ -101,5 +101,10 @@ public class TopicsManager {
          }
          return top.get(0);
     }
+    
+    
+    public void setEntityManager(EntityManager em){
+        this.em = em;
+    }
 
 }

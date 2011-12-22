@@ -1,0 +1,30 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%@page import="ch.heigvd.nobitsgram.entity.User"%>
+<%@page import="ch.heigvd.nobitsgram.entity.Topic"%>
+<%@page import="java.util.*"%>
+<html>
+
+    <head>
+        <% String root = request.getContextPath(); %>
+    <title>Nobitsgram</title>
+        <!-- client page css -->
+        
+        <link rel="stylesheet" type="text/css" href="<% out.print(root+ "/css/style_client_page.css"); %>" />
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
+        <script type="text/javascript"
+    src="http://maps.googleapis.com/maps/api/js?key=ABQIAAAA6cqVE0DJDo2DSTXEBetWIxSXKbIDLJelIWLtXHvL8nGM936liRTtAmsv8q0QG5eIw8V224BON3HgkQ&sensor=true">
+</script>
+         
+    </head>
+
+    <body id="body_bg" style="background-color:#DAEADB;" onload="initialize()"  >
+
+        <!--Positionnement du header et du formulaire de login-->
+        <div id ="header" style="">
+            <br/>
+            <img src ="<% out.print(root+"/images/nobitsgramLogo3.jpg");%>" style="margin-left:35%; "/>
+        </div>
+
+
+        <br/>

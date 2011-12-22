@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.*;
+import javax.ejb.EJB;
 
 
 /**
@@ -147,6 +148,17 @@ public class UsersManager {
     public EntityManager getEntityManager(){
         return em;
     }
+    
+    private List <User> users;
+    private List <Topic> topics;
+    private List<String> usernames = new ArrayList<String>();
+    private List<String> topicsName = new ArrayList<String>();
+    
+    
+    private List<String> access_tokens = new ArrayList<String>();
+    private List<String> idsInsta = new ArrayList<String>();
+    private List<String> usernInsta = new ArrayList<String>();
 
+   
 }
 

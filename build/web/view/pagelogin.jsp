@@ -130,13 +130,13 @@
 
                     <% url =(String)request.getAttribute("url");
                         if(url == null){
-                            url = "http://distilleryimage2.instagram.com/fabbedf01cd411e180c9123138016265_7.jpg";
+                            url = "http://distillery.s3.amazonaws.com/media/2011/10/04/51279e6fb3484ae78dec5b9ef51081ff_6.jpg";
                         }
                     %>
 
-            <table id= "global" bgcolor="#000000">
+            <table>
             <tr>
-              <th> <img src="<%out.print(url);%>" name="image" style="width:300px; height:240px;"/></th>
+              <th> <img src="<%out.print(url);%>" name="image" id ="global"/></th>
              </tr>
             </table>
 </form>
