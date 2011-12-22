@@ -178,7 +178,7 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public boolean isIsConnect() {
+    public boolean isConnect() {
         return isConnect;
     }
 

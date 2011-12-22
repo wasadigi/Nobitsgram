@@ -64,9 +64,14 @@ public class UsersManager {
         return ((Long) q.getSingleResult()).intValue();
     }
 
-    public User getUser(String username){
+    
+    /*
+     * This method get user according to his parameter and its value
+     */
+    public User getUser(String parameter, String value){
 
-         Query q = em.createQuery("SELECT s FROM User s WHERE s.username='"+username+"'");
+         Query q = em.createQuery("SELECT userSearch FROM User userSearch "
+                 + "WHERE userSearch."+parameter+"='"+value+"'");
          List<User> user = q.getResultList();
          return user.get(0);
     }
@@ -75,7 +80,7 @@ public class UsersManager {
     public boolean isAllReadyRecord(String username){
         boolean cond = false;
         try{
-            User tmp = getUser(username);
+            User tmp = getUser("username",username);
             cond = true;
         }
         catch(Exception exc){

@@ -36,9 +36,10 @@
    User user = (User)session.getAttribute("user");   
    double lat = user.getLatitude();
    double lng = user.getLongitude();
+   
    if(lat == Double.NaN){
-       lat = 0;
-       lng = 0;
+    lat = 0;
+    lng = 0;           
    }
 %>
 
@@ -60,7 +61,9 @@
     var map = new google.maps.Map(document.getElementById("map_canvas"),
         myOptions);
     
-   var marker = new google.maps.Marker({
+    
+       
+          var marker = new google.maps.Marker({
     map:map,
     draggable:true,
     animation: google.maps.Animation.DROP,
@@ -88,6 +91,8 @@ function toggleBounce() {
   } else {
     marker.setAnimation(google.maps.Animation.BOUNCE);
   }
+       
+    
     
      
   

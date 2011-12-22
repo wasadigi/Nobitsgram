@@ -4,6 +4,7 @@
  */
 package ch.heigvd.nobitsgram.util;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -35,7 +36,7 @@ public class MyParser {
     public static List<String> parseResponse(String message,String path,
             String value,boolean split){
         List<String> myList = new ArrayList<String>();
-        String s = "";
+        
         try{
             ObjectMapper mapper = new ObjectMapper();
             JsonFactory factory = mapper.getJsonFactory();
@@ -74,9 +75,58 @@ public class MyParser {
 
     
     
-    public static String parseResponse(String message, String path){
-        ObjectMapper mapper = new ObjectMapper();
-        JsonFactory fact = mapper.getJsonFactory();
+    public static List<UserInstagram> getUsersFromJson(String message,String path,
+            String username, String pictureProfile,String id){
+        List<UserInstagram> myList = new ArrayList<UserInstagram>();
+        UserInstagram userInsta;         
+        try{
+            ObjectMapper mapper = new ObjectMapper();
+            JsonFactory factory = mapper.getJsonFactory();
+            JsonParser parser;
+            JsonNode nodeRoot;
+            JsonNode nodeUsername;
+            JsonNode nodePictProf;
+            JsonNode nodeId;
+            JSONObject js = new JSONObject(message);
+            JSONArray myArray = js.getJSONArray(path);
+            
+            int size = myArray.length();            
+            
+            String tmp;
+            // For each user in JSON, we create an instance of UserInstagram
+            for(int i = 0; i<size; i++){
+                tmp =myArray.getString(i);
+                parser = factory.createJsonParser(tmp);
+                nodeRoot = mapper.readTree(parser);
+                userInsta = new UserInstagram();
+                // we get the node of username
+                nodeUsername = nodeRoot.findValue(username);
+                // we set the value of the username to the instance of UserInstagram
+                userInsta.setUsername(nodeUsername.toString().replace("\"",""));
+                
+                // we get the node of picture profile
+                nodePictProf = nodeRoot.findValue(pictureProfile);
+                // we set the value of picture profile to the instance of UserInstagram
+                userInsta.setProfilePicture(nodePictProf.toString().replace("\"",""));
+                
+                // We get the node of Id
+                nodeId = nodeRoot.findValue(id);
+                // We set the value of the Id to the instance of UserInstagram
+                userInsta.setId(nodeId.toString().replace("\"",""));
+                
+                myList.add(userInsta);
+            }
+        }
+        catch(Exception excep){
+            excep.printStackTrace();
+        }
+        
+        return myList;
+    }
+    
+    
+    public static String parseResponse(String message, String path,boolean split){
+        ObjectMapper mapper = new ObjectMapper();        
         String response = "";
         
         try{
@@ -88,7 +138,12 @@ public class MyParser {
         catch(Exception exc){
             exc.printStackTrace();
         }
-        return response.replace("\"", "");
+        if(split){
+            return response.replace("\"", "");
+        }
+        else{
+            return response;
+        }
     }
     
     
@@ -151,7 +206,21 @@ public class MyParser {
             s += "\n # element["+(i++)+"] = "+it.next();       
         }
        
-
         return s;
     }
+    
+    public static String displayUser(List<UserInstagram> list){
+        Iterator it = list.iterator();
+        String s ="";
+        int i = 0;
+        UserInstagram user;
+        while(it.hasNext()){
+            user = (UserInstagram)it.next();
+            s += "\n***************\n# element["+(i++)+"] \n"+user;
+            s +="\n"+displayList(user.getListPicture());
+        }
+       
+        return s;
+    }
+    
 }

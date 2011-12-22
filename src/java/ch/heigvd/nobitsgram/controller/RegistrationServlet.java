@@ -101,18 +101,11 @@ public class RegistrationServlet extends HttpServlet {
         String idInstagram = (String)session.getAttribute("idInstagram");
         String profile_picture = (String)session.getAttribute("profile_picture");
 
-
-
-
         String error=null;
-
 
         ServletContext sc = getServletContext();;
         // If the client session is already open, then the client is directly
         // redirect to his client page
-
-
-
 
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
@@ -180,7 +173,7 @@ public class RegistrationServlet extends HttpServlet {
                 // We get the status of request. It can be take only two values
                 // If the request succeed, it value is "OK",
                 // if not it take the value "ZERO_RESULT"
-                String status = MyParser.parseResponse(result, "status");
+                String status = MyParser.parseResponse(result, "status",true);
                 
 
                 // If the address is not defined, then we return to the registration
@@ -209,8 +202,8 @@ public class RegistrationServlet extends HttpServlet {
                     String location = MyParser.parseResponse(result,"results","location",false).get(0);
                     
                     
-                    String lat = MyParser.parseResponse(location, "lat");
-                    String lng = MyParser.parseResponse(location, "lng");
+                    String lat = MyParser.parseResponse(location, "lat",true);
+                    String lng = MyParser.parseResponse(location, "lng",true);
 
                     // We set lat and lng to the user
                     user.setLatitude(Double.parseDouble(lat));
@@ -219,6 +212,9 @@ public class RegistrationServlet extends HttpServlet {
             }
 
             if(error == null){
+                // We indicate that the user is connect
+                user.setIsConnect(true);
+                
                 // We create an user with the value which the client has enter
                 usersManager.create(user);
 
@@ -259,7 +255,7 @@ public class RegistrationServlet extends HttpServlet {
 
 
 
-
+                 
                 // We send the client to the redirect page
                 session.setAttribute("user",user);
 
@@ -353,20 +349,20 @@ public class RegistrationServlet extends HttpServlet {
                 
 
         // We extract access token, username and id to record them in the databases
-        String access_token = MyParser.parseResponse(informations,"access_token");       
+        String access_token = MyParser.parseResponse(informations,"access_token",true);       
         // We insert the key access_token and its value to the hashtable
         table.put("access_token", access_token);
 
         
-        String profile_picture = MyParser.parseResponse(informations, "profile_picture");
+        String profile_picture = MyParser.parseResponse(informations, "profile_picture",true);
         table.put("profile_picture",profile_picture);
 
         // We insert the key username of instagram and its value to the hashtable
-        String username_instagram = MyParser.parseResponse(informations, "username");       
+        String username_instagram = MyParser.parseResponse(informations, "username",true);
         table.put("username_instagram", username_instagram);
 
         // We insert id of instagram and its value to the hash table
-        String id_instagram = MyParser.parseResponse(informations, "id");       
+        String id_instagram = MyParser.parseResponse(informations, "id",true);
         table.put("id_instagram",id_instagram);
 
         return table;
@@ -398,7 +394,6 @@ public class RegistrationServlet extends HttpServlet {
         session.setAttribute("zip", zip);
         session.setAttribute("city", city);
         session.setAttribute("topicRaw", topicRaw);
-
 
     }
 

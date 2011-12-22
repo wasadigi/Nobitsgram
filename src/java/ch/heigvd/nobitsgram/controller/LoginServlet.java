@@ -84,7 +84,7 @@ private UsersManager usersManager;
         String password = request.getParameter("password");
         User user;
         try{
-            user = usersManager.getUser(username);
+            user = usersManager.getUser("username",username);
         }
         catch(Exception exc){
            user = null;

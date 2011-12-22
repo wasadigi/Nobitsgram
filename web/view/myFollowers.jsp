@@ -1,9 +1,9 @@
 <%-- 
-    Document   : pageListTopicUser
-    Created on : 20 déc. 2011, 16:41:35
+    Document   : myFollowers
+    Created on : 21 déc. 2011, 14:48:23
     Author     : Eyram
 --%>
-
+<%@page import="ch.heigvd.nobitsgram.util.UserInstagram"%>
 <%@include file="tools/headPage.jspf" %>
 
 <div class="bar" id="positionbar">
@@ -33,54 +33,22 @@
     <div class="menubarre" id="position-menu-barre">
     
         <a href="<% out.print(root+ "/view/friendsPage.jsp"); %>" style="margin-top: 10px;">My contacts</a>
-        <a href="<% out.print(root+ "/ListTopicUserServlet"); %>" class="is_selected" >My topics users</a>
+        <a href="<% out.print(root+ "/ListTopicUserServlet"); %>"  >My topics users</a>
         <a href="">Nobitsgram users</a>
-        <a href="<% out.print(root+ "/MyFollowerServlet"); %>">My followers</a>                  
+        <a href="<% out.print(root+ "/MyFollowerServlet"); %>"
+           class="is_selected">My followers</a>                  
     </div>
-        <% List<Topic> topics = (List<Topic>)session.getAttribute("topics");
+        <% 
+           List<UserInstagram> myFollowers = (List<UserInstagram>)session.
+                                                getAttribute("myFollowers");           
            int size = 0;
-           if(topics != null){
-               size = topics.size();
+           
+           if(myFollowers != null && !myFollowers.isEmpty()){
+               size = myFollowers.size();
+           }
+           for(int i = 0; i < size; i++){
+               
            }
         %>
-        <div>
-            <% for(int i = 0; i < size; i++){ %>
-            <div class="imageContener">
-                                    
-              <h2 style="margin-bottom:-3px;">  <% out.print(topics.get(i).getName()); %>   </h2>
-                                        
-                
-              <table>  
-                    <tr>
-                        <% List<User> users = topics.get(i).getUsers();
-                   users.remove((User)session.getAttribute("user"));
-                   int size1 = users.size(); User user;
-                   for(int j = 0; j < size1; j++){
-                       user = users.get(j);
-                %>
-                        <td class="pictureContener">
-                            <p id="picturposition">
-                                <img src="<% out.print(user.getProfile_picture()); %>" 
-                                         style="width: 80px;height:80px;" />
-                            </p>
-                            <p id="nameposition">
-                                        <% out.print(user.getUsername()); %> 
-                            </p>
-                        </td>
-                        <td>
-                    
-                        </td>
-                          <% } %>
-                    </tr>
-
-                    </table>
-                  
-                                    
-
-
-            <% } %>
-            
-        </div>
-                
+        
 <%@include file="tools/footPage.jspf" %>
-

@@ -133,7 +133,7 @@
               }%>
             
             <img src="<% if(k > -1){                               
-                out.print(topicUrlList.get(k));
+                out.print(likeUrlList.get(k));
             }
             else{
             out.print("");}%>" style="background: #7D26CD;width: 200px;height:150px;" />
@@ -141,7 +141,7 @@
         <td>
             <img src="<% if(k > -1){
                 k= random3.nextInt(size3);
-                out.print(topicUrlList.get(k));
+                out.print(likeUrlList.get(k));
             }
             else{
             out.print("");}%>" style="background: #007FFF;width: 200px;height:150px;" />
@@ -149,7 +149,7 @@
         <td>
             <img src="<% if(k > -1){
                 k= random3.nextInt(size3);
-                out.print(topicUrlList.get(k));
+                out.print(likeUrlList.get(k));
             }
             else{
             out.print("");}%>" style="background: #00FFFF;width: 200px;height:150px;" />

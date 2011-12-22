@@ -14,7 +14,7 @@
             <img class="" src="<% out.print(root+"/images/home1.jpg");%>" style="top:10px;margin-left: -5px;position: relative"/>Home</a>
      <a href="<% out.print(root+ "/view/settingAccount.jsp"); %>" id="" class ="selected">
             <img class="" src="<% out.print(root+"/images/account1.jpg");%>" style="top:10px;margin-left: -5px;position: relative" />My account</a>
-     <a href="<% out.print(root+ "/view/gallery.jsp"); %>" id="Gallery"  >
+     <a href="<% out.print(root+ "/GalleryServlet"); %>" id="Gallery"  >
             <img src="<% out.print(root+"/images/gallery.jpg");%>" style="top:10px;margin-left: -5px;position: relative"/>Gallery</a>
      <a href="<% out.print(root+ "/FriendServlet"); %>" id="">
             <img class="" src="<% out.print(root+"/images/friends3.jpg");%>" style="top:10px;margin-left: -5px;position: relative" />Friends</a>

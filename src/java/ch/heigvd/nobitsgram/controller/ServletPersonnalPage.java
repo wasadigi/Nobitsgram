@@ -228,7 +228,7 @@ public class ServletPersonnalPage extends HttpServlet {
                 // We get the status of request. It can be take only two values
                 // If the request succeed, it value is "OK",
                 // if not it take the value "ZERO_RESULT"
-                String status = MyParser.parseResponse(result, "status");
+                String status = MyParser.parseResponse(result, "status",true);
                 
 
                 // If the address is not defined, then we return to the registration
@@ -249,8 +249,8 @@ public class ServletPersonnalPage extends HttpServlet {
                     String location = MyParser.parseResponse(result,"results","location",false).get(0);
                     
                     
-                    String lat = MyParser.parseResponse(location, "lat");
-                    String lng = MyParser.parseResponse(location, "lng");
+                    String lat = MyParser.parseResponse(location, "lat",true);
+                    String lng = MyParser.parseResponse(location, "lng",true);
 
                     // We set lat and lng to the user
                     user.setLatitude(Double.parseDouble(lat));

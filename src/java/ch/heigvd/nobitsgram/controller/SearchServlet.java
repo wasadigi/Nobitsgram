@@ -110,7 +110,7 @@ public class SearchServlet extends HttpServlet {
        String resultResearch = interrogator.getSearcResult(url);
        String s = "";
        if(resultResearch != null){
-            s = MyParser.parseResponse(resultResearch,"media_count");
+            s = MyParser.parseResponse(resultResearch,"media_count",true);
                   
        }
         

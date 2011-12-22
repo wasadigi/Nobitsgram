@@ -41,10 +41,10 @@
                             My topics users
         </a>
         <a href="">Nobitsgram users</a>
-        <a href="">My followers</a>      
-            
+        <a href="<% out.print(root+ "/MyFollowerServlet"); %>">My followers</a>                      
+    </div>
     
-    </div>           
+    
                 
 <%@include file="tools/footPage.jspf" %>
 
