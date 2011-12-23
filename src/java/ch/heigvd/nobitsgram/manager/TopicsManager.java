@@ -39,8 +39,8 @@ public class TopicsManager {
         em.refresh(topic);
     }
 
-    public void edit(Topic topic){
-        em.merge(topic);
+    public Topic edit(Topic topic){
+       return em.merge(topic);
     }
 
     public void remove(Topic topic){
@@ -102,6 +102,13 @@ public class TopicsManager {
          return top.get(0);
     }
     
+    public void removeUserOfTopic(User user, Topic topic){
+        
+        topic.removeUser(user);
+        user.removeTopic(topic);
+        
+        
+    }
     
     public void setEntityManager(EntityManager em){
         this.em = em;

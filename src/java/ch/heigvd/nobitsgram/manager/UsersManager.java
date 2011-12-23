@@ -38,8 +38,8 @@ public class UsersManager {
         em.refresh(user);
     }
 
-    public void edit(User user){
-        em.merge(user);
+    public User edit(User user){
+        return em.merge(user);
     }
 
     public void remove(User user){
@@ -74,7 +74,10 @@ public class UsersManager {
          Query q = em.createQuery("SELECT userSearch FROM User userSearch "
                  + "WHERE userSearch."+parameter+"='"+value+"'");
          List<User> user = q.getResultList();
+         
          return user.get(0);
+         
+         
     }
 
 
@@ -130,12 +133,12 @@ public class UsersManager {
     }
 
     public boolean removeTopicOfUser(User user, Topic topic){
-                
+                       
         user.removeTopic(topic);        
         topic.removeUser(user);        
         user = em.merge(user);
         topic = em.merge(topic);        
-
+        
         // We check if the users list is empty, and then we remove the topic
         if(topic.getUsers().isEmpty()){
            return true;

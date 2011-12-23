@@ -5,9 +5,10 @@
 package ch.heigvd.nobitsgram.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.*;
 import ch.heigvd.nobitsgram.entity.*;
+import ch.heigvd.nobitsgram.manager.*;
+import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +23,10 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ListTopicUserServlet", urlPatterns = {"/ListTopicUserServlet"})
 public class ListTopicUserServlet extends HttpServlet {
-
+    @EJB
+    private UsersManager usersManager;
+    @EJB
+    private TopicsManager topicsManager;
    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
@@ -38,10 +42,12 @@ public class ListTopicUserServlet extends HttpServlet {
         HttpSession session = request.getSession();
         ServletContext sc = request.getServletContext();
         User user = (User)session.getAttribute("user");
+        user = usersManager.edit(user);
         List<Topic> topics = user.getTopicList();
         
-        session.setAttribute("topics", topics);
-        
+        refreshTopics(topics);
+        session.setAttribute("user", user);
+        session.setAttribute("topics", topics);        
         sc.getRequestDispatcher("/view/pageListTopicUser.jsp").
                  forward(request, response);
         
@@ -61,7 +67,12 @@ public class ListTopicUserServlet extends HttpServlet {
         doGet(request, response);
     }
 
-    
+    public void refreshTopics(List<Topic> topics){
+        
+        for(Topic topic: topics){
+            topic = topicsManager.edit(topic);
+        }
+    }
    
     
 }

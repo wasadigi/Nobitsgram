@@ -43,7 +43,7 @@ public class Topic implements Serializable {
      *
      */
     public Topic(String name){
-        this.name = name;
+        this.name = name.toUpperCase();
     }
 
     /*
@@ -79,7 +79,7 @@ public class Topic implements Serializable {
     *
     */
     public void setName(String name) {
-        this.name = name;
+        this.name = name.toUpperCase();
     }
 
     @Override
@@ -90,7 +90,18 @@ public class Topic implements Serializable {
     }
 
     
-
+    public boolean equals(Object object){
+        if (!(object instanceof Topic)) {
+            return false;
+        }
+        Topic other = (Topic) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;        
+    }
+    
+    
   /**
     *
     * This method is used to display the information about the topic. We can

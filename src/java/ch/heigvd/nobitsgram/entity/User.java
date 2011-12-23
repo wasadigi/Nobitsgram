@@ -51,6 +51,13 @@ public class User implements Serializable {
 
     // Country of the user
     private String country;
+    
+    private String streetNumber;
+    
+    private String street;
+    
+    private String zipCode;
+    private String city;
 
     //email of the user
     private String email;
@@ -70,6 +77,11 @@ public class User implements Serializable {
     
     private String profile_picture;
 
+    // boolean which indicate if the map must be zoom out or not
+    // Default the map is zoom out
+    private boolean zoomOut = true;
+    
+    
 
 
     public User(String username){
@@ -104,6 +116,49 @@ public class User implements Serializable {
         this.id = id;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getStreetNumber() {
+        return streetNumber;
+    }
+
+    public void setStreetNumber(String streetNumber) {
+        this.streetNumber = streetNumber;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public boolean isZoomOut() {
+        return zoomOut;
+    }
+
+    public void setZoomOut(boolean zoomOut) {
+        this.zoomOut = zoomOut;
+    }
+
+    
+    
+    
     /**
     *
     * This method return the user's country
@@ -330,6 +385,18 @@ public class User implements Serializable {
         return hash;
     }
 
+    
+    public boolean equals(Object object){
+        if (!(object instanceof User)) {
+            return false;
+        }
+        User other = (User) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;        
+    }
+    
     
     /**
     *

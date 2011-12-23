@@ -156,7 +156,7 @@ public class InterrogatorInstagram {
             response = "";
             while ((inputLine = reader.readLine()) != null){
 
-                response +=inputLine;
+                response +=inputLine+"\n";
             }
             reader.close();
         }

@@ -93,20 +93,16 @@ public class RegistrationServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        String code = (String)session.getAttribute("codeInstagram");
-
-
-
+        
         String access_token = (String)session.getAttribute("access_token");
         String usernameInstagram = (String)session.getAttribute("usernameInstagram");
         String idInstagram = (String)session.getAttribute("idInstagram");
         String profile_picture = (String)session.getAttribute("profile_picture");
 
         String error=null;
-
+        InterrogatorInstagram interrogator = new InterrogatorInstagram();
         ServletContext sc = getServletContext();;
-        // If the client session is already open, then the client is directly
-        // redirect to his client page
+       
 
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
@@ -120,7 +116,8 @@ public class RegistrationServlet extends HttpServlet {
         String streetNumber = request.getParameter("streetNumber");
         String city = request.getParameter("city");
         String zip = request.getParameter("zip");
-
+        String address;
+        
         List<String> listTopicName;
 
         UserBean userBean = new UserBean(firstname,lastname,username,country,password,
@@ -159,57 +156,70 @@ public class RegistrationServlet extends HttpServlet {
                                  streetNumber, zip, city, rawTopic, session);
                     redirectToRegisterForm(error, request, response);
                 }
+                                
+                user.setCity(city);
+                user.setStreet(street);
+                user.setStreetNumber(streetNumber);
+                user.setZipCode(zip);
+                user.setZoomOut(false);
+          
                 // If all is ok, we create an address and we search its geocode
-                String address = streetNumber+"+"+street+"+"+city+"+"+zip;
-                InterrogatorInstagram interrogator = new InterrogatorInstagram();
-                
-                // We construct the url of request to googleapis
-                String url = "http://maps.googleapis.com/maps/api/geocode/json?address="
-                             + address + "&sensor=true";
-                
-                // we get the response of request
-                String result = interrogator.getSearcResult(url);
-                
-                
-                // We get the status of request. It can be take only two values
-                // If the request succeed, it value is "OK",
-                // if not it take the value "ZERO_RESULT"
-                String status = MyParser.parseResponse(result, "status",true);
-                
+                                 
+                address = streetNumber+"+"+street+"+"+city+"+"+zip;                
+            }
+            
+            // If the user don't enter an address, we get his geocoding according
+            // to his country
+            else{                                     
+                user.setZoomOut(true);
+                address = country;                
+            }
+           // We build the url of request to googleapis
+            String url = "http://maps.googleapis.com/maps/api/geocode/json?address="
+                         + address + "&sensor=true";
 
-                // If the address is not defined, then we return to the registration
-                // page with error message that invite the user to check his address
-                if(status==null || !status.equalsIgnoreCase("ok")){
-                    error = "Invalid address, please enter a valide one, or "
-                            + "leave its fields blank";
-                    // We redirect the user to register form with the according
-                    // error.
-                    street="";
-                    streetNumber="";
-                    zip="";
-                    city ="";
-                    setUserInput(firstname, lastname, username, email, street,
-                                 streetNumber, zip, city, rawTopic, session);
-                                      
-                }
-                // If the status of the response is ok, we extract latitude and
-                // longitude of the client address
-                else{
+            // we get the response of request
+            String result = interrogator.getSearcResult(url);
 
-                    // parseResponse return a list of String. In this case, only
-                    // one element will be on the list if the status of request
-                    // is ok; else it will be nothing.
-                    // We don't wont to remove all caracter "", because, we'll parse the result again
-                    String location = MyParser.parseResponse(result,"results","location",false).get(0);
-                    
-                    
-                    String lat = MyParser.parseResponse(location, "lat",true);
-                    String lng = MyParser.parseResponse(location, "lng",true);
 
-                    // We set lat and lng to the user
-                    user.setLatitude(Double.parseDouble(lat));
-                    user.setLongitude(Double.parseDouble(lng));
-                }
+            // We get the status of request. It can be take only two values
+            // If the request succeed, it value is "OK",
+            // if not it take the value "ZERO_RESULT"
+            String status = MyParser.parseResponse(result, "status",true);
+
+
+            // If the address is not defined, then we return to the registration
+            // page with error message that invite the user to check his address
+            if(status==null || !status.equalsIgnoreCase("ok")){
+                error = "Invalid address, please enter a valide one, or "
+                        + "leave its fields blank";
+                // We redirect the user to register form with the according
+                // error.
+                street="";
+                streetNumber="";
+                zip="";
+                city ="";
+                setUserInput(firstname, lastname, username, email, street,
+                             streetNumber, zip, city, rawTopic, session);
+
+            }
+            // If the status of the response is ok, we extract latitude and
+            // longitude of the client address
+            else{
+
+                // parseResponse return a list of String. In this case, only
+                // one element will be on the list if the status of request
+                // is ok; else it will be nothing.
+                // We don't wont to remove all caracter "", because, we'll parse the result again
+                String location = MyParser.parseResponse(result,"location",false);
+
+
+                String lat = MyParser.parseResponse(location, "lat",true);
+                String lng = MyParser.parseResponse(location, "lng",true);
+
+                // We set lat and lng to the user
+                user.setLatitude(Double.parseDouble(lat));
+                user.setLongitude(Double.parseDouble(lng));
             }
 
             if(error == null){

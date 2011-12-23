@@ -36,11 +36,7 @@
    User user = (User)session.getAttribute("user");   
    double lat = user.getLatitude();
    double lng = user.getLongitude();
-   
-   if(lat == Double.NaN){
-    lat = 0;
-    lng = 0;           
-   }
+   boolean zoomOut = user.isZoomOut();
 %>
 
 
@@ -49,11 +45,18 @@
 <script type="text/javascript">
        
    var userPosition = new google.maps.LatLng(<%out.print(lat);%>,<%out.print(lng);%>);
-    
+   var myZoom;
+   if(<%out.print(zoomOut);%>){
+       myZoom = 6;
+   }
+   else{
+       myZoom = 15;
+   }
  
   function initialize() {    
     var myOptions = {
-      zoom: 15,
+      
+      zoom: myZoom ,
       center : userPosition,
       mapTypeId: google.maps.MapTypeId.ROADMAP
      

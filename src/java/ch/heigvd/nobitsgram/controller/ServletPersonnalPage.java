@@ -66,7 +66,7 @@ public class ServletPersonnalPage extends HttpServlet {
 
 
             if(action != null && action.equals("Submit")){
-                setUser(request,response,user);
+                user = setUser(request,response,user);                                
 
             }
 
@@ -78,12 +78,13 @@ public class ServletPersonnalPage extends HttpServlet {
                 if(usersManager.removeTopicOfUser(user, topic)){
                     topicsManager.remove(topic);
                 }
-                getServletContext().getRequestDispatcher("/view/client.jsp").forward(request, response);
+                else{
+                    topicsManager.edit(topic);
+                }
+                
             }
-
-          
-           
-           
+                     
+           getServletContext().getRequestDispatcher("/view/client.jsp").forward(request, response);
 
     }
 
@@ -112,14 +113,14 @@ public class ServletPersonnalPage extends HttpServlet {
     }
 
 
-    private void setUser(HttpServletRequest request,
+    private User setUser(HttpServletRequest request,
             HttpServletResponse response, User user)throws IOException, ServletException{
 
         String firstname="";
         String lastname="";
         String password="";
         String passwordConfirm="";
-        String country="";
+        String country= request.getParameter("country");
         String email="";
         String streetNumber="";
         String street="";
@@ -127,7 +128,9 @@ public class ServletPersonnalPage extends HttpServlet {
         String zip="";
         String rawTopic =request.getParameter("rawTopic");
         List<String> listTopicName = new ArrayList<String>();
-        
+        String address;
+        InterrogatorInstagram interrogator = new InterrogatorInstagram();
+        user.setCountry(country);
         if(request.getParameter("firstname") != null){
                 firstname = request.getParameter("firstname");
             }
@@ -137,9 +140,7 @@ public class ServletPersonnalPage extends HttpServlet {
             if(request.getParameter("email") != null){
                 email = request.getParameter("email");
             }
-            if(request.getParameter("country") != null){
-                country = request.getParameter("country");
-            }
+           
             if(request.getParameter("city") != null){
                 city = request.getParameter("city");
             }
@@ -212,51 +213,63 @@ public class ServletPersonnalPage extends HttpServlet {
                     redirectToSettingAccount(error, request, response);
 
                 }
-                // If all is ok, we create an address and we search its geocode
-                String address = streetNumber+"+"+street+"+"+city+"+"+zip;
                 
-                InterrogatorInstagram interrogator = new InterrogatorInstagram();
-                
-                // We construct the url of request to googleapis
-                String url = "http://maps.googleapis.com/maps/api/geocode/json?address="
-                             + address + "&sensor=true";
-                
-                // we get the response of request
-                String result = interrogator.getSearcResult(url);
-                
-                
-                // We get the status of request. It can be take only two values
-                // If the request succeed, it value is "OK",
-                // if not it take the value "ZERO_RESULT"
-                String status = MyParser.parseResponse(result, "status",true);
-                
-
-                // If the address is not defined, then we return to the registration
-                // page with error message that invite the user to check his address
-                if(status==null || !status.equalsIgnoreCase("ok")){
-                    error += "Invalid address, please enter a valide one, or "
-                            + "leave its fields blank";                    
-
-                }
-                // If the status of the response is ok, we extract latitude and
-                // longitude of the client address
-                else{
-
-                    // parseResponse return a list of String. In this case, only
-                    // one element will be on the list if the status of request
-                    // is ok; else it will be nothing.
-                    // We don't wont to remove all caracter "", because, we'll parse the result again
-                    String location = MyParser.parseResponse(result,"results","location",false).get(0);
-                    
-                    
-                    String lat = MyParser.parseResponse(location, "lat",true);
-                    String lng = MyParser.parseResponse(location, "lng",true);
-
-                    // We set lat and lng to the user
-                    user.setLatitude(Double.parseDouble(lat));
-                    user.setLongitude(Double.parseDouble(lng));
-                }
+                user.setCity(city);
+                user.setStreet(street);
+                user.setStreetNumber(streetNumber);
+                user.setZipCode(zip);
+                user.setZoomOut(false);
+               
+                // If all is ok, we create an address and we search its geocode              
+                address = streetNumber+"+"+street+"+"+city+"+"+zip;
             }
+            
+            // If the user don't enter an address, we get his geocoding according
+            // to his country
+            else{                                                     
+                address = country;
+                user.setZoomOut(true);
+            }
+                        // We construct the url of request to googleapis
+            String url = "http://maps.googleapis.com/maps/api/geocode/json?address="
+                         + address + "&sensor=true";
+
+            // we get the response of request
+            String result = interrogator.getSearcResult(url);
+
+
+            // We get the status of request. It can be take only two values
+            // If the request succeed, it value is "OK",
+            // if not it take the value "ZERO_RESULT"
+            String status = MyParser.parseResponse(result, "status",true);
+
+
+            // If the address is not defined, then we return to the registration
+            // page with error message that invite the user to check his address
+            if(status==null || !status.equalsIgnoreCase("ok")){
+                error += "Invalid address, please enter a valide one, or "
+                        + "leave its fields blank";                    
+
+            }
+            // If the status of the response is ok, we extract latitude and
+            // longitude of the client address
+            else{
+
+                // parseResponse return a list of String. In this case, only
+                // one element will be on the list if the status of request
+                // is ok; else it will be nothing.
+                // We don't wont to remove all caracter "", because, we'll parse the result again
+                String location = MyParser.parseResponse(result,"results","location",false).get(0);
+
+
+                String lat = MyParser.parseResponse(location, "lat",true);
+                String lng = MyParser.parseResponse(location, "lng",true);
+
+                // We set lat and lng to the user
+                user.setLatitude(Double.parseDouble(lat));
+                user.setLongitude(Double.parseDouble(lng));
+            }
+
 
             // We fill the list of topic with topicName which was separate with ","
             listTopicName = MyParser.setListTopic(rawTopic,",");         
@@ -278,6 +291,7 @@ public class ServletPersonnalPage extends HttpServlet {
                 
                 try{
                     topic = topicsManager.getTopic(topicName);
+                    
                 }
                 catch(Exception ex){
                     topic = null;
@@ -289,12 +303,11 @@ public class ServletPersonnalPage extends HttpServlet {
                     topic = new Topic(topicName);
                     topicsManager.create(topic);
                 }
-                usersManager.addTopicToUser(user,topic);
+                usersManager.addTopicToUser(user,topic);                
+                topicsManager.edit(topic);
             }
             
-            
-            usersManager.edit(user);
-            getServletContext().getRequestDispatcher("/view/client.jsp").forward(request, response);
+            return usersManager.edit(user);
             
     }
 
