@@ -87,13 +87,15 @@ public class FriendServlet extends HttpServlet {
         myList = MyParser.getUsersFromJson(resp1,"data","username",
                                          "profile_picture","id");
         
+        System.out.println("Ma liste 1 ==> \n"+MyParser.displayUser(myList));
         String url2 = "https://api.instagram.com/v1/users/"+
-                     idInsta+"/follows?access_token="+access_token;
+                     idInsta+"/followed-by?access_token="+access_token;
         
         resp1 = inter.getSearcResult(url2);
         
         myList.addAll(MyParser.getUsersFromJson(resp1,"data","username",
                                          "profile_picture","id"));
+        System.out.println("My LIST 2 =====> "+MyParser.displayUser(myList));
         return myList;
     }
     

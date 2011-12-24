@@ -28,7 +28,7 @@
             <!-- We try to redirect the user to the client page when the session is still open -->
             <% if(request.getSession().getAttribute("id") != null){
             out.println(request.getSession().toString());%>
-            <jsp:forward page="client.jsp">
+            <jsp:forward page="/GalleryServlet">
                 <jsp:param name="transfert" value="ok" />
             </jsp:forward>
             <%}%>

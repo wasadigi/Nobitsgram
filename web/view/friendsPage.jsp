@@ -45,12 +45,12 @@
     </div>
     
     
-<table> 
+<table cellspacing="20"> 
     
     <% 
         List<UserInstagram> users = (List<UserInstagram>)session.getAttribute("myContacts");
 
-        int compt=0;
+        int compt=1;
         String image;
         String name;
         for(UserInstagram user: users){

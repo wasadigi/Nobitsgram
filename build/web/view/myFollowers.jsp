@@ -52,11 +52,11 @@
                image = userInsta.getProfilePicture();
                name = userInsta.getUsername();
         %>
-        <table cellspacing="10"  style="margin-left:2%;">
+        <table cellspacing="18"  style="margin-left:2%;">
              <tr>
                 
                  <td>
-                     <table>
+                     <table cellspacing="0" >
                          <tr>
                          <td  class="pictureContener">
                     <center>
@@ -71,7 +71,17 @@
                  
                     </td>
                   </tr>
-                  
+                  <tr>
+                      <td>
+                  <center>
+                        <input title="FOLLOW" type ="button" value="follow"  
+                         style="border:1px solid #1C86EE;
+                         background:#1C86EE;width:60px;
+                         background-color:#1C86EE;
+                         height: 20px;font-size:14px" /> 
+                  </center>
+                      </td>
+                  </tr>
                 </table>
                      </td>
                  <% 
@@ -90,8 +100,6 @@
                   <p id="nameposition">
                       <input src="<%out.print(root+ "/images/like1.jpg");%>" 
                    style="margin-left: 2px;width: 30px;height:30px;" title="LIKE" title="FOLLOW" type ="image" value="submit"  />
-                      <input src="<%out.print(root+ "/images/follower1.jpg");%>" 
-                   style="margin-left: 110px;width: 30px;height:30px;" title="FOLLOW" type ="image" value="follow"  /> 
                      </p>
                  </td>
                  <%}%>
