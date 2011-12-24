@@ -272,7 +272,7 @@ public class RegistrationServlet extends HttpServlet {
 
 
                 // The register is ok, we redirect the client to his client page
-                sc.getRequestDispatcher("/view/client.jsp").forward(request, response);
+                response.sendRedirect(request.getContextPath()+"/GalleryServlet");
             }
             else{
                 redirectToRegisterForm(error, request, response);

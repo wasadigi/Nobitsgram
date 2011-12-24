@@ -6,19 +6,18 @@
 <%@page import="ch.heigvd.nobitsgram.util.UserInstagram"%>
 <%@include file="tools/headPage.jspf" %>
 
-<div class="bar" id="positionbar">
-           <a href="<% out.print(root+ "/view/client.jsp"); %>" id="Home" class="">
-            <img class="" src="<% out.print(root+"/images/home1.jpg");%>" style="top:10px;margin-left: -5px;position: relative"/>Home</a>
-     <a href="<% out.print(root+ "/view/settingAccount.jsp"); %>" id="" >
-            <img class="" src="<% out.print(root+"/images/account1.jpg");%>" style="top:10px;margin-left: -5px;position: relative" />My account</a>
-     <a href="<% out.print(root+ "/GalleryServlet"); %>" id="Gallery"  >
-            <img src="<% out.print(root+"/images/gallery.jpg");%>" style="top:10px;margin-left: -5px;position: relative"/>Gallery</a>
-     <a href="<% out.print(root+ "/view/friendsPage.jsp"); %>" id="" class ="selected" >
-            <img class="" src="<% out.print(root+"/images/friends3.jpg");%>" style="top:10px;margin-left: -5px;position: relative" />Friends</a>
-     <a href="<% out.print(root+ "/view/map.jsp"); %>" id="">
-             <img class="" src="<% out.print(root+"/images/map.jpg");%>" style="top:10px;margin-left: -5px;position: relative"  />Map</a>
+<div class="bar2" id="positionbar">
+     <a href="<% out.print(root+ "/GalleryServlet"); %>" >
+         <img class="" src="<% out.print(root+"/images/gallery.jpg");%>" class ="posipicto" /><span id="myText">Gallery </span></a>
+     <a href="<% out.print(root+ "/view/settingAccount.jsp"); %>" id="">
+            <img class="" src="<% out.print(root+"/images/account1.jpg");%>" class ="posipicto" /><span id="myText">My account</span></a>
+     <a href="<% out.print(root+ "/FriendServlet"); %>" class="selected">
+            <img class="" src="<% out.print(root+"/images/friends3.jpg");%>" class ="posipicto"/><span id="myText">Friends</span></a>
+     <a href="<% out.print(root+ "/view/map.jsp"); %>" >
+             <img class="" src="<% out.print(root+"/images/map.jpg");%>" class ="posipicto"  /><span id="myText">Map</span></a>
      <a href="<%out.print(root+ "/LogoutServlet"); %>" id="">
-             <img class="" src="<% out.print(root+"/images/logout1.jpg");%>" style="top:10px;margin-left: -5px;position: relative" />Logout</a>
+             <img class="" src="<% out.print(root+"/images/logout1.jpg");%>" class ="posipicto" /><span id="myText">Logout</span></a>
+
 
         <!--Bare menu-->
 
@@ -42,13 +41,65 @@
            List<UserInstagram> myFollowers = (List<UserInstagram>)session.
                                                 getAttribute("myFollowers");           
            int size = 0;
-           
+           String image;
+           String name;
+           UserInstagram userInsta;
            if(myFollowers != null && !myFollowers.isEmpty()){
                size = myFollowers.size();
            }
            for(int i = 0; i < size; i++){
-               
-           }
+               userInsta = myFollowers.get(i);
+               image = userInsta.getProfilePicture();
+               name = userInsta.getUsername();
         %>
+        <table cellspacing="10"  style="margin-left:2%;">
+             <tr>
+                
+                 <td>
+                     <table>
+                         <tr>
+                         <td  class="pictureContener">
+                    <center>
+                     <p id="picturposition">
+                         <img src="<% out.print(image); %>" 
+                   style="background: #FFA07A;width: 60px;height:60px;" /> 
+                     </p>
+                    </center>
+                     <p id="nameposition">
+                            <% out.print(name); %> 
+                     </p>
+                 
+                    </td>
+                  </tr>
+                  
+                </table>
+                     </td>
+                 <% 
+                    List<String> urlList = userInsta.getListPicture(); 
+                    for(String s: urlList){
+                 %>
+                 <td class="pictureContener">
+                     <p>
+                 <center>
+                     
+                     <img src="<% out.print(s); %>" 
+                   style="background: #FFA07A;width: 185px;height:170px;" /> 
+                     
+                 </center>
+                  </p>
+                  <p id="nameposition">
+                      <input src="<%out.print(root+ "/images/like1.jpg");%>" 
+                   style="margin-left: 2px;width: 30px;height:30px;" title="LIKE" title="FOLLOW" type ="image" value="submit"  />
+                      <input src="<%out.print(root+ "/images/follower1.jpg");%>" 
+                   style="margin-left: 110px;width: 30px;height:30px;" title="FOLLOW" type ="image" value="follow"  /> 
+                     </p>
+                 </td>
+                 <%}%>
+                </tr>                                  
+           
+             </tr>
+        </table>
+               
+       <% }%>
         
 <%@include file="tools/footPage.jspf" %>

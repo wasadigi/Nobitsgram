@@ -30,7 +30,7 @@
 
 .menubarre a:hover{
     color : white;
-     border-bottom: 4px solid white;
+    border-bottom: 4px solid white;
   
     
 }
@@ -38,19 +38,18 @@
 .menubarre a.is_selected{    
     color: white;
     border-bottom: 4px solid white;
-
 }
 
 
 #position-menu-barre{
-    margin-top: 13px;
+    
     
 }
 
 #posearch1 {
     position : absolute;
-    top : 15px;
-    right : 80px;
+    top: 25%;
+    right : 20px;
 }
 
 
@@ -63,17 +62,16 @@
 }
 
 
-.pictureContener{
+.pictureContener, .pictureContener1{      
       
-      padding: 20px 10px 2px 10px;      
       border-left: 2px solid #2B2B2B;
       border-right: 2px solid #2B2B2B;
       border-top: 2px solid #2B2B2B;
       border-bottom: 2px solid #2B2B2B;
       height: 70px;
-      width: 40px;
-     
+      width: 40px;     
 }
+
 
 .pictureContener .imageContener{    
       margin-left: 20px;
@@ -89,5 +87,6 @@
 }
 
 #picturposition{    
-    margin-top: -15px;    
+    margin-top: 0px;
 }
+

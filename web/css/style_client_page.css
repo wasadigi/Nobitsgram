@@ -11,14 +11,13 @@
 */
 
 #contener {
-margin-left : auto;
-margin-right : auto;
+    margin-left : auto;
+    margin-right : auto;
 }
 #header {
-margin-top: 0px;
-height : 128px;
-background : url(../images/bg-header.jpg) repeat-x ;
-
+    margin-top: 0px;
+    height : 128px;
+    background : url(../images/bg-header.jpg) repeat-x ;
 }
 
 #body_bg {
@@ -26,23 +25,44 @@ background : url(../images/bg-header.jpg) repeat-x ;
     background : url("../images/body-bg.jpg") repeat-x;
 }
 #body1 {
-background : url("../images/background.jpg") repeat-x;
+    background : url("../images/background.jpg") repeat-x;
 }
 
-.bar{
-    font-size : 140%;
-    width: 100%;
-    margin-left: -4px;
-    font: bold 12px;  
-    list-style-type: none;
-   
+#positionbar{    
+    margin-top: -20px;
+    margin-left: 0px;
+}
+
+
+#myText{
+    position: relative;
+    font-size: 130%;
+    top: -10px;
+    
     
 }
 
-.bar a {    
-    border-bottom: none;
-    margin-right: -3px;
+.bar, .bar1, .bar2{    
     background-color: gray;
+    height: 42px;
+    width: 41%;
+    margin-left: -4px;
+    font: bold 12px;  
+    list-style-type: none;
+    
+}
+
+.bar1{    
+    width: 52%; 
+    height: 38px;
+}
+.bar2{
+    width: 48.45%
+}
+
+.bar a,  .bar1 a, .bar2 a{    
+    border-bottom: none;
+    margin-right: -3px;    
     color: black;
     padding: 4px 5px;
     text-decoration: none;
@@ -50,31 +70,31 @@ background : url("../images/background.jpg") repeat-x;
 }
 
 
-.bar a:hover {
-    
-    color :#0A1ACC;
-
+.bar a:hover, .bar1 a:hover, .bar2 :hover {    
+    color :#0A1ACC;   
 }
 
 
-.bar a.selected{
+.bar a.selected, .bar1 a.selected, .bar2 a.selected{
     background-color: #2B2B2B;
     color: #F6B22B;
     border-bottom: 4px
     solid #F6B22B;
+    padding-top: 20px;
+    padding-bottom: 0px;
+    padding-left: 0px;
 }
 
-
-
-#positionbar{
-    position: absolute;
-    top: 118px;
-    margin-left: 0px;
+#posipicto{
+    top:6px;
+    margin-left:10px;
+    position: relative
 }
 
 #posearch { 
-    margin-top: -25px;
-    margin-left: 80%;
+    position : absolute;
+    top: 25%;
+    right: 20px;
 }
 
 .chromemenu ul li a:hover, .chromemenu ul li a.current {
@@ -93,28 +113,28 @@ background : url("../images/background.jpg") repeat-x;
 }
 
 #footer {
-color : #00b1d7;
-background : url(../images/footer.jpg) repeat-x scroll;
-height : 65px;
-width : 100%;
-position : absolute;
-bottom : 0;
-padding : 6px 0;
-margin : -80px 0;
+    color : #00b1d7;
+    background : url(../images/footer.jpg) repeat-x scroll;
+    height : 65px;
+    width : 100%;
+    position : absolute;
+    bottom : 0;
+    padding : 6px 0;
+    margin : -80px 0;
 }
 #content, #footer1 {
-background : url("../images/footer_bg.gif") repeat-x;
-clear : both;
+    background : url("../images/footer_bg.gif") repeat-x;
+    clear : both;
 }
 html, body {
-height : 100%;
+    height : 100%;
 }
 
 
 .btn_search {
-background : url(../images/btn-search.png);
-width : 10px;
-height : 10px;
+    background : url(../images/btn-search.png);
+    width : 10px;
+    height : 10px;
 }
 
 

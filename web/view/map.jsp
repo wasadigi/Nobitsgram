@@ -7,18 +7,16 @@
 <%@include file="tools/mapHead.jspf" %>
 
 <div class="bar" id="positionbar">
-           <a href="<% out.print(root+ "/view/client.jsp"); %>" id="Home" class="">
-            <img class="" src="<% out.print(root+"/images/home1.jpg");%>" style="top:10px;margin-left: -5px;position: relative"/>Home</a>
-     <a href="<% out.print(root+ "/view/settingAccount.jsp"); %>" id="" >
-            <img class="" src="<% out.print(root+"/images/account1.jpg");%>" style="top:10px;margin-left: -5px;position: relative" />My account</a>
-     <a href="<% out.print(root+ "/GalleryServlet"); %>" id="Gallery"  >
-            <img src="<% out.print(root+"/images/gallery.jpg");%>" style="top:10px;margin-left: -5px;position: relative"/>Gallery</a>
-     <a href="<% out.print(root+ "/FriendServlet"); %>" id="" >
-            <img class="" src="<% out.print(root+"/images/friends3.jpg");%>" style="top:10px;margin-left: -5px;position: relative" />Friends</a>
-     <a href="<% out.print(root+ "/view/map.jsp"); %>" class ="selected" >
-             <img class="" src="<% out.print(root+"/images/map.jpg");%>" style="top:10px;margin-left: -5px;position: relative"  />Map</a>
+         <a href="<% out.print(root+ "/GalleryServlet"); %>" >
+         <img class="" src="<% out.print(root+"/images/gallery.jpg");%>" class ="posipicto" /><span id="myText">Gallery </span></a>
+     <a href="<% out.print(root+ "/view/settingAccount.jsp"); %>" id="">
+            <img class="" src="<% out.print(root+"/images/account1.jpg");%>" class ="posipicto" /><span id="myText">My account</span></a>
+     <a href="<% out.print(root+ "/FriendServlet"); %>" id="">
+            <img class="" src="<% out.print(root+"/images/friends3.jpg");%>" class ="posipicto"/><span id="myText">Friends</span></a>
+            <a href="<% out.print(root+ "/view/map.jsp"); %>" class="selected" >
+             <img class="" src="<% out.print(root+"/images/map.jpg");%>" class ="posipicto"  /><span id="myText">Map</span></a>
      <a href="<%out.print(root+ "/LogoutServlet"); %>" id="">
-             <img class="" src="<% out.print(root+"/images/logout1.jpg");%>" style="top:10px;margin-left: -5px;position: relative" />Logout</a>
+             <img class="" src="<% out.print(root+"/images/logout1.jpg");%>" class ="posipicto" /><span id="myText">Logout</span></a>
 
         <!--Bare menu-->
 

@@ -8,6 +8,7 @@ import ch.heigvd.nobitsgram.entity.User;
 import ch.heigvd.nobitsgram.manager.UsersManager;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -82,12 +83,16 @@ private UsersManager usersManager;
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        User user;
+        User user = null;
         try{
-            user = usersManager.getUser("username",username);
+            List<User> myList = usersManager.getUser("username",username);
+            
+            if(myList != null && !myList.isEmpty()){
+                user = myList.get(0);           
+            }
         }
         catch(Exception exc){
-           user = null;
+           
         }
 
         if((!username.trim().equals("") && !password.trim().equals(""))&&
@@ -106,7 +111,7 @@ private UsersManager usersManager;
                 ServletContext sc = getServletContext();
                 request.setAttribute("username", username);
                 //sc.getRequestDispatcher("/view/client.jsp").forward(request, response);
-                response.sendRedirect(request.getContextPath()+"/view/client.jsp");
+                response.sendRedirect(request.getContextPath()+"/GalleryServlet");
             }
         }
         // Return a jsp page error where the username don't exist in the

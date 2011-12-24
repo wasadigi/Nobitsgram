@@ -69,13 +69,13 @@ public class UsersManager {
     /*
      * This method get user according to his parameter and its value
      */
-    public User getUser(String parameter, String value){
+    public List<User> getUser(String parameter, String value){
 
          Query q = em.createQuery("SELECT userSearch FROM User userSearch "
                  + "WHERE userSearch."+parameter+"='"+value+"'");
          List<User> user = q.getResultList();
          
-         return user.get(0);
+         return user;
          
          
     }
@@ -84,8 +84,13 @@ public class UsersManager {
     public boolean isAllReadyRecord(String username){
         boolean cond = false;
         try{
-            User tmp = getUser("username",username);
-            cond = true;
+            List<User> myList = getUser("username",username);
+            
+            if(myList != null && !myList.isEmpty()){
+                User tmp = myList.get(0);
+                cond = true;
+            }
+            
         }
         catch(Exception exc){
 

@@ -13,26 +13,22 @@
 
 
 
-<div class="bar" id="positionbar">
+<div class="bar1" id="positionbar">
 
-     <a href="<% out.print(root+ "/view/client.jsp"); %>" id="Home">
-            <img class="" src="<% out.print(root+"/images/home1.jpg");%>" style="top:10px;margin-left: -5px;position: relative"/>Home</a>
+     <a href="<% out.print(root+ "/GalleryServlet"); %>" >
+         <img class="" src="<% out.print(root+"/images/gallery.jpg");%>" class ="posipicto" /><span id="myText">Gallery </span></a>
      <a href="<% out.print(root+ "/view/settingAccount.jsp"); %>" id="">
-            <img class="" src="<% out.print(root+"/images/account1.jpg");%>" style="top:10px;margin-left: -5px;position: relative" />My account</a>
-     <a href="<% out.print(root+ "/GalleryServlet"); %>" id="Gallery"  >
-            <img class="" src="<% out.print(root+"/images/gallery.jpg");%>" style="top:10px;margin-left: -5px;position: relative"/>Gallery</a>
+            <img class="" src="<% out.print(root+"/images/account1.jpg");%>" class ="posipicto" /><span id="myText">My account</span></a>
      <a href="<% out.print(root+ "/FriendServlet"); %>" id="">
-            <img class="" src="<% out.print(root+"/images/friends3.jpg");%>" style="top:10px;margin-left: -5px;position: relative" />Friends</a>
-     <a href="<% out.print(root+ "/view/map.jsp"); %>" id="">
-             <img class="" src="<% out.print(root+"/images/map.jpg");%>" style="top:10px;margin-left: -5px;position: relative"  />Map</a>
-     <a href="<% out.print(root+ "/view/searchPage.jsp"); %>" class="selected">
-             <img class="" src="<% out.print(root+"/images/search1.jpg");%>" style="top:10px;margin-left: -5px;position: relative"/>Search</a>
+            <img class="" src="<% out.print(root+"/images/friends3.jpg");%>" class ="posipicto"/><span id="myText">Friends</span></a>
+     <a href="<% out.print(root+ "/view/map.jsp"); %>" >
+             <img class="" src="<% out.print(root+"/images/map.jpg");%>" class ="posipicto"  /><span id="myText">Map</span></a>
+             <a href="<% out.print(root+ "/view/searchPage.jsp"); %>" class="selected">
+             <img class="" src="<% out.print(root+"/images/search3.jpg");%>"  class ="posipicto"/><span id="myText">Search</span></a>
 
-<!-- <form action="<%// out.print(root+ "/LogoutServlet"); %>" method="GET"> -->
-            <!-- <input type="submit" name="disconnect" value="Logout"> -->
              <a href="<%out.print(root+ "/LogoutServlet"); %>" id="">
-             <img class="" src="<% out.print(root+"/images/logout1.jpg");%>" style="top:10px;margin-left: -5px;position: relative" />Logout</a>
-<!-- </form> -->
+             <img class="" src="<% out.print(root+"/images/logout1.jpg");%>" class ="posipicto" /><span id="myText">Logout</span></a>
+
 
 <form action="<% out.print(root+ "/SearchServlet"); %>" method="GET">
             <!-- Bare menu -->

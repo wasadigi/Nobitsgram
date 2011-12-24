@@ -84,7 +84,7 @@ public class ServletPersonnalPage extends HttpServlet {
                 
             }
                      
-           getServletContext().getRequestDispatcher("/view/client.jsp").forward(request, response);
+           getServletContext().getRequestDispatcher("/view/gallery.jsp").forward(request, response);
 
     }
 

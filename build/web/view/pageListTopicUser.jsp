@@ -6,19 +6,17 @@
 
 <%@include file="tools/headPage.jspf" %>
 
-<div class="bar" id="positionbar">
-           <a href="<% out.print(root+ "/view/client.jsp"); %>" id="Home" class="">
-            <img class="" src="<% out.print(root+"/images/home1.jpg");%>" style="top:10px;margin-left: -5px;position: relative"/>Home</a>
-     <a href="<% out.print(root+ "/view/settingAccount.jsp"); %>" id="" >
-            <img class="" src="<% out.print(root+"/images/account1.jpg");%>" style="top:10px;margin-left: -5px;position: relative" />My account</a>
-     <a href="<% out.print(root+ "/GalleryServlet"); %>" id="Gallery"  >
-            <img src="<% out.print(root+"/images/gallery.jpg");%>" style="top:10px;margin-left: -5px;position: relative"/>Gallery</a>
-     <a href="<% out.print(root+ "/view/friendsPage.jsp"); %>" id="" class ="selected" >
-            <img class="" src="<% out.print(root+"/images/friends3.jpg");%>" style="top:10px;margin-left: -5px;position: relative" />Friends</a>
-     <a href="<% out.print(root+ "/view/map.jsp"); %>" id="">
-             <img class="" src="<% out.print(root+"/images/map.jpg");%>" style="top:10px;margin-left: -5px;position: relative"  />Map</a>
+<div class="bar2" id="positionbar">
+      <a href="<% out.print(root+ "/GalleryServlet"); %>" >
+         <img class="" src="<% out.print(root+"/images/gallery.jpg");%>" class ="posipicto" /><span id="myText">Gallery </span></a>
+     <a href="<% out.print(root+ "/view/settingAccount.jsp"); %>" id="">
+            <img class="" src="<% out.print(root+"/images/account1.jpg");%>" class ="posipicto" /><span id="myText">My account</span></a>
+     <a href="<% out.print(root+ "/FriendServlet"); %>" class="selected">
+            <img class="" src="<% out.print(root+"/images/friends3.jpg");%>" class ="posipicto"/><span id="myText">Friends</span></a>
+     <a href="<% out.print(root+ "/view/map.jsp"); %>" >
+             <img class="" src="<% out.print(root+"/images/map.jpg");%>" class ="posipicto"  /><span id="myText">Map</span></a>
      <a href="<%out.print(root+ "/LogoutServlet"); %>" id="">
-             <img class="" src="<% out.print(root+"/images/logout1.jpg");%>" style="top:10px;margin-left: -5px;position: relative" />Logout</a>
+             <img class="" src="<% out.print(root+"/images/logout1.jpg");%>" class ="posipicto" /><span id="myText">Logout</span></a>
 
         <!--Bare menu-->
 
@@ -59,10 +57,12 @@
                        user = users.get(j);
                 %>
                         <td class="pictureContener">
+                    <center>
                             <p id="picturposition">
                                 <img src="<% out.print(user.getProfile_picture()); %>" 
                                          style="width: 80px;height:80px;" />
                             </p>
+                    </center>
                             <p id="nameposition">
                                         <% out.print(user.getUsername()); %> 
                             </p>
