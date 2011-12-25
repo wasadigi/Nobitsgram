@@ -35,6 +35,15 @@
    double lat = user.getLatitude();
    double lng = user.getLongitude();
    boolean zoomOut = user.isZoomOut();
+   String position = user.getCountry();
+   String username = user.getUsername();
+   String image = user.getProfile_picture();
+   if(user.getStreet() != null && user.getStreet()!="" ){
+       position = user.getStreet();
+   }
+   else if(user.getCity() != null && user.getCity() !="" ){
+         position = user.getCity();
+   }
 %>
 
 
@@ -44,6 +53,7 @@
        
    var userPosition = new google.maps.LatLng(<%out.print(lat);%>,<%out.print(lng);%>);
    var myZoom;
+   var marker;
    if(<%out.print(zoomOut);%>){
        myZoom = 6;
    }
@@ -64,7 +74,7 @@
     
     
        
-          var marker = new google.maps.Marker({
+    marker = new google.maps.Marker({
     map:map,
     draggable:true,
     animation: google.maps.Animation.DROP,
@@ -81,8 +91,21 @@
       center: userPosition,
       radius: 621.3711922
     };
-    cityCircle = new google.maps.Circle(areaOption);
-
+    
+    
+    cityCircle = new google.maps.Circle(areaOption);    		
+    var infowindow = new google.maps.InfoWindow({
+        content: '<div> <img src="<% out.print(image); %>" style="background: #FFA07A;width: 50px;height:50px;" />'+
+                   '<div style="margin-left:10px;"><% out.print(username);%></div>'+
+                  '<p> <% out.print("Position:  " +position ); %> </div> </p>'+
+                   '<p> <% out.print("Latitude:  " +lat); %> </div> </p>'+
+                   '<p> <% out.print("Longitude:  " +lng ); %> </div> </p>'
+              
+    });
+    
+    google.maps.event.addListener(marker, 'click', function() {
+    infowindow.open(map, marker);
+});
 }
 
 function toggleBounce() {
@@ -102,7 +125,18 @@ function toggleBounce() {
 </script>
 
     <br/><br/>
-     <div id="map_canvas" style="width:100%; height:100%; margin: 0; padding: 0;margin-top: -25px;"></div>
+     <div id="map_canvas" class="mapContainer" style="width:70%; height:80%; 
+          border: 2px solid #000 ; margin-top: 20px;" > 
+     </div>
+    <div style="width: 30%; height: 80%; margin-top: -39%;margin-left: 70%; border: 2px solid #000 ;">
+        <table>
+            <tr>
+                
+            </tr>
+        </table>
+    
+    </div>
+        
 
 <%@include file="tools/footPage.jspf" %>
 

@@ -33,7 +33,7 @@
     
         <a href="<% out.print(root+ "/view/friendsPage.jsp"); %>" style="margin-top: 10px;">My contacts</a>
         <a href="<% out.print(root+ "/ListTopicUserServlet"); %>"  >My topics users</a>
-        <a href="">Nobitsgram users</a>
+        <a href="<% out.print(root+ "/UsersActualyConnectServlet"); %>">Nobitsgram users</a>
         <a href="<% out.print(root+ "/MyFollowerServlet"); %>"
            class="is_selected">My followers</a>                  
     </div>

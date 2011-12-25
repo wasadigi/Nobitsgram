@@ -106,11 +106,9 @@ private UsersManager usersManager;
             else{
                 HttpSession session = request.getSession();
                 session.setAttribute("username", username);
-                session.setAttribute("id", user.getId());
-                session.setAttribute("user", user);
-                ServletContext sc = getServletContext();
-                request.setAttribute("username", username);
-                //sc.getRequestDispatcher("/view/client.jsp").forward(request, response);
+                user.setIsConnect(true);
+                user = usersManager.edit(user);
+                session.setAttribute("user", user);        
                 response.sendRedirect(request.getContextPath()+"/GalleryServlet");
             }
         }

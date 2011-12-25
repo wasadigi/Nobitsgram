@@ -1,8 +1,9 @@
-<%--
-    Document   : friendsPage
-    Created on : 11 déc. 2011, 16:51:44
+<%-- 
+    Document   : usersConnectedPage
+    Created on : 24 déc. 2011, 23:38:08
     Author     : Eyram
 --%>
+
 
 <%@page import="ch.heigvd.nobitsgram.util.UserInstagram"%>
 <%@include file="tools/headPage.jspf" %>
@@ -33,14 +34,15 @@
     <div class="menubarre" id="position-menu-barre">
     
         <a href="<% out.print(root+ "/view/friendsPage.jsp"); %>" 
-           class="is_selected" style="margin-top: 10px;">
+           style="margin-top: 10px;">
                             My contacts
         </a>
            
         <a href="<% out.print(root+ "/ListTopicUserServlet"); %>">
                             My topics users
         </a>
-        <a href="<% out.print(root+ "/UsersActualyConnectServlet"); %>">Nobitsgram users</a>
+        <a href="<% out.print(root+ "/UsersActualyConnectServlet"); %>" 
+           class="is_selected" >Nobitsgram users</a>
         <a href="<% out.print(root+ "/MyFollowerServlet"); %>">My followers</a>                      
     </div>
     
@@ -48,13 +50,13 @@
 <table cellspacing="20"> 
     
     <% 
-        List<UserInstagram> users = (List<UserInstagram>)session.getAttribute("myContacts");
+        List<User> usersConnected = (List<User>)session.getAttribute("usersConnected");
 
         int compt=1;
         String image;
         String name;
-        for(UserInstagram user: users){
-            image = user.getProfilePicture();
+        for(User user: usersConnected){
+            image = user.getProfile_picture();
             name = user.getUsername();
             if(compt%6 == 0){
     %>
@@ -67,8 +69,11 @@
                    style="background: #FFA07A;width: 100px;height:100px;" /> 
                      </p>
                     </center>
-                     <p id="nameposition">
-                            <% out.print(name); %> 
+                    <p style="margin-top: -10px;">
+                          <img src="<%out.print(root+ "/images/connected3.jpg");%>" 
+                   style="background: #FFA07A;width: 20px;height:20px;" /> 
+                          <span style=" position:absolute ;color: green; margin-left: 10px; 
+                               margin-top: -1px; font-weight: bold;"> <% out.print(name); %> </span>
                      </p>
   
     <% if(compt%6 == 0){ %>
@@ -80,4 +85,5 @@
 </table>    
                 
 <%@include file="tools/footPage.jspf" %>
+
 

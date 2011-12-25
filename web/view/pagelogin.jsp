@@ -4,6 +4,7 @@
     Author     : Eyram
 --%>
 
+<%@page import="ch.heigvd.nobitsgram.entity.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page session="true" %>
 
@@ -27,7 +28,8 @@
 
             <!-- We try to redirect the user to the client page when the session is still open -->
             <% if(request.getSession().getAttribute("id") != null){
-            out.println(request.getSession().toString());%>
+                User user = (User)session.getAttribute("user");
+                user.setIsConnect(true); %>
             <jsp:forward page="/GalleryServlet">
                 <jsp:param name="transfert" value="ok" />
             </jsp:forward>

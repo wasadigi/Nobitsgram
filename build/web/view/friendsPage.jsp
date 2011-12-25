@@ -40,7 +40,7 @@
         <a href="<% out.print(root+ "/ListTopicUserServlet"); %>">
                             My topics users
         </a>
-        <a href="">Nobitsgram users</a>
+        <a href="<% out.print(root+ "/UsersActualyConnectServlet"); %>">Nobitsgram users</a>
         <a href="<% out.print(root+ "/MyFollowerServlet"); %>">My followers</a>                      
     </div>
     

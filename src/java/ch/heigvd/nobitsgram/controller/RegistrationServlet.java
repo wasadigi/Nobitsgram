@@ -266,7 +266,7 @@ public class RegistrationServlet extends HttpServlet {
 
 
 
-                 
+                 user.setIsConnect(true);
                 // We send the client to the redirect page
                 session.setAttribute("user",user);
 

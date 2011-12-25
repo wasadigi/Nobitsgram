@@ -32,7 +32,7 @@
     
         <a href="<% out.print(root+ "/view/friendsPage.jsp"); %>" style="margin-top: 10px;">My contacts</a>
         <a href="<% out.print(root+ "/ListTopicUserServlet"); %>" class="is_selected" >My topics users</a>
-        <a href="">Nobitsgram users</a>
+        <a href="<% out.print(root+ "/UsersActualyConnectServlet"); %>">Nobitsgram users</a>
         <a href="<% out.print(root+ "/MyFollowerServlet"); %>">My followers</a>                  
     </div>
         <% List<Topic> topics = (List<Topic>)session.getAttribute("topics");

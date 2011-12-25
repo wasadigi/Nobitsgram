@@ -4,8 +4,11 @@
  */
 package ch.heigvd.nobitsgram.controller;
 
+import ch.heigvd.nobitsgram.entity.User;
+import ch.heigvd.nobitsgram.manager.UsersManager;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +22,8 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "LogoutServlet", urlPatterns = {"/LogoutServlet"})
 public class LogoutServlet extends HttpServlet {
-
+@EJB
+private UsersManager usersManager;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -64,6 +68,9 @@ public class LogoutServlet extends HttpServlet {
         HttpSession session = null;
         // We destruct the session and redirect the user to the welcome page
        session =request.getSession();
+       User user = (User)session.getAttribute("user");
+       user.setIsConnect(false);
+       user = usersManager.edit(user);
        session.invalidate();
 
 
