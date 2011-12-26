@@ -28,7 +28,18 @@
 
 
         </div>
-<!-- Google Custom Search Element -->
+<div class="menubarre" id="position-menu-barre">
+    
+        <a href="<% out.print(root+ "/MapServlet"); %>" 
+           class="is_selected" style="margin-top: 10px;">
+                            Photo Map
+        </a>
+           
+        <a href="<% out.print(root+ "/NobitsgramMapServlet"); %>"
+           >
+                            Nobitsgram Map
+        </a>        
+    </div>
 
 <% 
    User user = (User)session.getAttribute("user");   

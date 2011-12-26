@@ -12,7 +12,6 @@ import ch.heigvd.nobitsgram.model.UserBean;
 import ch.heigvd.nobitsgram.util.InterrogatorInstagram;
 import ch.heigvd.nobitsgram.util.MyParser;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;

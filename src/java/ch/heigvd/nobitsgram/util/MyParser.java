@@ -4,6 +4,7 @@
  */
 package ch.heigvd.nobitsgram.util;
 
+import ch.heigvd.nobitsgram.model.UserInstagram;
 import java.io.IOException;
 import java.util.ArrayList;
 

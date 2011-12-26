@@ -139,14 +139,14 @@ public class UsersGenerator {
         Random random = new Random();
         double lat;
         double lng;
-        double latMax = 90;
-        double lngMax = 360;
+        double latMax = 70;
+        double lngMax = 300;
         
         
         for(String s: usernames){
             lat = random.nextFloat()*latMax;
             lng = random.nextFloat()*lngMax;
-            if(lng > 180){
+            if(lng > 150){
                 lng = -1*lng/2;
             }
             user = new User(s);

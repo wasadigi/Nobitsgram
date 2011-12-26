@@ -9,7 +9,7 @@ import ch.heigvd.nobitsgram.manager.TopicsManager;
 import ch.heigvd.nobitsgram.manager.UsersManager;
 import ch.heigvd.nobitsgram.util.InterrogatorInstagram;
 import ch.heigvd.nobitsgram.util.MyParser;
-import ch.heigvd.nobitsgram.util.UserInstagram;
+import ch.heigvd.nobitsgram.model.UserInstagram;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;

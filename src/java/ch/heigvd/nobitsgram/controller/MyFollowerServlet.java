@@ -4,6 +4,7 @@
  */
 package ch.heigvd.nobitsgram.controller;
 
+import ch.heigvd.nobitsgram.model.UserInstagram;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;

@@ -11,6 +11,7 @@
         <!-- client page css -->
         
         <link rel="stylesheet" type="text/css" href="<% out.print(root+ "/css/style_client_page.css"); %>" />
+        <link rel="stylesheet" type="text/css" href="<% out.print(root+ "/css/map_style.css"); %>" />
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
         <script type="text/javascript"
     src="http://maps.googleapis.com/maps/api/js?key=ABQIAAAA6cqVE0DJDo2DSTXEBetWIxSXKbIDLJelIWLtXHvL8nGM936liRTtAmsv8q0QG5eIw8V224BON3HgkQ&sensor=true">
