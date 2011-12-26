@@ -7,7 +7,6 @@ package ch.heigvd.nobitsgram.controller;
 import ch.heigvd.nobitsgram.entity.User;
 import ch.heigvd.nobitsgram.manager.UsersManager;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,24 +23,7 @@ import javax.servlet.http.HttpSession;
 public class LogoutServlet extends HttpServlet {
 @EJB
 private UsersManager usersManager;
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            
-        } finally {
-            out.close();
-        }
-    }
-
+  
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -53,8 +35,16 @@ private UsersManager usersManager;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // We disconnect the user
-        toDisconnect(request, response);
+        try{                        
+            HttpSession session = request.getSession();           
+            
+            // We disconnect the user
+            toDisconnect(session);            
+        }
+        catch(Exception excp){
+            
+        }
+        response.sendRedirect(request.getContextPath()+"/view/pagelogin.jsp");
     }
 
 
@@ -63,20 +53,14 @@ private UsersManager usersManager;
      * This method deconnect the user to nobitsgram
      *
      */
-    public void toDisconnect(HttpServletRequest request, HttpServletResponse response)
+    public void toDisconnect(HttpSession session)
          throws IOException, ServletException{
-        HttpSession session = null;
-        // We destruct the session and redirect the user to the welcome page
-       session =request.getSession();
-       User user = (User)session.getAttribute("user");
-       user.setIsConnect(false);
+
+        User user = (User)session.getAttribute("user");
+       user.setIsConnect(false);               
        user = usersManager.edit(user);
        session.invalidate();
-
-
-
-       response.sendRedirect(request.getContextPath()+"/view/pagelogin.jsp");
-
+       
     }
 
 }

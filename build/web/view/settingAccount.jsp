@@ -16,7 +16,7 @@
             <img class="" src="<% out.print(root+"/images/account1.jpg");%>" class ="posipicto" /><span id="myText">My account</span></a>
      <a href="<% out.print(root+ "/FriendServlet"); %>">
             <img class="" src="<% out.print(root+"/images/friends3.jpg");%>" class ="posipicto"/><span id="myText">Friends</span></a>
-     <a href="<% out.print(root+ "/view/map.jsp"); %>" >
+     <a href="<% out.print(root+ "/MapServlet"); %>" >
              <img class="" src="<% out.print(root+"/images/map.jpg");%>" class ="posipicto"  /><span id="myText">Map</span></a>
      <a href="<%out.print(root+ "/LogoutServlet"); %>" id="">
              <img class="" src="<% out.print(root+"/images/logout1.jpg");%>" class ="posipicto" /><span id="myText">Logout</span></a>
@@ -34,8 +34,17 @@
 
         </div>
 
-        <%
-            User user = (User)request.getSession().getAttribute("user");
+        <%  User user = null;
+            try{
+                user = (User)request.getSession().getAttribute("user");
+            }
+            catch(Exception exc){ %>
+            <jsp:forward page="/LogoutServlet">
+                <jsp:param name="transfert" value="ok" />
+            </jsp:forward>
+                
+           <% }
+                    
             String firstname = user.getFirstname();
             String lastname = user.getLastname();
             String country = user.getCountry();

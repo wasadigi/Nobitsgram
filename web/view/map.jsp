@@ -13,7 +13,7 @@
             <img class="" src="<% out.print(root+"/images/account1.jpg");%>" class ="posipicto" /><span id="myText">My account</span></a>
      <a href="<% out.print(root+ "/FriendServlet"); %>" id="">
             <img class="" src="<% out.print(root+"/images/friends3.jpg");%>" class ="posipicto"/><span id="myText">Friends</span></a>
-            <a href="<% out.print(root+ "/view/map.jsp"); %>" class="selected" >
+            <a href="<% out.print(root+ "/MapServlet"); %>" class="selected" >
              <img class="" src="<% out.print(root+"/images/map.jpg");%>" class ="posipicto"  /><span id="myText">Map</span></a>
      <a href="<%out.print(root+ "/LogoutServlet"); %>" id="">
              <img class="" src="<% out.print(root+"/images/logout1.jpg");%>" class ="posipicto" /><span id="myText">Logout</span></a>
@@ -125,10 +125,12 @@ function toggleBounce() {
 </script>
 
     <br/><br/>
-     <div id="map_canvas" class="mapContainer" style="width:70%; height:80%; 
-          border: 2px solid #000 ; margin-top: 20px;" > 
+    <div >
+     <div id="map_canvas" style="width:60%; height:95%;
+    border: 2px solid #000; margin-top: 30px;"> 
      </div>
-    <div style="width: 30%; height: 80%; margin-top: -39%;margin-left: 70%; border: 2px solid #000 ;">
+    <div 
+     <div>
         <table>
             <tr>
                 
@@ -136,7 +138,7 @@ function toggleBounce() {
         </table>
     
     </div>
-        
+    </div>
 
 <%@include file="tools/footPage.jspf" %>
 

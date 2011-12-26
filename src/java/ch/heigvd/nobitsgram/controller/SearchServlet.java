@@ -21,77 +21,58 @@ public class SearchServlet extends HttpServlet {
 
 
 
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            getServletContext().getRequestDispatcher("/view/searchPage.jsp").forward(request, response);
-
-        }
-        finally {
-            out.close();
-        }
-    }
-
-
     /**
      *
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try{
+            HttpSession session = request.getSession();
+            // We get the urlList from the session
+            List<String> urlList =(List<String>)session.getAttribute("urlList");
+            // We set the message to empty always the jsp page call this servlet
+            String message= (String)session.getAttribute("message");
+            String topic;
+            String access_token = null;
+            User user=(User)session.getAttribute("user");
+            String tagInfo;
 
-        HttpSession session = request.getSession();
-        // We get the urlList from the session
-        List<String> urlList =(List<String>)session.getAttribute("urlList");
-        // We set the message to empty always the jsp page call this servlet
-        String message= (String)session.getAttribute("message");
-        String topic;
-        String access_token = null;
-        User user=(User)session.getAttribute("user");
-        String tagInfo;
-
-       ServletContext sc = getServletContext();
-
-
-       topic = request.getParameter("searchTopic");
-
-       if(topic.trim().equals("") && urlList == null){
-            message = "Please type some words in the search box!";
-
-       }
+           ServletContext sc = getServletContext();
 
 
+           topic = request.getParameter("searchTopic");
 
-      if(topic.trim()!= ""){
-            access_token = user.getAcces_token();
-            urlList = getListsUrl(topic,access_token);
-            if(urlList.isEmpty()){
-                message = "No matching topic for \""+topic+"\"";
-            }
-            else{
-                tagInfo = getInfoTopic(topic,access_token);
-                if(tagInfo != "")
-                    message = "Result for \""+topic +"\" : "+tagInfo;
-                else{
-                    message = "An error occured when we try to get the number of topic";
+           if(topic.trim().equals("") && urlList == null){
+                message = "Please type some words in the search box!";
+
+           }
+
+
+
+          if(topic.trim()!= ""){
+                access_token = user.getAcces_token();
+                urlList = getListsUrl(topic,access_token);
+                if(urlList.isEmpty()){
+                    message = "No matching topic for \""+topic+"\"";
                 }
-            }
-       }
-      
-       session.setAttribute("urlList", urlList);
-       session.setAttribute("message",message);       
-       sc.getRequestDispatcher("/view/searchPage.jsp").forward(request, response);
+                else{
+                    tagInfo = getInfoTopic(topic,access_token);
+                    if(tagInfo != "")
+                        message = "Result for \""+topic +"\" : "+tagInfo;
+                    else{
+                        message = "An error occured when we try to get the number of topic";
+                    }
+                }
+           }
 
+           session.setAttribute("urlList", urlList);
+           session.setAttribute("message",message);       
+           sc.getRequestDispatcher("/view/searchPage.jsp").forward(request, response);
 
+        }
+        catch(NullPointerException nulExc){
+            response.sendRedirect(request.getContextPath()+"/view/pagelogin.jsp");
+        }
 
     }
 

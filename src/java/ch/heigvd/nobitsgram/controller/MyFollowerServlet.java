@@ -37,41 +37,45 @@ public class MyFollowerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        ServletContext sc = request.getServletContext();
-        
-        HttpSession session = request.getSession();
-        
-        InterrogatorInstagram inter = new InterrogatorInstagram();
-        
-        User user = (User)session.getAttribute("user");
-        String access_token = user.getAcces_token();
-                
-        
-        
-        String followingUrl ="https://api.instagram.com/v1/users/"+
-                     user.getId_Instagram()+"/follows?access_token="+access_token;
-        // We get the list of Instagram user which the user is follow by
-        List<UserInstagram> followings = getListUserInstgram(followingUrl, inter);
-                
-        
-        // We build the url to do the follow request to Instagram
-        String myFollowersUrl =  "https://api.instagram.com/v1/users/"+
-             user.getId_Instagram()+"/followed-by?access_token="+access_token;
-                        
-       // We get the list of Instagra user which the current user follow
-        List<UserInstagram> myFollowers = getListUserInstgram(myFollowersUrl, inter);        
-                        
-        // We remove each Instagram user which is in followersBy in the followers
-        myFollowers = filterList(myFollowers, followings);
-        
-        
-        myFollowers = setListUrl(myFollowers, inter, access_token);
-        
-        session.setAttribute("myFollowers", myFollowers);
-        
-        sc.getRequestDispatcher("/view/myFollowers.jsp").
-                 forward(request, response);
+        try{
+            ServletContext sc = request.getServletContext();
+
+            HttpSession session = request.getSession();
+
+            InterrogatorInstagram inter = new InterrogatorInstagram();
+
+            User user = (User)session.getAttribute("user");
+            String access_token = user.getAcces_token();
+
+
+
+            String followingUrl ="https://api.instagram.com/v1/users/"+
+                         user.getId_Instagram()+"/follows?access_token="+access_token;
+            // We get the list of Instagram user which the user is follow by
+            List<UserInstagram> followings = getListUserInstgram(followingUrl, inter);
+
+
+            // We build the url to do the follow request to Instagram
+            String myFollowersUrl =  "https://api.instagram.com/v1/users/"+
+                 user.getId_Instagram()+"/followed-by?access_token="+access_token;
+
+           // We get the list of Instagra user which the current user follow
+            List<UserInstagram> myFollowers = getListUserInstgram(myFollowersUrl, inter);        
+
+            // We remove each Instagram user which is in followersBy in the followers
+            myFollowers = filterList(myFollowers, followings);
+
+
+            myFollowers = setListUrl(myFollowers, inter, access_token);
+
+            session.setAttribute("myFollowers", myFollowers);
+
+            sc.getRequestDispatcher("/view/myFollowers.jsp").
+                     forward(request, response);
+        }
+        catch(NullPointerException nulExc){
+            response.sendRedirect(request.getContextPath()+"/view/pagelogin.jsp");
+        }
               
         
     }

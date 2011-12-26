@@ -41,15 +41,20 @@ public class UsersActualyConnectServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User user = (User)session.getAttribute("user");
-        List<User> usersConnected = usersManager.getUser("isConnect","true");
-        // We remove the current user in the list
-        usersConnected.remove(user);        
-        session.setAttribute("usersConnected", usersConnected);
-        getServletContext().getRequestDispatcher("/view/usersConnectedPage.jsp").
-                 forward(request, response);
-        
+        try{
+            HttpSession session = request.getSession();
+            User user = (User)session.getAttribute("user");
+            List<User> usersConnected = usersManager.getUser("isConnect","true");
+            // We remove the current user in the list
+            usersConnected.remove(user);
+            
+            session.setAttribute("usersConnected", usersConnected);
+            getServletContext().getRequestDispatcher("/view/usersConnectedPage.jsp").
+                     forward(request, response);
+        }
+        catch(NullPointerException nulExc){
+            response.sendRedirect(request.getContextPath()+"/view/pagelogin.jsp");
+        }
     }
 
     /** 

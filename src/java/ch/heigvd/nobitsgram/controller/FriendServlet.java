@@ -45,7 +45,7 @@ public class FriendServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        try{
             HttpSession session = request.getSession();
             User user = (User)session.getAttribute("user");
             ServletContext sc = request.getServletContext();
@@ -57,6 +57,10 @@ public class FriendServlet extends HttpServlet {
             
              sc.getRequestDispatcher("/view/friendsPage.jsp").
                  forward(request, response);
+        }
+        catch(NullPointerException nulExc){
+            response.sendRedirect(request.getContextPath()+"/view/pagelogin.jsp");
+        }
         
     }
 

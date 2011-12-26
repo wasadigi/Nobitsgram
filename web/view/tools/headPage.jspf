@@ -1,3 +1,4 @@
+<%@page import="ch.heigvd.nobitsgram.listener.MyServletListener"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@page import="ch.heigvd.nobitsgram.entity.User"%>
@@ -23,8 +24,7 @@
             <br/>
             <img src ="<% out.print(root+"/images/nobitsgramLogo3.jpg");%>" style="margin-left:35%; "/>
         </div>
-
-
+          
 
 
 

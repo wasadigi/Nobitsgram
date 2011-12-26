@@ -21,7 +21,7 @@
             <img class="" src="<% out.print(root+"/images/account1.jpg");%>" class ="posipicto" /><span id="myText">My account</span></a>
      <a href="<% out.print(root+ "/FriendServlet"); %>" id="">
             <img class="" src="<% out.print(root+"/images/friends3.jpg");%>" class ="posipicto"/><span id="myText">Friends</span></a>
-     <a href="<% out.print(root+ "/view/map.jsp"); %>" >
+     <a href="<% out.print(root+ "/MapServlet"); %>" >
              <img class="" src="<% out.print(root+"/images/map.jpg");%>" class ="posipicto"  /><span id="myText">Map</span></a>
              <a href="<% out.print(root+ "/view/searchPage.jsp"); %>" class="selected">
              <img class="" src="<% out.print(root+"/images/search3.jpg");%>"  class ="posipicto"/><span id="myText">Search</span></a>

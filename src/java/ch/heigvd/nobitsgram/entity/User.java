@@ -238,7 +238,12 @@ public class User implements Serializable {
     }
 
     public void setIsConnect(boolean isConnect) {
-        this.isConnect = isConnect;
+        try{
+            this.isConnect = isConnect;
+        }
+        catch(NullPointerException npExc){
+            
+        }
     }
 
 

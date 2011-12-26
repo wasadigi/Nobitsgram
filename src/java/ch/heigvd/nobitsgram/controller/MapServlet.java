@@ -5,28 +5,21 @@
 package ch.heigvd.nobitsgram.controller;
 
 import java.io.IOException;
-import java.util.*;
-import ch.heigvd.nobitsgram.entity.*;
-import ch.heigvd.nobitsgram.manager.*;
-import javax.ejb.EJB;
-import javax.servlet.ServletContext;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.ServletContext;
 
 /**
  *
  * @author Eyram
  */
-@WebServlet(name = "ListTopicUserServlet", urlPatterns = {"/ListTopicUserServlet"})
-public class ListTopicUserServlet extends HttpServlet {
-    @EJB
-    private UsersManager usersManager;
-    @EJB
-    private TopicsManager topicsManager;
+@WebServlet(name = "MapServlet", urlPatterns = {"/MapServlet"})
+public class MapServlet extends HttpServlet {
+
    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
@@ -40,22 +33,13 @@ public class ListTopicUserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try{
-            HttpSession session = request.getSession();
             ServletContext sc = request.getServletContext();
-            User user = (User)session.getAttribute("user");
-            user = usersManager.edit(user);
-            List<Topic> topics = user.getTopicList();
-
-            refreshTopics(topics);
-            session.setAttribute("user", user);
-            session.setAttribute("topics", topics);        
-            sc.getRequestDispatcher("/view/pageListTopicUser.jsp").
-                     forward(request, response);
+            sc.getRequestDispatcher("/view/map.jsp").
+                   forward(request, response);
         }
-        catch(NullPointerException nulExc){
+        catch(Exception except){
             response.sendRedirect(request.getContextPath()+"/view/pagelogin.jsp");
         }
-        
     }
 
     /** 
@@ -68,15 +52,8 @@ public class ListTopicUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+        
     }
 
-    public void refreshTopics(List<Topic> topics){
-        
-        for(Topic topic: topics){
-            topic = topicsManager.edit(topic);
-        }
-    }
-   
     
 }

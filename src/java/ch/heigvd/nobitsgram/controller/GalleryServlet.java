@@ -8,7 +8,6 @@ import ch.heigvd.nobitsgram.entity.User;
 import ch.heigvd.nobitsgram.util.InterrogatorInstagram;
 import ch.heigvd.nobitsgram.util.MyParser;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 import javax.servlet.ServletContext;
+
 /**
  *
  * @author Eyram
@@ -36,60 +36,61 @@ public class GalleryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        ServletContext sc = request.getServletContext();
-        HttpSession session = request.getSession();        
-        User user = (User)session.getAttribute("user");        
-        String access_token = user.getAcces_token();
-        InterrogatorInstagram inter = new InterrogatorInstagram();
-        
-        
-        // Here we get the url of the media which the user like
-        String likeUrl = "https://api.instagram.com/v1/users/self/media/liked?access_token="+access_token;
-        List<String> likeUrlList = getListURL(likeUrl,inter);
-        session.setAttribute("likeUrlList", likeUrlList);
-        
-        // Here we get the url of the media which is match of one of the 
-        // topic of the user
-        // We get ramdom of a topic
-        int size = user.getTopicList().size();
-        List<String> topicUrlList = new ArrayList<String>();
-        if(size > 0){
-            int i = new Random().nextInt(size);            
-            String topic = user.getTopicList().get(i).getName();                   
-            String topicUrl = "https://api.instagram.com/v1/tags/"+topic+"/media/recent?access_token="+access_token;            
-            topicUrlList = getListURL(topicUrl, inter);           
-        }        
-        session.setAttribute("topicUrlList",topicUrlList);
-        
-        
-        
-        // We build the url which permit us to do a follower request to Instagram
-        String urlFollowers = "https://api.instagram.com/v1/users/"+
-             user.getId_Instagram()+"/followed-by?access_token="+access_token;
-        
-        // This list represente the list of followers id
-        List<String> followers = getfollowers(urlFollowers, inter);
-        List<String> followUrlList = new ArrayList<String>();
-        
-        if(!followers.isEmpty()){
-            Random random = new Random();
-            int i = random.nextInt(followers.size());
-            String urlFolMedia = "https://api.instagram.com/v1/users/"
-                 +followers.get(i)+"/media/recent/?access_token="+access_token;
-            followUrlList = getListURL(urlFolMedia, inter);
-           
+        try{
+            
+            ServletContext sc = request.getServletContext();
+            HttpSession session = request.getSession();
+            
+            User user = (User)session.getAttribute("user");        
+            String access_token = user.getAcces_token();
+            InterrogatorInstagram inter = new InterrogatorInstagram();
+            
+            
+
+            // Here we get the url of the media which the user like
+            String likeUrl = "https://api.instagram.com/v1/users/self/media/liked?access_token="+access_token;
+            List<String> likeUrlList = getListURL(likeUrl,inter);
+            session.setAttribute("likeUrlList", likeUrlList);
+
+            // Here we get the url of the media which is match of one of the 
+            // topic of the user
+            // We get ramdom of a topic
+            int size = user.getTopicList().size();
+            List<String> topicUrlList = new ArrayList<String>();
+            if(size > 0){
+                int i = new Random().nextInt(size);            
+                String topic = user.getTopicList().get(i).getName();                   
+                String topicUrl = "https://api.instagram.com/v1/tags/"+topic+"/media/recent?access_token="+access_token;            
+                topicUrlList = getListURL(topicUrl, inter);           
+            }        
+            session.setAttribute("topicUrlList",topicUrlList);
+
+
+
+            // We build the url which permit us to do a follower request to Instagram
+            String urlFollowers = "https://api.instagram.com/v1/users/"+
+                 user.getId_Instagram()+"/followed-by?access_token="+access_token;
+
+            // This list represente the list of followers id
+            List<String> followers = getfollowers(urlFollowers, inter);
+            List<String> followUrlList = new ArrayList<String>();
+
+            if(!followers.isEmpty()){
+                Random random = new Random();
+                int i = random.nextInt(followers.size());
+                String urlFolMedia = "https://api.instagram.com/v1/users/"
+                     +followers.get(i)+"/media/recent/?access_token="+access_token;
+                followUrlList = getListURL(urlFolMedia, inter);
+
+            }
+            
+            session.setAttribute("followUrlList",followUrlList);       
+            sc.getRequestDispatcher("/view/gallery.jsp").
+                   forward(request, response);            
         }
-        
-        
-        
-        
-        
-        
-        session.setAttribute("followUrlList",followUrlList);       
-        
-        sc.getRequestDispatcher("/view/gallery.jsp").
-                 forward(request, response);
+        catch(Exception except){
+            response.sendRedirect(request.getContextPath()+"/view/pagelogin.jsp");
+        }
         
     }
 
@@ -127,5 +128,6 @@ public class GalleryServlet extends HttpServlet {
         // and the end of all result it will put in the list
         return MyParser.parseResponse(response,"data","url",true);
     }
+        
             
 }

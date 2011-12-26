@@ -27,7 +27,7 @@
         <div id ="header">
 
             <!-- We try to redirect the user to the client page when the session is still open -->
-            <% if(request.getSession().getAttribute("id") != null){
+            <% if(request.getSession().getAttribute("user") != null){
                 User user = (User)session.getAttribute("user");
                 user.setIsConnect(true); %>
             <jsp:forward page="/GalleryServlet">
