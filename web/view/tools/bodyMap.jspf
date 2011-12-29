@@ -1,0 +1,34 @@
+<%-- any content can be specified here e.g.: --%>
+<div id="myPictuPosition">
+         
+               
+               <table style="margin-top:-5px; margin-left:-5px;">
+                   <% List<String> positionUrl = (List<String>)session.getAttribute("positionUrl");
+                      int size1 =  positionUrl.size(); System.out.println("TAille ====> "+size1);
+                   if(size1 != 0){
+                       Random random = new Random();
+                       int index;
+                       //String imSrc="http://distilleryimage4.s3.amazonaws.com/ba37b9bc0dbb11e1a87612313804ec91_6.jpg";
+                       for(int i = 0; i < 9; i++ ) {
+                           index = random.nextInt(size1);
+                          
+                           System.out.println("L'index ===> "+index);
+                           System.out.println("URL URL ==> "+positionUrl.get(index));
+                      if(i%3 == 0){        System.out.println("DANS le if avec i i i ==> "+i);         %>                   
+                       <tr >
+                       <% } %>
+                           <td>
+                               <% System.out.println("DEBUT IMAGE SOURCE"); %>
+                               <img src="<% out.print("http://distillery.s3.amazonaws.com/media/2011/10/04/51279e6fb3484ae78dec5b9ef51081ff_6.jpg"); %>" />
+                               <% System.out.println("FIN IMAGE SOURCE"); %>
+                           </td>
+                        <% if((i+1)%3 == 0){ %>
+                       </tr>
+                       <% } %>
+                     <% }
+                                           }%>
+                             
+                
+               </table>
+           </div>
+

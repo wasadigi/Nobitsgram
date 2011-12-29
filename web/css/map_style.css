@@ -40,4 +40,27 @@
 }
 
 
+#myMap{
+    
+    width:600;
+    height:450px;
+    
+    border: 2px solid #000;
+}
 
+#positionCadreCarte{
+   
+   margin-top:10px;
+   width: 900px;
+   height: 550px;
+}
+
+#cadrePicture{
+   border: 2px solid #000;
+}
+
+#myPictuPosition{
+    width:600;
+    height:450px;
+    border: 2px solid #000;
+}

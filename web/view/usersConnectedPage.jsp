@@ -5,7 +5,7 @@
 --%>
 
 
-<%@page import="ch.heigvd.nobitsgram.util.UserInstagram"%>
+<%@page import="ch.heigvd.nobitsgram.model.UserInstagram"%>
 <%@include file="tools/headPage.jspf" %>
 
 <div class="bar2" id="positionbar">

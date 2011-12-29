@@ -45,13 +45,13 @@
 
 <% 
    
-   List<MapUser> mapUsers = (List<MapUser>)session.getAttribute("mapUsers");
+   List<User> users = (List<User>)session.getAttribute("users");
    String position;
    String image;
    String username;
    double lat;
    double lng;
-   int size = mapUsers.size();
+   int size = users.size();
    User user = (User)session.getAttribute("user");   
    double lat1 = user.getLatitude();
    double lng1 = user.getLongitude();
@@ -66,7 +66,7 @@
 <script type="text/javascript">
        
    var userPosition= new google.maps.LatLng(<%out.print(lat1);%>,<%out.print(lng1);%>);
-   var myZoom = 4;
+   var myZoom = 2;
    var marker;
    var infowindow = new google.maps.InfoWindow();
   
@@ -82,19 +82,25 @@
         myOptions);
     var j;
     
-    currentMarker = new google.maps.Marker({
-                        position: new google.maps.LatLng(<%out.print(lat1);%>,<%out.print(lng1);%>),
-                            map: map
-                    });
+    currentMarker = new google.maps.Marker();
+    currentMarker.setPosition();
     
     <% for(int i = 0; i < size; i++) {
 
-            lat = mapUsers.get(i).getLat();
-            lng = mapUsers.get(i).getLng();
-            position = mapUsers.get(i).getAddress();
-            image = mapUsers.get(i).getProfilePicture();
-            username = mapUsers.get(i).getUsername();                        
-            isConnected = mapUsers.get(i).isIsConnected();
+            lat = users.get(i).getLatitude();
+            lng = users.get(i).getLongitude();            
+            position =users.get(i).getCountry();
+            image = users.get(i).getProfile_picture();
+            username = users.get(i).getUsername(); 
+            isConnected = users.get(i).isConnect();
+            
+            if(users.get(i).getStreet() != null && users.get(i).getStreet() != ""){  
+              position = users.get(i).getStreet();
+            } 
+            
+            else if(users.get(i).getCity() != null && users.get(i).getCity() != ""){
+               position = users.get(i).getCity();
+            }
 
        %>
                           
@@ -153,6 +159,6 @@
     
     </div>
     </div>
-
+        
 <%@include file="tools/footPage.jspf" %>
 

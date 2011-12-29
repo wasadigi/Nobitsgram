@@ -8,7 +8,6 @@ import ch.heigvd.nobitsgram.entity.User;
 import ch.heigvd.nobitsgram.manager.TopicsManager;
 import ch.heigvd.nobitsgram.manager.UsersManager;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;

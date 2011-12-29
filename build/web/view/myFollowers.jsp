@@ -3,7 +3,7 @@
     Created on : 21 déc. 2011, 14:48:23
     Author     : Eyram
 --%>
-<%@page import="ch.heigvd.nobitsgram.util.UserInstagram"%>
+<%@page import="ch.heigvd.nobitsgram.model.UserInstagram"%>
 <%@include file="tools/headPage.jspf" %>
 
 <div class="bar2" id="positionbar">

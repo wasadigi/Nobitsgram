@@ -46,10 +46,8 @@ public class NobitsgramMapServlet extends HttpServlet {
             HttpSession session = request.getSession();
             User user = (User)session.getAttribute("user");
             List<User> users = usersManager.findAllUser();
-            List<MapUser> mapUsers = getMapUsers(users);
-            
-            session.setAttribute("users", user);
-            session.setAttribute("mapUsers",mapUsers);
+                        
+            session.setAttribute("users", users);            
             sc.getRequestDispatcher("/view/nobitsgramMap.jsp").
                     forward(request, response);
         }
