@@ -138,6 +138,7 @@
         longitude = 2.294351;//event.latLng.lng();
          xmlHttpObject = createRequestObject();
              makeRequest(); 
+             //loadWindow();
     }); 
 } 
  
@@ -208,15 +209,7 @@ function createRequestObject() {
     xmlHttpObject.send(null);
    }
    
-   function processResponse() {
-    //check if the response has been received from the server
-    if(xmlHttpObject.readyState == 4 && xmlHttpObject.status == 200){
    
-           // Reload the div containing the pictures
-           reloadDiv();
-       
-       
-   }
 
 
 </script>

@@ -41,7 +41,7 @@ public class MyServletListener implements HttpSessionListener{
           session.removeAttribute("user");
         }
         catch(Exception excep){
-            excep.printStackTrace();
+           // excep.printStackTrace();
         }
     }
 

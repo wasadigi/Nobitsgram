@@ -1,0 +1,22 @@
+/* 
+    Document   : adminHome_style
+    Created on : 30 déc. 2011, 00:00:56
+    Author     : Eyram
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+#tableContener{
+     width: 80%;
+     margin-left: 1%; 
+ 
+}
+
+td{
+    text-align: center;
+}

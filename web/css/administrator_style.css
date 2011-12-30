@@ -1,0 +1,47 @@
+/* 
+    Document   : administrator_style
+    Created on : 29 déc. 2011, 16:26:17
+    Author     : Eyram
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+
+
+p {
+  margin-left: 80px;
+  margin-bottom: 20px;
+}
+
+
+.login-form{ 
+    text-align: left; 
+    width: 60%; 
+}
+
+
+
+
+#fieldContener{
+    position: relative;
+    width: 350px; 
+     
+   border: 2px solid #C2C2C2;
+}
+
+
+#legendContener{
+    color: #0000FF;
+    size: 3;
+    font-weight: bold;
+    font-family: Verdana,Tahoma,Arial,sans-serif;
+}
+
+#positionPicture{
+    position: absolute;
+    width: 80px;
+    height: 80px;
+   margin-left: -50px;
+   margin-top: -40px;
+    
+}

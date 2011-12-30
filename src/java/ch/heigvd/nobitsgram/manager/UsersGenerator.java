@@ -103,7 +103,22 @@ public class UsersGenerator {
         usernames.add("jean-marie");
         usernames.add("Sylvain");
         usernames.add("maestro");
-        usernames.add("tintin");
+        usernames.add("tintin");                
+        usernames.add("joujon");
+        usernames.add("titon");
+        usernames.add("tout");
+        usernames.add("Jean");
+        usernames.add("Franck");
+        usernames.add("toun");
+        usernames.add("max");
+        usernames.add("jour");
+        usernames.add("dupe");
+        usernames.add("dalt");
+        usernames.add("marie");
+        usernames.add("Sylvie");
+        usernames.add("master");
+        usernames.add("Hadock");
+        
     }
     
     
