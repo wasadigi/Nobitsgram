@@ -5,9 +5,11 @@
 package ch.heigvd.nobitsgram.controller;
 
 import ch.heigvd.nobitsgram.entity.*;
+import ch.heigvd.nobitsgram.manager.UsersManager;
 import ch.heigvd.nobitsgram.util.*;
 import java.io.*;
 import java.util.*;
+import javax.ejb.EJB;
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -18,7 +20,8 @@ import javax.servlet.http.*;
  */
 @WebServlet(name = "SearchServlet", urlPatterns = {"/SearchServlet"})
 public class SearchServlet extends HttpServlet {
-
+@EJB
+private UsersManager usersManager;
 
 
     /**
@@ -51,6 +54,24 @@ public class SearchServlet extends HttpServlet {
 
           if(topic.trim()!= ""){
                 access_token = user.getAcces_token();
+                Calendar currentDate = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
+                Calendar date = user.getLastDateSearch();
+
+                // We check if the month change. If it change, we set the 
+                // countMonthSearch to one, because it is the first search
+                // in that month
+                if(currentDate.get(currentDate.MONTH) != date.get(date.MONTH)){
+                    user.setCountMonthSearch(1);
+                    // We change the lastDateSearch
+                    user.setLastDateSearch(currentDate);                    
+                }
+                // We increment the countMonthConnection
+                else{
+                    user.setCountMonthSearch(user.getCountMonthSearch()+1);
+                }
+                user.setCountSearch(user.getCountSearch()+1);
+                
+                user = usersManager.edit(user);
                 urlList = getListsUrl(topic,access_token);
                 if(urlList.isEmpty()){
                     message = "No matching topic for \""+topic+"\"";

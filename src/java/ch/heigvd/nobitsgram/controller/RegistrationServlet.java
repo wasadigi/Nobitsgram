@@ -267,6 +267,19 @@ public class RegistrationServlet extends HttpServlet {
 
 
                  user.setIsConnect(true);
+                 
+                 // We create a date with the current timezone et local of user
+                 Calendar date = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
+                 
+                 // We set all the date 
+                 user.setCreateDate(date);
+                 user.setLastDateConnection(date);
+                 user.setLastDateSearch(date);
+                 user.setCountConnection(1);
+                 user.setCountMonthConnection(1);
+                 
+                 user = usersManager.edit(user);
+                 
                 // We send the client to the redirect page
                 session.setAttribute("user",user);
 

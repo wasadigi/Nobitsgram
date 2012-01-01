@@ -7,9 +7,14 @@ import java.security.NoSuchAlgorithmException;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.Date;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
 import sun.misc.BASE64Encoder;
 
@@ -83,8 +88,25 @@ public class User implements Serializable {
     // Default the map is zoom out
     private boolean zoomOut = true;
     
+    private long countConnection = 0;
+    
+    private int countMonthConnection = 0;
+    
+    private long countSearch = 0;
+    
+    private int countMonthSearch = 0;
+    
+    
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Calendar createDate;
     
 
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Calendar lastDateConnection;
+
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Calendar lastDateSearch;
 
     public User(String username){
         this.username = username;
@@ -379,9 +401,67 @@ public class User implements Serializable {
 
     public void setProfile_picture(String profile_picture) {
         this.profile_picture = profile_picture;
-    }                
+    }
 
+    public Calendar getCreateDate() {
+        return createDate;
+    }
 
+    public void setCreateDate(Calendar createDate) {
+        this.createDate = createDate;
+    }
+
+    public Calendar getLastDateConnection() {
+        return lastDateConnection;
+    }
+
+    public void setLastDateConnection(Calendar lastDateConnection) {
+        this.lastDateConnection = lastDateConnection;
+    }
+
+    public Calendar getLastDateSearch() {
+        return lastDateSearch;
+    }
+
+    public void setLastDateSearch(Calendar lastDateSearch) {
+        this.lastDateSearch = lastDateSearch;
+    }
+
+   
+    
+    public long getCountConnection() {
+        return countConnection;
+    }
+
+    public void setCountConnection(long countConnection) {
+        this.countConnection = countConnection;
+    }
+
+    public int getCountMonthConnection() {
+        return countMonthConnection;
+    }
+
+    public void setCountMonthConnection(int countMonthConnection) {
+        this.countMonthConnection = countMonthConnection;
+    }
+
+    public int getCountMonthSearch() {
+        return countMonthSearch;
+    }
+
+    public void setCountMonthSearch(int countMonthSearch) {
+        this.countMonthSearch = countMonthSearch;
+    }
+
+    public long getCountSearch() {
+        return countSearch;
+    }
+
+    public void setCountSearch(long countSearch) {
+        this.countSearch = countSearch;
+    }
+
+    
 
     /**
     *

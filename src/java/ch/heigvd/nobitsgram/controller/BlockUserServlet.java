@@ -42,8 +42,7 @@ public class BlockUserServlet extends HttpServlet {
         ServletContext sc = request.getServletContext();        
         try{
             String[] tabID = request.getParameterValues("blockID");            
-            blockUsers(tabID,session);
-            
+            blockUsers(tabID,session);            
         }
         catch(NullPointerException except){
             String errorBlock = "You don't select any user to block!";            

@@ -59,17 +59,27 @@ public class Test {
         String url2 = "https://api.instagram.com/v1/locations/search?lat="
                     + lat+"&lng="+lng+"&access_token="+access_token;
         
-         String s = rt.getSearcResult(url4);
+        
+        Calendar c = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
+        
+        Date d = new Date();
+        
+        
+        System.out.println("CALENDAR ===> "+c.get(c.MONTH));
+        
+        //System.out.println("Date ====> "+d.ge);
+        
+         //String s = rt.getSearcResult(url4);
        // System.out.println("MY LIST:\n"+MyParser.displayList(myList));
        
-        System.out.println("******************** APRES PARSING \n"+s+"\n*****************");
+    //    System.out.println("******************** APRES PARSING \n"+s+"\n*****************");
         
         //List<UserInstagram> data = MyParser.getUsersFromJson(s,"data","username","profile_picture","id");
         
         //List<String> idS = MyParser.parseResponse(s, "data", "id", true);
         //String  name = data.getUsername();
         //String  proPicture = data.getProfile_picture();  
-       List<String> myList = MyParser.parseResponse(s,"data","url",true);
+       //List<String> myList = MyParser.parseResponse(s,"data","url",true);
        
        
        
@@ -89,7 +99,7 @@ public class Test {
       // System.out.println("USERNAME USERNAME USERNAME ===========> "+ name);
        //System.out.println("\tPROFILE_PICTURE\tPROFILE_PICTURE =======> "+MyParser.displayUser(data));
       
-      System.out.println(" =================================\n"+MyParser.displayList(myList));
+      //System.out.println(" =================================\n"+MyParser.displayList(myList));
        
 
     }

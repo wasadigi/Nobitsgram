@@ -8,7 +8,7 @@
 <%@include file="tools/headPage.jspf" %>
 <center>
     <h1>
-        Sorry!! You have been blocked. <br/> Contact the administrator of nobitsgram for furthers information
+        Sorry!! You have been blocked. <br/> Contact the administrator of nobitsgram for furthers informations
     </h1>
 </center>
 <%@include file="tools/footPage.jspf" %>

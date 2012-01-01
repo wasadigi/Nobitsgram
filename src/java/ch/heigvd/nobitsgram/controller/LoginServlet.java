@@ -8,7 +8,11 @@ import ch.heigvd.nobitsgram.entity.User;
 import ch.heigvd.nobitsgram.manager.UsersManager;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -111,6 +115,27 @@ private UsersManager usersManager;
                 }
                 else{
                     HttpSession session = request.getSession();
+                    // We set the value which indicate how many time user
+                    // has been connected to his account
+                    user.setCountConnection(user.getCountConnection()+1);
+                    
+                    Calendar currentDate = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
+                    Calendar date = user.getLastDateConnection();
+                    
+                    // We check if the month change. If it change, we set the 
+                    // countMonthConnection to one, because it is the first connection
+                    // in that month
+                    if(currentDate.get(currentDate.MONTH) != date.get(date.MONTH)){
+                        user.setCountMonthConnection(1);
+                        // We change the lastDateConnection
+                        user.setLastDateConnection(currentDate);
+                    }
+                    // We increment the countMonthConnection
+                    else{
+                        user.setCountMonthConnection(user.getCountMonthConnection()+1);
+                    }
+                    
+                    
                     session.setAttribute("username", username);
                     user.setIsConnect(true);
                     user = usersManager.edit(user);
