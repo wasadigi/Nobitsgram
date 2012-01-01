@@ -75,6 +75,8 @@ public class User implements Serializable {
     
     private boolean isConnect = false;
     
+    private boolean isBlocked = false;
+    
     private String profile_picture;
 
     // boolean which indicate if the map must be zoom out or not
@@ -244,6 +246,14 @@ public class User implements Serializable {
         catch(NullPointerException npExc){
             
         }
+    }
+
+    public boolean isIsBlocked() {
+        return isBlocked;
+    }
+
+    public void setIsBlocked(boolean isBlocked) {
+        this.isBlocked = isBlocked;
     }
 
 

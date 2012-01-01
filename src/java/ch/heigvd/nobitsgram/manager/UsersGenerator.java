@@ -174,6 +174,12 @@ public class UsersGenerator {
             user.setCountry("ch");
             user.setLatitude(lat);
             user.setLongitude(lng);
+            if(i%2 == 0){
+              user.setIsBlocked(false);
+            }
+            else{
+              user.setIsBlocked(true);
+            }
             create(user);
             users.add(user);
             i++;

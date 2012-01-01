@@ -18,5 +18,12 @@
 }
 
 td{
-    text-align: center;
+    text-align: center;    
+}
+
+#contenerSelectUser{
+    position: relative;
+    margin-left: 300px;
+    font-size: 130%;
+    margin-top: -36px;
 }

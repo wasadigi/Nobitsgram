@@ -224,4 +224,13 @@ public class MyParser {
         return s;
     }
     
+    
+    public static String displayUser(String[] tab){
+        String msg = "";
+        for(String s: tab){
+            msg +=s+"\n";
+        }
+        return msg;
+    }
+    
 }

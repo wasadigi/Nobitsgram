@@ -6,8 +6,9 @@ package ch.heigvd.nobitsgram.controller;
 
 import ch.heigvd.nobitsgram.entity.User;
 import ch.heigvd.nobitsgram.manager.UsersManager;
+import ch.heigvd.nobitsgram.util.MyParser;
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -21,12 +22,11 @@ import javax.servlet.http.HttpSession;
  *
  * @author Eyram
  */
-@WebServlet(name = "HomeServlet", urlPatterns = {"/HomeServlet"})
-public class HomeServlet extends HttpServlet {
-    @EJB
+@WebServlet(name = "BlockUserServlet", urlPatterns = {"/BlockUserServlet"})
+public class BlockUserServlet extends HttpServlet {
+     @EJB
     private UsersManager usersManager;
-   
-
+  
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
@@ -37,21 +37,20 @@ public class HomeServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {    
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        ServletContext sc = request.getServletContext();        
         try{
+            String[] tabID = request.getParameterValues("blockID");            
+            blockUsers(tabID,session);
             
-            ServletContext sc = request.getServletContext();
-            HttpSession session = request.getSession();                       
-                        
-            List<User> users = usersManager.findAllUser();
+        }
+        catch(NullPointerException except){
+            String errorBlock = "You don't select any user to block!";            
+            session.setAttribute("errorBlock", errorBlock);
             
-            //We add the list of user to the administrator session
-            session.setAttribute("users", users);          
-            sc.getRequestDispatcher("/nobitsgramAdmin/administrator/home.jsp").forward(request, response);
         }
-        catch(Exception exc){
-            response.sendRedirect(request.getContextPath()+"/nobitsgramAdmin/administrator/administrator.jsp");
-        }
+        sc.getRequestDispatcher("/nobitsgramAdmin/administrator/home.jsp").forward(request, response);
     }
 
     /** 
@@ -64,8 +63,28 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-     
+        doGet(request, response);
     }
 
+    public void blockUsers(String[] tab, HttpSession session){
+        List<User> users = usersManager.findAllUser();
+        int i;
+        User user;
+        try{
+            for(String s:tab){                
+                i = Integer.parseInt(s);
+                user = users.get(i);                
+                user.setIsBlocked(!user.isIsBlocked());;                
+                user = usersManager.edit(users.get(i));                
+            }
+        }
+        catch(Exception ex){
+            
+        }
+        
+        session.removeAttribute("users");
+        session.setAttribute("users", users);
+    }
+    
     
 }

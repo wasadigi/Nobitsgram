@@ -104,12 +104,19 @@ private UsersManager usersManager;
                 response.sendRedirect(request.getContextPath()+"/view/errorLogin.jsp");
             }
             else{
-                HttpSession session = request.getSession();
-                session.setAttribute("username", username);
-                user.setIsConnect(true);
-                user = usersManager.edit(user);
-                session.setAttribute("user", user);        
-                response.sendRedirect(request.getContextPath()+"/GalleryServlet");
+                // If user was blocked, we redirect him to a page which him
+                // that he has been blocked
+                if(user.isIsBlocked()){
+                    response.sendRedirect(request.getContextPath()+"/view/forbidenPage.jsp");
+                }
+                else{
+                    HttpSession session = request.getSession();
+                    session.setAttribute("username", username);
+                    user.setIsConnect(true);
+                    user = usersManager.edit(user);
+                    session.setAttribute("user", user);        
+                    response.sendRedirect(request.getContextPath()+"/GalleryServlet");
+                }
             }
         }
         // Return a jsp page error where the username don't exist in the
