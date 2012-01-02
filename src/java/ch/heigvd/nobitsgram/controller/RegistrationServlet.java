@@ -345,6 +345,7 @@ public class RegistrationServlet extends HttpServlet {
         List<String> infoList = new ArrayList<String>();
         Hashtable<String,String> table = new Hashtable<String, String>();
         String delimiter ="\"";
+        
 
         // This instance will permit us to communicate with instagram
         InterrogatorInstagram intInstag = new InterrogatorInstagram();

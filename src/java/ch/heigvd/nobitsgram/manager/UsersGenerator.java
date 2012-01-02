@@ -90,6 +90,7 @@ public class UsersGenerator {
         
     
     public void initUsername(){
+        usernames.add("Mat jean");
         usernames.add("tototo");
         usernames.add("tititi");
         usernames.add("toutou");
@@ -180,6 +181,15 @@ public class UsersGenerator {
             else{
               user.setIsBlocked(true);
             }
+            // We create a date with the current timezone et local of user
+             Calendar date = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
+
+             // We set all the date 
+             user.setCreateDate(date);
+             user.setLastDateConnection(date);
+             user.setLastDateSearch(date);
+             user.setCountConnection(1);
+             user.setCountMonthConnection(1);
             create(user);
             users.add(user);
             i++;

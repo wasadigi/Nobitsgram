@@ -54,16 +54,22 @@
 <% 
    
    
-   User user = (User)session.getAttribute("user");   
+   User user = (User)session.getAttribute("user");
+   
+   
    double lat = user.getLatitude();
    double lng = user.getLongitude();
    boolean zoomOut = user.isZoomOut();
    String position = user.getCountry();
    String username = user.getUsername();
    String image = user.getProfile_picture();
-   String clickLat = (String)session.getAttribute("lat");
-   String clickLng = (String)session.getAttribute("lng");
+   String clickLat;
+   String clickLng;
    
+      clickLat = request.getParameter("latitude");
+      clickLng = request.getParameter("longitude");
+      
+  
    if(user.getStreet() != null && user.getStreet()!="" ){
        position = user.getStreet();
    }
@@ -85,32 +91,52 @@
    var servletName ="MapServlet";
    var latitude;
    var longitude;
-   
+   var pos;
+   var iconUser = new google.maps.MarkerImage("images/marker.png",         
+          new google.maps.Size(40,64),         
+          new google.maps.Point(0,0)                
+  );
+    
+    
+    var iconPhoto = new google.maps.MarkerImage("images/photography.png",                   
+        new google.maps.Size(40,64),         
+        new google.maps.Point(0,0)         
+  );
+    
+   var tmp = <% out.print(clickLat ); %>
    if(<%out.print(zoomOut);%>){
        myZoom = 6;
    }
    else{
-       myZoom = 15;
+       myZoom = 10;
    }
  
   function initialize() {    
-    var myOptions = {
       
+      <% if(clickLat != null){ %>
+        pos = new google.maps.LatLng(<%out.print(clickLat);%>,<%out.print(clickLng);%>);
+        center = pos;
+      <% } else{ %>
+        center = userPosition;
+      <% } %>
+          
+     var myOptions = {      
       zoom: myZoom ,
-      center : userPosition,
+      center : center,
       mapTypeId: google.maps.MapTypeId.ROADMAP
      
     };
     var map = new google.maps.Map(document.getElementById("myMap"),
         myOptions);
     
-    
+       
        
     marker = new google.maps.Marker({
     map:map,
     draggable:true,
     animation: google.maps.Animation.DROP,
-    position: userPosition
+    position: userPosition,
+    icon : iconUser
   });
   google.maps.event.addListener(marker, 'click', toggleBounce);
   var areaOption = {
@@ -123,9 +149,11 @@
       center: userPosition,
       radius: 621.3711922
     };
-    
+        <% if(clickLat != null){ %>                   
+            placeMarker(pos, map)                   
+        <% } %>
    
-        // cityCircle = new google.maps.Circle(areaOption);    		
+        //cityCircle = new google.maps.Circle(areaOption);    		
         var infowindow = new google.maps.InfoWindow({
             content: '<div> <img src="<% out.print(image); %>" style="background: #FFA07A;width: 50px;height:50px;" />'+
                        '<div style="margin-left:10px;"><% out.print(username);%></div>'+
@@ -143,9 +171,9 @@
           placeMarker(event.latLng, map);
         
         latitude = event.latLng.lat();
-        longitude = event.latLng.lng();
+        longitude = event.latLng.lng();        
         document.location.href = "/nobitsgram/MapServlet?latitude="+latitude+"&longitude="+longitude;        
-       
+        
     }); 
 } 
  
@@ -165,7 +193,8 @@
   function placeMarker(position, map) {
         var marker = new google.maps.Marker({
           position: position,
-          map: map
+          map: map, 
+          icon: iconPhoto
         });
         markersArray.push(marker);
         //clear the last marker on the map
@@ -201,18 +230,17 @@
            <div id="myPictuPosition">
          
                
-               <table style="margin-top:-5px; margin-left:-5px;">
+               
                    <% List<String> positionUrl = (List<String>)session.getAttribute("positionUrl");
+                      String errorMap = (String)session.getAttribute("errorMap");                      
                       int size1 =  positionUrl.size();
                    if(size1 != 0){
                        Random random = new Random();
                        int index;
-                       
-                       for(int i = 0; i < 9; i++ ) {
-                           index = random.nextInt(size1);
-                          
-                           //System.out.println("L'index ===> "+index);
-                           //System.out.println("URL URL ==> "+positionUrl.get(index));
+                       %>
+                  <table style="margin-top:-5px; margin-left:-5px;">
+                     <%  for(int i = 0; i < 9; i++ ) {
+                           index = random.nextInt(size1);                      
                       if(i%3 == 0){    %>                   
                        <tr >
                        <% } %>
@@ -223,12 +251,16 @@
                            </td>
                         <% if((i+1)%3 == 0){ %>
                        </tr>
-                       <% } %>
-                     <% }
-                                           }%>
-                             
-                
-               </table>
+                       <% }
+                      } %>
+                    </table>
+                     <% } %>
+               
+               <% if (errorMap != null) { %>
+               <center>
+                   <h3 style="color:red"> <% out.print(errorMap); %> <h3/>
+               </center>
+              <% session.removeAttribute("errorMap"); } %>
            </div>
            
        </td>

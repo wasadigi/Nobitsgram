@@ -58,23 +58,28 @@ public class MapServlet extends HttpServlet {
                 urlSearchId = "https://api.instagram.com/v1/locations/search?lat="
                     + lat+"&lng="+lng+"&access_token="+user.getAcces_token();
                 listId = getListId(urlSearchId,inter);
+                if(listId.isEmpty()){
+                    String errorMap = "Any picture in this area";
+                    session.setAttribute("errorMap", errorMap);
+                }
             }                       
             
             if(!listId.isEmpty()){
                 Random random = new Random();
-                String id =""+listId.get(random.nextInt(listId.size()));
-                System.out.println("ID ID ID ID =====> "+id);
+                String id =""+listId.get(random.nextInt(listId.size()));                
                 urlIdMedia = "https://api.instagram.com/v1/locations/"
                     +id+"/media/recent/?access_token="+user.getAcces_token();
                 positionUrl = getListUrl(urlIdMedia, inter);
+                
             }            
-          
+                                    
             session.setAttribute("positionUrl", positionUrl);                              
             sc.getRequestDispatcher("/view/map.jsp").
                    forward(request, response);
                       
         }
         catch(Exception except){
+            
             response.sendRedirect(request.getContextPath()+"/view/pagelogin.jsp");
         }
         

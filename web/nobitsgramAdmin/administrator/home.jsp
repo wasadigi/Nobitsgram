@@ -93,7 +93,7 @@
                 int limit;
                 int begining;
                 int nbPage;
-                int ind = 0;
+               
                 
                 try{
                    tmp = request.getParameter("indexPage");                   
@@ -211,26 +211,27 @@
                      
                          <% String url;  
                       if(!users.get(i).isIsBlocked()){ 
-                          url = root+"/images/blockUser1.jpg"; %>
-                          <img  src="<% out.print(url);%>"
-                          style="width: 35px; height: 35px; margin-top: 5px;" />
+                          //url = root+"/images/blockUser1.jpg"; %>
+                          
+                          
                           <input  type="checkbox" name="blockID"
                                 value="<% out.print(i); %>" />                       
                        <% } else { %>
-                       <b></b>
+                           <img  src="<% out.print(root+"/images/blockUser1.jpg");%>"
+                             style="width: 35px; height: 35px; margin-top: 5px;" />
                        <% } %>
                   </td>
                   <td>
                      
                      <%   
                       if(users.get(i).isIsBlocked()){ 
-                          url = root+"/images/activeAccount.jpg"; %>
-                          <img  src="<% out.print(url);%>"
-                             style="width: 35px; height: 35px; margin-top: 5px;" />
+                          //url = root+"/images/activeAccount.jpg"; %>
+                      
                           <input  type="checkbox" name="blockID"
                                 value="<% out.print(i); %>" />                                             
                       <% } else { %>
-                       <b> </b>
+                       <img  src="<% out.print(root+"/images/activeAccount.jpg");%>"
+                              style="width: 35px; height: 35px; margin-top: 5px;" />
                        <% } %>  
                     
                   </td>
@@ -333,14 +334,13 @@
 
 <script type="text/javascript" src="jquery.js"></script>
  <script type="text/javascript">
-     
-   var xmlHttpObject;
+    
    var $username;   
    var servletName = "UserInfoServlet";
 $(document).ready(function(){
    $("#tableContener a").click(function(){       
        $username = $(this).html();
-        document.location.href = "/nobitsgram/UserInfoServlet?username="+$username;        
+        document.location.href = "/nobitsgram/"+servletName+"?username="+$username;        
         
     });
     

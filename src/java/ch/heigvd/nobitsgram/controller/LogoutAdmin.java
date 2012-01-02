@@ -37,11 +37,11 @@ public class LogoutAdmin extends HttpServlet {
             
             HttpSession session = request.getSession();           
             session.invalidate();
-             sc.getRequestDispatcher("/nobitsgram/administrator/administrator.jsp").forward(request, response);
+             sc.getRequestDispatcher("/nobitsgramAdmin/administrator/administrator.jsp").forward(request, response);
              
         }
         catch(Exception excp){
-            sc.getRequestDispatcher("/nobitsgram/administrator/administrator.jsp").forward(request, response);
+            sc.getRequestDispatcher("/nobitsgramAdmin/administrator/administrator.jsp").forward(request, response);
         }
          
     }
