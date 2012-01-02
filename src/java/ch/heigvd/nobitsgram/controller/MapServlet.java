@@ -97,8 +97,7 @@ public class MapServlet extends HttpServlet {
     public List<String> getListId(String url,InterrogatorInstagram inter){
        List<String> myList = new ArrayList<String>();
        String resp = inter.getSearcResult(url);       
-       myList = MyParser.parseResponse(resp,"data","id",true);
-       System.out.println("My getListId ====> "+MyParser.displayList(myList)+"\nFIN LIST ID\n**************************************");
+       myList = MyParser.parseResponse(resp,"data","id",true);      
        return myList;
     }
     
@@ -110,8 +109,7 @@ public class MapServlet extends HttpServlet {
             String resp = inter.getSearcResult(url);
             myList = MyParser.parseResponse(resp,"data","url",true);
         }
-        
-        System.out.println("My getListUrl ====> "+MyParser.displayList(myList));
+                
         return myList;
     }
     

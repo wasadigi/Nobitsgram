@@ -4,9 +4,10 @@
     Author     : Eyram
 --%>
 
-<%@page import="ch.heigvd.nobitsgram.util.MyParser"%>
+
 <%@include file="../../view/tools/headPage.jspf" %>
 <link rel="stylesheet" type="text/css" href="<% out.print(root+ "/css/adminHome_style.css"); %>" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
 <div class="bar" id="positionbar">
     <%  int nberRow; 
         String tmp;        
@@ -65,6 +66,22 @@
         </table>
          </form>
        </div>
+    <form action="<% out.print(root+ "/SearchUserServlet"); %>" method="GET">
+            <!-- Bare menu -->
+            <div id="posearch">
+                <table>
+                    <tr>
+                        <td>
+                    <input type="text" name="topicSearchUser" value="" size="25">
+                        </td>
+                        <td>
+                        <input type="image" src="<% out.print(root+"/images/searchUser.jpg");%>"
+                           style="width: 40px; height: 40px;" name="Submit" value="find">
+                        </td>
+                </tr>
+                </table>
+            </div>
+ </form>
 </div>      
              <% 
                 int leftLength;
@@ -76,7 +93,7 @@
                 int limit;
                 int begining;
                 int nbPage;
-               
+                int ind = 0;
                 
                 try{
                    tmp = request.getParameter("indexPage");                   
@@ -133,6 +150,15 @@
            <form action="<% out.print(root+ "/BlockUserServlet"); %>" method="GET" name="checkForm">
             <table border="2" id ="tableContener">
                 <caption><h2>It were <% out.print(nbUser); %> users in nobitsgram</h2></caption>
+                <colgroup>
+                    <col class="usernCol"/>
+                    <col class="firstnCol"/>
+                    <col class="lastnCol"/>
+                    <col class="countryCol"/>
+                    <col class="pictureCol"/>
+                    <col class="blockCol"/>
+                    <col class="activeCol"/>
+                </colgroup>
                 <tr>
                     <td>
                         <h3>  username </h3>
@@ -162,7 +188,8 @@
               %>
               <tr>
                   <td>
-                      <a href="<% out.print(root+ "/UserViewServlet"); %>" >
+                      
+                      <a href="#" id="<% out.print(i);%>">
                           <% out.print(users.get(i).getUsername()); %>
                       </a>
                   </td>
@@ -301,5 +328,29 @@
          } %>
             
          }
+</script>
+
+
+<script type="text/javascript" src="jquery.js"></script>
+ <script type="text/javascript">
+     
+   var xmlHttpObject;
+   var $username;   
+   var servletName = "UserInfoServlet";
+$(document).ready(function(){
+   $("#tableContener a").click(function(){       
+       $username = $(this).html();
+        document.location.href = "/nobitsgram/UserInfoServlet?username="+$username;        
+        
+    });
+    
+ });
+ 
+ 
+    
+ </script>  
+
+<script language="javascript">
+    
 </script>
 <%@include file="../../view/tools/footPage.jspf" %> 

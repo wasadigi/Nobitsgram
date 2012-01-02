@@ -19,13 +19,22 @@
      <a href="<%out.print(root+ "/LogoutServlet"); %>" id="">
              <img class="" src="<% out.print(root+"/images/logout1.jpg");%>" class ="posipicto" /><span id="myText">Logout</span></a>
 
-        <!--Bare menu-->
-
-            <form action="<% out.print(root+ "/SearchServlet"); %>" method="get" id="posearch">
-                <input type="text" name="searchTopic" value="" size="25">
-                 <input type="submit" name="Submit" value="find">
-
-            </form>
+        <form action="<% out.print(root+ "/SearchServlet"); %>" method="GET">
+            <!-- Bare menu -->
+            <div id="posearch">
+                <table>
+                    <tr>
+                        <td>
+                    <input type="text" name="searchTopic" value="" size="25">
+                        </td>
+                        <td>
+                        <input type="image" src="<% out.print(root+"/images/search.jpg");%>"
+                           style="width: 32px; height: 32px;" name="Submit" value="find">
+                        </td>
+                </tr>
+                </table>
+            </div>
+ </form>
 
 
         </div>
@@ -73,7 +82,6 @@
    var myZoom;
    var marker;
    var markersArray = [];
-   var xmlHttpObject;
    var servletName ="MapServlet";
    var latitude;
    var longitude;
@@ -134,11 +142,10 @@
           
           placeMarker(event.latLng, map);
         
-        latitude = 48.858844;//event.latLng.lat();
-        longitude = 2.294351;//event.latLng.lng();
-         xmlHttpObject = createRequestObject();
-             makeRequest(); 
-             //loadWindow();
+        latitude = event.latLng.lat();
+        longitude = event.latLng.lng();
+        document.location.href = "/nobitsgram/MapServlet?latitude="+latitude+"&longitude="+longitude;        
+       
     }); 
 } 
  
@@ -178,38 +185,6 @@
   } 
 }
 
-function createRequestObject() {
-    
-    var tmpXmlObject;
-    // According to the browser we create the specifie xmlHttpObject
-    if (window.XMLHttpRequest) { 
-        // For Firefox, Safari browser
-        tmpXmlObject = new XMLHttpRequest();
-	
-    } 
-    // Internet Explorer use the object ActiveXObject
-    else if (window.ActiveXObject) {
-      
-             tmpXmlObject = new ActiveXObject("Microsoft.XMLHTTP");
-            
-
-    }
-    return tmpXmlObject;
-}
-
-        
-      
-         
-           
-   function makeRequest(){
-   
-    xmlHttpObject.open("GET",""+servletName+"?latitude="+latitude+"&longitude="+longitude,true);
-	    
-    //Send the request to the server
-    xmlHttpObject.send(null);
-   }
-   
-   
 
 
 </script>

@@ -24,7 +24,7 @@
      <a href="<% out.print(root+ "/MapServlet"); %>" >
              <img class="" src="<% out.print(root+"/images/map.jpg");%>" class ="posipicto"  /><span id="myText">Map</span></a>
              <a href="<% out.print(root+ "/view/searchPage.jsp"); %>" class="selected">
-             <img class="" src="<% out.print(root+"/images/search3.jpg");%>"  class ="posipicto"/><span id="myText">Search</span></a>
+             <img class="" src="<% out.print(root+"/images/search64.jpg");%>" style="width: 34px;height: 34px;" class ="posipicto"/><span id="myText">Search</span></a>
 
              <a href="<%out.print(root+ "/LogoutServlet"); %>" id="">
              <img class="" src="<% out.print(root+"/images/logout1.jpg");%>" class ="posipicto" /><span id="myText">Logout</span></a>
@@ -33,8 +33,17 @@
 <form action="<% out.print(root+ "/SearchServlet"); %>" method="GET">
             <!-- Bare menu -->
             <div id="posearch">
-                <input type="text" name="searchTopic" value="" size="25">
-                <input type="submit" name="Submit" value="find">
+                <table>
+                    <tr>
+                        <td>
+                    <input type="text" name="searchTopic" value="" size="25">
+                        </td>
+                        <td>
+                        <input type="image" src="<% out.print(root+"/images/search.jpg");%>"
+                           style="width: 32px; height: 32px;" name="Submit" value="find">
+                        </td>
+                </tr>
+                </table>
             </div>
  </form>
     </div>

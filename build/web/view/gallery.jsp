@@ -18,12 +18,22 @@
      <a href="<%out.print(root+ "/LogoutServlet"); %>" id="">
              <img class="" src="<% out.print(root+"/images/logout1.jpg");%>" class ="posipicto" /><span id="myText">Logout</span></a>
     <!--Bare menu-->
-
-        <form action="<% out.print(root+ "/SearchServlet"); %>" method="get" id="posearch">
-            <input type="text" name="searchTopic" value="" size="25">
-             <input type="submit" name="Submit" value="find">
-
-        </form>
+<form action="<% out.print(root+ "/SearchServlet"); %>" method="GET">
+            <!-- Bare menu -->
+            <div id="posearch">
+                <table>
+                    <tr>
+                        <td>
+                    <input type="text" name="searchTopic" value="" size="25">
+                        </td>
+                        <td>
+                        <input type="image" src="<% out.print(root+"/images/search.jpg");%>"
+                           style="width: 32px; height: 32px;" name="Submit" value="find">
+                        </td>
+                </tr>
+                </table>
+            </div>
+ </form>
 
 
     </div>
