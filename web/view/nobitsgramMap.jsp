@@ -55,14 +55,15 @@
 
 <% 
    
-   List<User> users = (List<User>)session.getAttribute("users");
+   List<User> users = (List<User>)session.getAttribute("users");   
    String position;
    String image;
    String username;
    double lat;
    double lng;
    int size = users.size();
-   User user = (User)session.getAttribute("user");   
+   User user = (User)session.getAttribute("user");
+   String username1 = user.getUsername();
    double lat1 = user.getLatitude();
    double lng1 = user.getLongitude();
    boolean isConnected;
@@ -79,8 +80,20 @@
    var myZoom = 2;
    var marker;
    var infowindow = new google.maps.InfoWindow();
-  
+   var iconUser = new google.maps.MarkerImage("images/marker.png",         
+          new google.maps.Size(40,64),         
+          new google.maps.Point(0,0)                
+  );
  
+ var iconUser1 = new google.maps.MarkerImage("images/marker1.png",         
+          new google.maps.Size(40,64),         
+          new google.maps.Point(0,0)                
+  );
+ 
+ var iconUser2 = new google.maps.MarkerImage("images/marker2.png",         
+          new google.maps.Size(40,64),         
+          new google.maps.Point(0,0)                
+  );
   function initialize() {    
     var myOptions = {
       center: userPosition,
@@ -113,13 +126,25 @@
             }
 
        %>
-                          
+             <% if(username1.equals(users.get(i).getUsername())){ %>
               marker = new google.maps.Marker({
                         position: new google.maps.LatLng(<%out.print(lat);%>,<%out.print(lng);%>),
-                            map: map
+                            map: map,
+                            icon: iconUser2
                     });
-       
-                  
+           <% } else if(isConnected){ %>
+                 marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(<%out.print(lat);%>,<%out.print(lng);%>),
+                            map: map,
+                            icon: iconUser1
+                    });
+           <% } else { %>
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(<%out.print(lat);%>,<%out.print(lng);%>),
+                            map: map,
+                            icon: iconUser
+                       });
+            <% } %>
     google.maps.event.addListener(marker, 'click', (function(marker,j){
         return function() {
           infowindow.setContent('<div> <img src="<% out.print(image); %>" style="width: 50px;height:50px;" />'+

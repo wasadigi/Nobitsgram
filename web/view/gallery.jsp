@@ -45,7 +45,7 @@
        
        
      %>
-     <tr><td> <img src="<% out.print(root+ "/images/topic.jpg"); %>" 
+     <tr><td> <img src="<% out.print(root+ "/images/topic.jpg"); %>" title="TOPIC"
                    style="background: #FFA07A;width: 30px;height:30px;" /> </td>
         </tr>
      <tr>
@@ -88,7 +88,7 @@
         Random random2 = new Random(); int j = -1; int size2 = followUrlList.size();
      %>
      <tr>
-         <td> <img src="<% out.print(root+ "/images/follower.jpg"); %>" 
+         <td> <img src="<% out.print(root+ "/images/follower.jpg"); %>" title="FOLLOWER"
                   style="background: #FFA07A;width: 35px;height:35px;" /> </td>
         
      </tr>
@@ -130,7 +130,7 @@
      %>
      <tr>
          
-         <td> <img src="<% out.print(root+ "/images/like.jpg"); %>" 
+         <td> <img src="<% out.print(root+ "/images/like.jpg"); %>" title="LIKE"
                   style="background: #FFA07A;width: 30px;height:30px;" /> </td>
         
      </tr>

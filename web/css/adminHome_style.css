@@ -27,3 +27,9 @@ td{
     font-size: 130%;
     margin-top: -36px;
 }
+
+#tab2-position td{
+    width: 200px;
+    height: 80px;
+    margin-top: 20px;    
+}

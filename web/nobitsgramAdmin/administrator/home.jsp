@@ -149,16 +149,7 @@
             <div >
            <form action="<% out.print(root+ "/BlockUserServlet"); %>" method="GET" name="checkForm">
             <table border="2" id ="tableContener">
-                <caption><h2>It were <% out.print(nbUser); %> users in nobitsgram</h2></caption>
-                <colgroup>
-                    <col class="usernCol"/>
-                    <col class="firstnCol"/>
-                    <col class="lastnCol"/>
-                    <col class="countryCol"/>
-                    <col class="pictureCol"/>
-                    <col class="blockCol"/>
-                    <col class="activeCol"/>
-                </colgroup>
+                <caption><h2>It were <% out.print(nbUser); %> users in nobitsgram</h2></caption>                
                 <tr>
                     <td>
                         <h3>  username </h3>
@@ -189,7 +180,7 @@
               <tr>
                   <td>
                       
-                      <a href="#" id="<% out.print(i);%>">
+                      <a href="<% out.print(root+ "/UserInfoServlet?username="+users.get(i).getUsername()); %>" >
                           <% out.print(users.get(i).getUsername()); %>
                       </a>
                   </td>
@@ -209,7 +200,7 @@
                   </td>
                   <td>
                      
-                         <% String url;  
+                         <%
                       if(!users.get(i).isIsBlocked()){ 
                           //url = root+"/images/blockUser1.jpg"; %>
                           
@@ -332,25 +323,4 @@
 </script>
 
 
-<script type="text/javascript" src="jquery.js"></script>
- <script type="text/javascript">
-    
-   var $username;   
-   var servletName = "UserInfoServlet";
-$(document).ready(function(){
-   $("#tableContener a").click(function(){       
-       $username = $(this).html();
-        document.location.href = "/nobitsgram/"+servletName+"?username="+$username;        
-        
-    });
-    
- });
- 
- 
-    
- </script>  
-
-<script language="javascript">
-    
-</script>
 <%@include file="../../view/tools/footPage.jspf" %> 
