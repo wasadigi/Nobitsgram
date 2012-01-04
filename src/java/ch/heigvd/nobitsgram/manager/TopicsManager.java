@@ -6,6 +6,7 @@ package ch.heigvd.nobitsgram.manager;
 
 import ch.heigvd.nobitsgram.entity.Topic;
 import ch.heigvd.nobitsgram.entity.User;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
@@ -109,6 +110,15 @@ public class TopicsManager {
         
         
     }
+    
+    
+    public List<Topic> getTopicLike(String topicName){
+        List<Topic> myList = new ArrayList<Topic>();
+        Query q = em.createQuery("SELECT top FROM Topic top WHERE top.name LIKE : "+topicName);
+        myList = q.getResultList();
+        return myList;
+    }
+    
     
     public void setEntityManager(EntityManager em){
         this.em = em;

@@ -4,6 +4,9 @@
     Author     : Eyram
 --%>
 
+<%@page import="ch.heigvd.nobitsgram.util.MyParser"%>
+<%@page import="java.util.Random"%>
+<%@page import="java.util.List"%>
 <%@page import="ch.heigvd.nobitsgram.entity.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page session="true" %>
@@ -18,11 +21,12 @@
         <title>Welcome to Nobitsgram</title>
          <link rel="stylesheet" type="text/css" href="/nobitsgram/css/style.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
         <title>Nobitsgram</title>
     </head>
 
 
-    <body id="body_bg" style="background-color:#DAEADB;">
+    <body id="body_bg" style="background-color:#DAEADB;"  onLoad = "reloadImg()" >
         <!--Positionnement du header et du formulaire de login-->
         <div id ="header">
 
@@ -33,8 +37,12 @@
             <jsp:forward page="/GalleryServlet">
                 <jsp:param name="transfert" value="ok" />
             </jsp:forward>
-            <%}%>
-
+                <% }                 
+                 if((Boolean)session.getAttribute("connectToServlet") == null){ %>
+                 <jsp:forward page="/WelcomeServlet">
+                    <jsp:param name="transfert" value="ok" />
+                </jsp:forward>
+                 <% } %>
             <!-- Else we show the welcome page -->
             <div style="width: 300px;">
 
@@ -107,7 +115,9 @@
             </div>
 
         </div>
-<form action="<% out.print(root+ "/WelcomeServlet"); %>" method="POST" id="RefreshUrl" accept-charset="utf-8">
+
+                
+    <form >            
         <!--Texte instagram-->
         <div id="cadretexteInstagram">
                 <font style ="font-size: 75px; color: #330099; margin-left: 100px;"> Nobitsgram</font>
@@ -116,33 +126,38 @@
         <!--Mise en place du cadre pour l'image-->
 
 
-            <script language="JavaScript">
-                setInterval( "RefreshImage();", 5000 );
+            
 
+        <% 
+          List<String> listTopicRefresh = (List<String>)session.getAttribute("listTopicRefresh");          
+          String imgUrl = listTopicRefresh.get(0);                           
+         %>
 
-
-                $(function () {
-                RefreshImage = function(){
-
-                $('#RefreshUrl').fadeOut("slow").load('/nobitsgram/WelcomeServlet').fadeIn("slow");
-
-                }
-                 });
-            </script>
-
-                    <% url =(String)request.getAttribute("url");
-                        if(url == null){
-                            url = "http://distillery.s3.amazonaws.com/media/2011/10/04/51279e6fb3484ae78dec5b9ef51081ff_6.jpg";
-                        }
-                    %>
-
+<script type="text/javascript">
+    var imgSrc;
+    var tabImg = new Array();
+     var j=0;     
+     var t= <% out.print(listTopicRefresh.size()); %>
+     <% for(String s: listTopicRefresh){ %>
+        tabImg.push(<% out.print("\""+s+"\""); %>);
+     <% } %>
+         
+     function reloadImg(){       
+       j++
+       document.refreshImg.src = tabImg[j%t];       
+       setTimeout("reloadImg()",4000);       
+     }
+    
+     
+ </script>
+         
             <table>
-            <tr>
-              <th> <img src="<%out.print(url);%>" name="image" id ="global"/></th>
+            <tr>                
+              <td> <img src="<%out.print(imgUrl);%>" name="refreshImg" id ="global" /></td>
+               
              </tr>
             </table>
-</form>
-
+    </form>
     </body>
 
 </html>

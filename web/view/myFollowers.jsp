@@ -62,9 +62,11 @@
                name = userInsta.getUsername();
         %>
         <table cellspacing="18"  style="margin-left:2%;">
+           
              <tr>
-                
+                 
                  <td>
+                     <form name ="ajax" method="Post">
                      <table cellspacing="0" >
                          <tr>
                          <td  class="pictureContener">
@@ -87,12 +89,15 @@
                          style="border:1px solid #1C86EE;
                          background:#1C86EE;width:60px;
                          background-color:#1C86EE;
-                         height: 20px;font-size:14px" /> 
+                         height: 20px;font-size:14px" onclick="submitFollow()" /> 
                   </center>
                       </td>
                   </tr>
                 </table>
+                      </form>
                      </td>
+            
+
                  <% 
                     List<String> urlList = userInsta.getListPicture(); 
                     for(String s: urlList){
@@ -106,10 +111,13 @@
                      
                  </center>
                   </p>
+                  <form method="POST" name ="ajax">
                   <p id="nameposition">
                       <input src="<%out.print(root+ "/images/like1.jpg");%>" 
-                   style="margin-left: 2px;width: 30px;height:30px;" title="LIKE" title="FOLLOW" type ="image" value="submit"  />
+                   style="margin-left: 2px;width: 30px;height:30px;" title="LIKE" 
+                   title="FOLLOW" type ="image" value="submit" onclick="submitLike()" />
                      </p>
+                  </form>
                  </td>
                  <%}%>
                 </tr>                                  
@@ -119,4 +127,8 @@
                
        <% }%>
         
+
+       
+       
+
 <%@include file="tools/footPage.jspf" %>

@@ -79,7 +79,7 @@ public class UsersManager {
          
          
     }
-
+    
 
     public boolean isAllReadyRecord(String username){
         boolean cond = false;

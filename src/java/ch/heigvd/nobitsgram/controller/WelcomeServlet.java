@@ -8,6 +8,7 @@ import ch.heigvd.nobitsgram.util.MyParser;
 import ch.heigvd.nobitsgram.util.InterrogatorInstagram;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -55,8 +56,18 @@ public class WelcomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-
+        ServletContext sc = request.getServletContext();
+        HttpSession session = request.getSession();
+        String myAccess_token = "10840565.f59def8.778aab0dc2d64a8ca9c27694ed9444bc";
+        String topicName = "nobits";
+        String urlTopic = "https://api.instagram.com/v1/tags/"+topicName+"/media/recent?access_token="+myAccess_token;
+        
+        // We create a list of url with the name nobits
+        List<String> listTopicRefresh = getListsUrl(urlTopic);
+        boolean connectToServlet = false;
+        session.setAttribute("listTopicRefresh", listTopicRefresh);
+        session.setAttribute("connectToServlet",connectToServlet);
+        sc.getRequestDispatcher("/view/pagelogin.jsp").forward(request, response);
     }
 
     /**
@@ -69,45 +80,22 @@ public class WelcomeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+            doGet(request, response);
     }
 
-    /*
-     * This method send the url to the jsp page which call this servlet
-     */
-    public void sendUrlToJSP(HttpServletRequest request, HttpServletResponse response,
-                         ServletContext sc)throws IOException, ServletException{
-        
-        // We create a list of url with the name nobits
-        List<String> listTopic = getListsUrl("nobits");
-        int i = 0;
-
-        // This variable will be increment to scan the list
-        HttpSession session;
-        int size = listTopic.size();
-        String url = listTopic.get((i++)%size);
-        request.setAttribute("url", url);
-        sc.getRequestDispatcher("/view/pagelogin.jsp").forward(request, response);
-
-     }
-
+    
     /*
      * This method create a list of url according to the topic name we get in
      * parameter
      */
-    public List<String> getListsUrl(String topicName){
-            List<String> listUrl = null;
-            InterrogatorInstagram interrogator = new InterrogatorInstagram();
-            //interrogator.setSearchUrl(topicName);
-            String url = interrogator.getUrl();
-
+    public List<String> getListsUrl(String url){
+            List<String> listUrl = new ArrayList<String>();
+            InterrogatorInstagram interrogator = new InterrogatorInstagram();            
 
             // Get the result when an instance of InterrogatorInstagram do a request
             // to the instagram site.
-            String resultResearch = interrogator.getSearcResult(url);
-
+            String resultResearch = interrogator.getSearcResult(url);            
             listUrl = MyParser.parseResponse(resultResearch,"data","url",true);
-
             return listUrl;
      }
 

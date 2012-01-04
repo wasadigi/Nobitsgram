@@ -79,7 +79,7 @@
                      </p>
                     </center>
                     <p style="margin-top: -10px;">
-                          <img src="<%out.print(root+ "/images/connected3.jpg");%>" 
+                          <img src="<%out.print(root+ "/images/connected5.jpg");%>" 
                    style="background: #FFA07A;width: 20px;height:20px;" /> 
                           <span style=" position:absolute ;color: green; margin-left: 10px; 
                                margin-top: -1px; font-weight: bold;"> <% out.print(name); %> </span>
