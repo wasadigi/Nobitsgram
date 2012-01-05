@@ -144,7 +144,7 @@
    
     function submitFollow(userId,idButton){               
         
-        urlFollow = "https://api.instagram.com/v1/users/"+userId+"/relationship?access_token=<% out.print(user.getAcces_token()); %>";
+        urlFollow = "https://api.instagram.com/v1/users/"+userId+"/relationship?access_token=<% out.print(user.getAcces_token()); %>&action=follow";
                 
         $.ajax({
         type: "POST",         

@@ -134,7 +134,7 @@ public class MyFollowerServlet extends HttpServlet {
         for(int i = 0; i < size; i++){
             // For each user we build the request which get us his recent pictures
             url = urlPart1+tmp.get(i).getId()+urlPart2+access_token;
-            response = inter.getSearcResult(url);
+            response = inter.getSearcResult(url);            
             pictureUrl = MyParser.parseResponse(response,"data","url", true);
             
             // We set the pictureUrl to the current user
