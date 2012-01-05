@@ -5,7 +5,9 @@
 --%>
 <%@page import="ch.heigvd.nobitsgram.model.UserInstagram"%>
 <%@include file="tools/headPage.jspf" %>
-
+<script type="text/javascript" src="jquery-1.2.3.min.js"></script>
+<script type="text/javascript" src="Default.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
 <div class="bar2" id="positionbar">
      <a href="<% out.print(root+ "/GalleryServlet"); %>" >
          <img class="" src="<% out.print(root+"/images/gallery.jpg");%>" class ="posipicto" /><span id="myText">Gallery </span></a>
@@ -48,10 +50,12 @@
     </div>
         <% 
            List<UserInstagram> myFollowers = (List<UserInstagram>)session.
-                                                getAttribute("myFollowers");           
+                                                getAttribute("myFollowers");
+           User user = (User)session.getAttribute("user");
            int size = 0;
            String image;
            String name;
+           String userId;
            UserInstagram userInsta;
            if(myFollowers != null && !myFollowers.isEmpty()){
                size = myFollowers.size();
@@ -60,6 +64,7 @@
                userInsta = myFollowers.get(i);
                image = userInsta.getProfilePicture();
                name = userInsta.getUsername();
+               userId = userInsta.getId();
         %>
         <table cellspacing="18"  style="margin-left:2%;">
            
@@ -84,12 +89,13 @@
                   </tr>
                   <tr>
                       <td>
-                  <center>
-                        <input title="FOLLOW" type ="button" value="follow"  
+                  <center id="buttonContainer">
+                      <input title="FOLLOW" type ="button" value="follow" name="<% out.print(userId); %>"  
                          style="border:1px solid #1C86EE;
                          background:#1C86EE;width:60px;
                          background-color:#1C86EE;
-                         height: 20px;font-size:14px" onclick="submitFollow()" /> 
+                         height: 20px;font-size:14px" onclick="submitFollow(userId = <% out.print(userId); %>,'idButton')" 
+                         id="idButton" /> 
                   </center>
                       </td>
                   </tr>
@@ -129,6 +135,32 @@
         
 
        
-       
+<script type="text/javascript">
+    
+    var xmlObject;
+    var userId;     
+    var urlFollow;
+    
+   
+    function submitFollow(userId,idButton){               
+        
+        urlFollow = "https://api.instagram.com/v1/users/"+userId+"/relationship?access_token=<% out.print(user.getAcces_token()); %>";
+                
+        $.ajax({
+        type: "POST",         
+        dataType: "jsonp",        
+        url: urlFollow,
+        success: function() {
+            alert("Follow is OK!!");
+            document.getElementById(idButton).disabled = 'disable';
+        }
+    });
+
+   }   
+        
+        
+   
+
+</script>  
 
 <%@include file="tools/footPage.jspf" %>

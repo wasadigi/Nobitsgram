@@ -200,15 +200,14 @@
                   </td>
                   <td>
                      
-                         <%
-                      if(!users.get(i).isIsBlocked()){ 
-                          //url = root+"/images/blockUser1.jpg"; %>
+                         
+                      <% if(!users.get(i).isIsBlocked()){  %>
                           
                           
                           <input  type="checkbox" name="blockID"
                                 value="<% out.print(i); %>" />                       
-                       <% } else { %>
-                           <img  src="<% out.print(root+"/images/blockUser1.jpg");%>"
+                       <% } else { %> 
+                           <img  src="<% out.print(root+"/images/blockUser1.jpg");%>" 
                              style="width: 35px; height: 35px; margin-top: 5px;" />
                        <% } %>
                   </td>
