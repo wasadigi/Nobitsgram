@@ -3,6 +3,7 @@
     Created on : 21 déc. 2011, 14:48:23
     Author     : Eyram
 --%>
+<%@page import="ch.heigvd.nobitsgram.model.Picture"%>
 <%@page import="ch.heigvd.nobitsgram.model.UserInstagram"%>
 <%@include file="tools/headPage.jspf" %>
 <script type="text/javascript" src="jquery-1.2.3.min.js"></script>
@@ -33,7 +34,7 @@
                         <input type="image" src="<% out.print(root+"/images/search.jpg");%>"
                            style="width: 32px; height: 32px;" name="Submit" value="find">
                         </td>
-                </tr>
+                    </tr>
                 </table>
             </div>
  </form>
@@ -90,12 +91,12 @@
                   <tr>
                       <td>
                   <center id="buttonContainer">
-                      <input title="FOLLOW" type ="button" value="follow" name="<% out.print(userId); %>"  
+                      <input type ="button" title ="FOLLOW" value="follow" name="<% out.print(userId); %>"  
                          style="border:1px solid #1C86EE;
                          background:#1C86EE;width:60px;
                          background-color:#1C86EE;
-                         height: 20px;font-size:14px" onclick="submitFollow(userId = <% out.print(userId); %>,'idButton')" 
-                         id="idButton" /> 
+                         height: 20px;font-size:14px" onclick="submitFollow(idButton = '<%out.print(userId); %>')" 
+                         id="<%out.print(userId); %>" /> 
                   </center>
                       </td>
                   </tr>
@@ -105,30 +106,32 @@
             
 
                  <% 
-                    List<String> urlList = userInsta.getListPicture(); 
-                    for(String s: urlList){
+                    List<Picture> pictures = userInsta.getListPicture(); 
+                    for(Picture picture: pictures){                        
                  %>
                  <td class="pictureContener">
                      <p>
                  <center>
                      
-                     <img src="<% out.print(s); %>" 
+                     <img src="<% out.print(picture.getUrl()); %>" 
                    style="background: #FFA07A;width: 185px;height:170px;" /> 
                      
                  </center>
                   </p>
-                  <form method="POST" name ="ajax">
+                 
                   <p id="nameposition">
-                      <input src="<%out.print(root+ "/images/like1.jpg");%>" 
-                   style="margin-left: 2px;width: 30px;height:30px;" title="LIKE" 
-                   title="FOLLOW" type ="image" value="submit" onclick="submitLike()" />
+                      <input src="<%out.print(root+ "/images/like1.jpg");%>"
+                   style="margin-left: 2px;width: 30px;height:30px;" 
+                   title="LIKE"  type ="image" 
+                   value="like" 
+                   onclick="submitLike(idLike = '<% out.print(picture.getId()); %>')" 
+                   id="<% out.print(picture.getId()); %>" />
                      </p>
-                  </form>
+
                  </td>
                  <%}%>
                 </tr>                                  
            
-             </tr>
         </table>
                
        <% }%>
@@ -136,27 +139,88 @@
 
        
 <script type="text/javascript">
-    
-    var xmlObject;
-    var userId;     
-    var urlFollow;
-    
-   
-    function submitFollow(userId,idButton){               
         
-        urlFollow = "https://api.instagram.com/v1/users/"+userId+"/relationship?access_token=<% out.print(user.getAcces_token()); %>&action=follow";
-                
+   
+    var urlFollow;
+    var action_Follow;
+    var action_Like;
+    var urlLike;
+    var access_token = "<% out.print(user.getAcces_token()); %>";
+    
+    function submitFollow(idFollow){         
+        action_Follow = document.getElementById(idFollow).value;
+       
+        urlFollow = "https://api.instagram.com/v1/users/"+idFollow+"/relationship?access_token="+access_token+"&action="+action_Follow;
+
         $.ajax({
         type: "POST",         
         dataType: "jsonp",        
         url: urlFollow,
         success: function() {
-            alert("Follow is OK!!");
-            document.getElementById(idButton).disabled = 'disable';
+            if(action_Follow == "follow"){
+                document.getElementById(idFollow).value = "unfollow";
+                document.getElementById(idFollow).title = "UNFOLLOW";
+            }
+            else{
+                document.getElementById(idFollow).value = "follow";
+                document.getElementById(idFollow).title = "FOLLOW";
+            }
+             
+        },
+        error: function(){
+            alert("error to follow this user !");
         }
+        
     });
 
-   }   
+   }
+
+   
+   function submitLike(idLike){        
+        action_Like = document.getElementById(idLike).value;        
+        urlLike = "https://api.instagram.com/v1/media/"+idLike+"/likes";
+    
+       if(action_Like == "like"){            
+            $.ajax({
+            type: "POST",         
+            dataType: "jsonp",      
+            url: urlLike,
+            data: {
+                access_token: access_token
+            },
+
+            success: function() {       
+                    document.getElementById(idLike).src = "<%out.print(root+ "/images/unlike1.jpg");%>";
+                    document.getElementById(idLike).value="unlike";
+                    document.getElementById(idLike).title = "UNLIKE";       
+            },
+            error: function(){
+                alert("Error to like this picture !");
+            }
+
+        });
+      }
+      else{
+            urlLike = urlLike+"?access_token="+access_token; 
+            
+            $.ajax({
+            type: "POST",         
+            dataType: "jsonp",      
+            url: urlLike,
+            
+            success: function() {
+                    document.getElementById(idLike).src = "<% out.print(root+ "/images/like1.jpg"); %>";
+                    document.getElementById(idLike).value="like";
+                    document.getElementById(idLike).title = "LIKE";
+            },
+            error: function(){
+                alert("Error to unlike this picture !");
+            }
+
+        });
+     }
+       
+   }
         
         
    

@@ -40,10 +40,12 @@ public class SearchUserServlet extends HttpServlet {
         
         HttpSession session = request.getSession();
         ServletContext sc = request.getServletContext();
+        List<Topic> topicsLike = new ArrayList<Topic>();
         try{
-            String topicSearch = request.getParameter("topicSearchUser");
-            List<Topic> topicsLike = topicsManager.getTopicLike(topicSearch);
-
+            String topicSearch = request.getParameter("topicSearchUser").toUpperCase();
+            if(topicSearch != ""){
+                topicsLike = topicsManager.getTopicLike(topicSearch);
+            }
             session.setAttribute("topicsLike", topicsLike);
             sc.getRequestDispatcher("/nobitsgramAdmin/administrator/searchUserTopicPage.jsp").forward(request, response);
         }

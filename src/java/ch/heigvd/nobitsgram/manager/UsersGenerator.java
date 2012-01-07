@@ -129,10 +129,12 @@ public class UsersGenerator {
         topicsName.add("mountain");
         topicsName.add("Foot");
         topicsName.add("moon");
-        topicsName.add("Iphone");
+        topicsName.add("IphoneFer");
         topicsName.add("watch");
+        topicsName.add("ferrari Iphone");
         topicsName.add("ferrari");
         topicsName.add("flower");
+        topicsName.add("Iphone");
     }
     
     public void initTopic(){

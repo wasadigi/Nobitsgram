@@ -6,7 +6,6 @@ package ch.heigvd.nobitsgram.controller;
 
 import ch.heigvd.nobitsgram.model.UserInstagram;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import ch.heigvd.nobitsgram.entity.*;
+import ch.heigvd.nobitsgram.model.Picture;
 import ch.heigvd.nobitsgram.util.*;
 import java.util.*;
 import javax.servlet.ServletContext;
@@ -129,16 +129,26 @@ public class MyFollowerServlet extends HttpServlet {
         String url;
         String response;
         List<String> pictureUrl;
+        List<String> pictureIds;        
+        List<Picture> pictures;
+        
         // we scan the list and for each userInstagram, we get it recent picture
         // which we set to it
         for(int i = 0; i < size; i++){
+            pictures = new ArrayList<Picture>();
             // For each user we build the request which get us his recent pictures
             url = urlPart1+tmp.get(i).getId()+urlPart2+access_token;
-            response = inter.getSearcResult(url);            
+            response = inter.getSearcResult(url);
             pictureUrl = MyParser.parseResponse(response,"data","url", true);
+            pictureIds = MyParser.getPictureIDs(response, "id");
             
-            // We set the pictureUrl to the current user
-            tmp.get(i).setListPictures(pictureUrl);                        
+            // For each url and id we build new picture which we add to list 
+            // of picture
+            for(int j = 0; j < pictureUrl.size(); j++){
+                pictures.add(new Picture(pictureUrl.get(j),pictureIds.get(j)));
+            }
+            // We set the pictures to the current user
+            tmp.get(i).setListPictures(pictures);                        
         }
         
         

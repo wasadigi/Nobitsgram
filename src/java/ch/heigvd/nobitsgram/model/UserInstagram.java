@@ -15,7 +15,7 @@ public class UserInstagram {
     private String username;    
     private String profilePicture;
     private String id;
-    private List<String> pictures = new ArrayList<String>();
+    private List<Picture> pictures = new ArrayList<Picture>();
    
 
     public String getId() {
@@ -53,11 +53,11 @@ public class UserInstagram {
         return true;        
     }
     
-    public void setListPictures(List<String> newList){
+    public void setListPictures(List<Picture> newList){
         pictures = newList;
     }
     
-    public List<String> getListPicture(){
+    public List<Picture> getListPicture(){
         return pictures;
     }
     

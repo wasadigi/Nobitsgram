@@ -29,7 +29,7 @@
                         </td>
                         <td>
                         <input type="image" src="<% out.print(root+"/images/search.jpg");%>"
-                           style="width: 32px; height: 32px;" name="Submit" value="find">
+                           style="width: 32px; height: 30px;" name="Submit" value="find">
                         </td>
                 </tr>
                 </table>
@@ -218,7 +218,7 @@
 
 </script>
 <center>
-    <table id="positionCadreCarte">
+    <table>
         <tr>
          
             <td>
@@ -242,11 +242,11 @@
                      <%  for(int i = 0; i < 9; i++ ) {
                            index = random.nextInt(size1);                      
                       if(i%3 == 0){    %>                   
-                       <tr >
+                      <tr>
                        <% } %>
                            <td> 
                                
-                               <img   src="<% out.print(positionUrl.get(index));%>"  style="width: 200px;height: 150px;"/>
+                               <img   src="<% out.print(positionUrl.get(index));%>"  style="width: 190px;height: 148px;"/>
                                
                            </td>
                         <% if((i+1)%3 == 0){ %>
@@ -260,7 +260,9 @@
                <center>
                    <h3 style="color:red"> <% out.print(errorMap); %> <h3/>
                </center>
-              <% session.removeAttribute("errorMap"); } %>
+              <% //errorMap ="";  //session.setAttribute("errorMap",errorMap);
+                 session.removeAttribute("errorMap");
+              } %>
            </div>
            
        </td>

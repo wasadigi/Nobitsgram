@@ -5,8 +5,7 @@
 package ch.heigvd.nobitsgram.util;
 
 import ch.heigvd.nobitsgram.model.UserInstagram;
-import java.io.IOException;
-import java.util.ArrayList;
+
 
 /**
  * File: MyParser.java
@@ -33,7 +32,6 @@ import org.codehaus.jettison.json.JSONObject;
 public class MyParser {
 
     
-
     public static List<String> parseResponse(String message,String path,
             String value,boolean split){
         List<String> myList = new ArrayList<String>();
@@ -52,8 +50,8 @@ public class MyParser {
             for(int i = 0; i<size; i++){
                 tmp =myArray.getString(i);
                 parser = factory.createJsonParser(tmp);
-                nodeRoot = mapper.readTree(parser);
-                node = nodeRoot.findValue(value);
+                nodeRoot = mapper.readTree(parser);                 
+                node = nodeRoot.findPath(value);
                 // If split, we remove all caractere ""
                 if(split){
                     myList.add(node.toString().replace("\"", ""));
@@ -132,9 +130,8 @@ public class MyParser {
         
         try{
             JsonNode root = mapper.readTree(message);
-            JsonNode node = root.findValue(path);
-            response = node.toString();
-            
+            JsonNode node = root.findPath(path);                        
+            response = node.toString();            
         }
         catch(Exception exc){
             exc.printStackTrace();
@@ -147,6 +144,28 @@ public class MyParser {
         }
     }
     
+    public static List<String> getPictureIDs(String message, String path){
+        ObjectMapper mapper = new ObjectMapper();
+        List<String> myList = new ArrayList<String>();
+        String s;
+        
+        try{
+            JsonNode root = mapper.readTree(message);
+            myList = root.findValuesAsText(path);
+        }
+        catch(Exception exc){
+            exc.printStackTrace();
+        }        
+        
+        for(int i = 0; i < myList.size(); i++){
+            s = myList.get(i);
+            if(!s.contains("_")){
+                myList.remove(s);
+                i -= 1;
+            }
+        }        
+        return myList;
+    }
     
        
     
@@ -217,8 +236,7 @@ public class MyParser {
         UserInstagram user;
         while(it.hasNext()){
             user = (UserInstagram)it.next();
-            s += "\n***************\n# element["+(i++)+"] \n"+user;
-            s +="\n"+displayList(user.getListPicture());
+            s += "\n***************\n# element["+(i++)+"] \n"+user;            
         }
        
         return s;

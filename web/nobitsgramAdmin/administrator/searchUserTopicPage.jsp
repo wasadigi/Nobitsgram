@@ -7,7 +7,6 @@
 <%@include file="../../view/tools/headPage.jspf" %>
 
 <link rel="stylesheet" type="text/css" href="<% out.print(root+ "/css/adminHome_style.css"); %>" />
-<% User user = (User)session.getAttribute("user"); %>
     <div class="bar" id="positionbar">
         <a href="<% out.print(root+ "/HomeServlet"); %>" >
              <img class="" src="<% out.print(root+"/images/usersSetting.jpg");%>" class ="posipicto" /><span id="myText">Users setting</span></a>
@@ -34,8 +33,9 @@
                 </table>
             </div>
  </form>
+    <br/><br/><br/>
     
-    <div>
+    <div style="margin-left: 40%">
         <% List<Topic> topics = (List<Topic>)session.getAttribute("topicsLike"); 
            int size = topics.size();
            if(size != 0){
@@ -44,36 +44,45 @@
            int size1;
          %>
          
-        <table>
-            <tr>
-                <td>
-                    username
-                </td>
-                <td>
-                    profile picture
-                </td>
-            </tr>
+        
+            
             <% for(int i = 0; i < size; i++) { 
                 topic = topics.get(i);
-                    size1 = topic.getUsers().size();
-                    for(int j = 0; j < size1; j++){
-                        user = topic.getUsers().get(i);
+            size1 = topic.getUsers().size(); %>
+                
+                <center>
+                   
+                        <h2> <% if(size1 != 0) out.print(topics.get(i).getName()); %> </h2>
+               <table cellspacing="30">     
+                
+               <% for(int j = 0; j < size1; j++){
+                        user = topic.getUsers().get(j);
+                        
+                        if(j%5 == 0){
              %>
-            <tr>
-                <td>
-                    <% out.print(user.getUsername()); %>                    
+             <tr>
+                 <% } %>
+                 <td>
+                    <img class="" src="<% out.print(user.getProfile_picture()); %>" style="width: 80px; height: 80px"/>
+                    
+                    <center>
+                    <br style="margin-top: -15px;"/>
+                        <% out.print(user.getUsername()); %> 
+                    
+                    </center>
                 </td>
-                <td>
-                    <% out.print(user.getProfile_picture()); %>
-                </td>
+            <% if((j+1)%5 == 0) {%>
             </tr>
-            <% } }%>
-        </table>
+            <% }} %>
+            </table>
+                </center>
+            <%  }%>
+        
         <% }else { %>
         <center>
             <h2> Any user haven't this word in his topic </h2>
         </center>
         <% } %>
     </div>
-
+    
 <%@include file="../../view/tools/footPage.jspf" %> 

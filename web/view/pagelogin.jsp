@@ -130,7 +130,7 @@
 
         <% 
           List<String> listTopicRefresh = (List<String>)session.getAttribute("listTopicRefresh");          
-          String imgUrl = listTopicRefresh.get(0);                           
+          String imgUrl = listTopicRefresh.get(0);          
          %>
 
 <script type="text/javascript">
@@ -139,7 +139,7 @@
      var j=0;     
      var t= <% out.print(listTopicRefresh.size()); %>
      <% for(String s: listTopicRefresh){ %>
-        tabImg.push(<% out.print("\""+s+"\""); %>);
+        tabImg.push("<% out.print(s); %>");
      <% } %>
          
      function reloadImg(){       

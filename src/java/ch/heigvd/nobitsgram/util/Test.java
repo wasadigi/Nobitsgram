@@ -65,18 +65,21 @@ public class Test {
         Date d = new Date();
         
         
-        System.out.println("CALENDAR ===> "+c.get(c.MONTH));
+       // System.out.println("CALENDAR ===> "+c.get(c.MONTH));
         
-        //System.out.println("Date ====> "+d.ge);
+        //System.out.println(" ====> "+url3);
         
-         //String s = rt.getSearcResult(url4);
+         String s = rt.getSearcResult(url3);
        // System.out.println("MY LIST:\n"+MyParser.displayList(myList));
        
-    //    System.out.println("******************** APRES PARSING \n"+s+"\n*****************");
+        System.out.println("******************** AVANT \n"+s+"\n*****************");
         
         //List<UserInstagram> data = MyParser.getUsersFromJson(s,"data","username","profile_picture","id");
         
-        //List<String> idS = MyParser.parseResponse(s, "data", "id", true);
+        List<String> idS = MyParser.getPictureIDs(s, "id");
+        String s1 = MyParser.parseResponse(s,"id", false);
+        String s2 = MyParser.parseResponse(s,"tags", false);
+        //List<String> idS1 = MyParser.parseResponse(s1, "image", "id", false);
         //String  name = data.getUsername();
         //String  proPicture = data.getProfile_picture();  
        //List<String> myList = MyParser.parseResponse(s,"data","url",true);
@@ -85,7 +88,8 @@ public class Test {
        
        
 
-       // System.out.println("REPONSE SERVEUR ==> "+s);
+       System.out.println("S1 ==> "+s1);
+       System.out.println("S2 ==> "+s2);
        //List<String> list1 = parser.getListUrls(s);
         //parser.displayList(list1);
         /*ResearchGeocode rs = new ResearchGeocode(saisie);
@@ -97,10 +101,10 @@ public class Test {
          */
       // System.out.println("****************************\tProfile Picture ==> "+proPicture);
       // System.out.println("USERNAME USERNAME USERNAME ===========> "+ name);
-       //System.out.println("\tPROFILE_PICTURE\tPROFILE_PICTURE =======> "+MyParser.displayUser(data));
+      //System.out.println("\tPROFILE_PICTURE\tPROFILE_PICTURE =======> "+MyParser.displayUser(data));
       
-      //System.out.println(" =================================\n"+MyParser.displayList(myList));
-       
+      System.out.println(" =================================\n"+MyParser.displayList(idS));
+       //System.out.println(" ==============LIST IDS1 ===================\n"+MyParser.displayList(idS1));
 
     }
 

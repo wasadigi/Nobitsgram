@@ -113,9 +113,14 @@ public class TopicsManager {
     
     
     public List<Topic> getTopicLike(String topicName){
+        String topName = "%"+topicName+"%";
         List<Topic> myList = new ArrayList<Topic>();
-        Query q = em.createQuery("SELECT top FROM Topic top WHERE top.name LIKE : "+topicName);
-        myList = q.getResultList();
+        final String QUERY = "SELECT top FROM Topic top WHERE top.name LIKE :ftopicName";
+        Query q = em.createQuery(QUERY);
+        q.setParameter("ftopicName", topName);
+        if(q.getResultList() !=null){
+            myList = q.getResultList();
+        }
         return myList;
     }
     

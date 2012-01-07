@@ -11,7 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.*;
-import javax.ejb.EJB;
 
 
 /**
@@ -70,9 +69,12 @@ public class UsersManager {
      * This method get user according to his parameter and its value
      */
     public List<User> getUser(String parameter, String value){
-
-         Query q = em.createQuery("SELECT userSearch FROM User userSearch "
-                 + "WHERE userSearch."+parameter+"='"+value+"'");
+         // Avoiding sql attack injection, we set parameter with the method
+        // setParameter(name,value) of Query
+        final String QUERY = "SELECT userSearch FROM User userSearch "
+                              + "WHERE userSearch."+parameter+"=:fValue";
+         Query q = em.createQuery(QUERY);
+         q.setParameter("fValue", value);
          List<User> user = q.getResultList();
          
          return user;
@@ -157,15 +159,7 @@ public class UsersManager {
         return em;
     }
     
-    private List <User> users;
-    private List <Topic> topics;
-    private List<String> usernames = new ArrayList<String>();
-    private List<String> topicsName = new ArrayList<String>();
-    
-    
-    private List<String> access_tokens = new ArrayList<String>();
-    private List<String> idsInsta = new ArrayList<String>();
-    private List<String> usernInsta = new ArrayList<String>();
+   
 
    
 }
