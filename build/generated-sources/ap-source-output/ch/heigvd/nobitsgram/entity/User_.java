@@ -1,13 +1,14 @@
 package ch.heigvd.nobitsgram.entity;
 
 import ch.heigvd.nobitsgram.entity.Topic;
+import ch.heigvd.nobitsgram.model.UserHistory;
 import java.util.Calendar;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.2.0.v20110202-r8913", date="2012-01-07T01:31:10")
+@Generated(value="EclipseLink-2.2.0.v20110202-r8913", date="2012-01-08T15:08:42")
 @StaticMetamodel(User.class)
 public class User_ { 
 
@@ -34,6 +35,7 @@ public class User_ {
     public static volatile SingularAttribute<User, Boolean> isConnect;
     public static volatile SingularAttribute<User, Boolean> isBlocked;
     public static volatile SingularAttribute<User, String> country;
+    public static volatile SingularAttribute<User, UserHistory> history;
     public static volatile ListAttribute<User, Topic> topics;
     public static volatile SingularAttribute<User, Long> countSearch;
     public static volatile SingularAttribute<User, String> email;

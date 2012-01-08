@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.*;
 import ch.heigvd.nobitsgram.entity.*;
+import ch.heigvd.nobitsgram.model.UserHistory;
 /**
  *
  * @author Eyram
@@ -192,9 +193,12 @@ public class UsersGenerator {
              user.setLastDateSearch(date);
              user.setCountConnection(1);
              user.setCountMonthConnection(1);
-            create(user);
-            users.add(user);
-            i++;
+             UserHistory history = new UserHistory();
+             history.setCreateDate(date);
+             user.setHistory(history);
+             create(user);
+             users.add(user);
+             i++;
         }
     }
     

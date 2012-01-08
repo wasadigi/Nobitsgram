@@ -6,7 +6,11 @@ package ch.heigvd.nobitsgram.controller;
 
 import ch.heigvd.nobitsgram.entity.User;
 import ch.heigvd.nobitsgram.manager.UsersManager;
+import ch.heigvd.nobitsgram.model.UserHistory;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -56,7 +60,11 @@ private UsersManager usersManager;
     public void toDisconnect(HttpSession session)
          throws IOException, ServletException{
 
-        User user = (User)session.getAttribute("user");
+       User user = (User)session.getAttribute("user");
+       UserHistory history = user.getHistory();
+       Calendar dateDeconnexion = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault()); 
+       history.addDateDeconnexion(dateDeconnexion);
+       user.setHistory(history);
        user.setIsConnect(false);               
        user = usersManager.edit(user);
        session.invalidate();

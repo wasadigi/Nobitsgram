@@ -11,34 +11,38 @@
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
 
-.menubarre, .menubarre1{
+.menubarre, .menubarre1, .menubarre2{
     background-color: #2B2B2B;
-    font-size : 120%;
-    width: 100%;
-    height:7%;
-    width: 48.45%;
+    font-size : 120%;   
+    height:40px;
+    width: 550px;
 }
 
-.menubarre1{
-    width: 43%;
+.menubarre1, .menubarre2{
+    width: 500px;
 }
 
-.menubarre a, .menubarre1 a{
+.menubarre a, .menubarre1 a, .menubarre2 a{
     display: inline-table;
     color: #FF9E16;
-    margin-left: 6%;
+    margin-left: 20px;
     text-decoration: none;
     
 }
 
-.menubarre a:hover, .menubarre1 a:hover{
+.menubarre2 a{
+    margin-left: 80px;
+}
+
+
+.menubarre a:hover, .menubarre1 a:hover, .menubarre2 a:hover{
     color : white;
     border-bottom: 4px solid white;
   
     
 }
 
-.menubarre a.is_selected, .menubarre1 a.is_selected{    
+.menubarre a.is_selected, .menubarre1 a.is_selected, .menubarre2 a.is_selected{    
     color: white;
     border-bottom: 4px solid white;
 }
@@ -51,7 +55,7 @@
 
 #posearch1 {
     position : absolute;
-    top: 25%;
+    top: 50px;
     right : 20px;
 }
 
@@ -59,7 +63,7 @@
 .imageContener{    
     position: inherit;
     float: none;
-    width: 20%;
+    width: 600;
     padding-left: 2px;
     padding-right: 2px;
 }

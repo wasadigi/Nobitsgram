@@ -106,9 +106,15 @@
             
 
                  <% 
-                    List<Picture> pictures = userInsta.getListPicture(); 
-                    for(Picture picture: pictures){                        
+                    List<Picture> pictures = userInsta.getListPicture();
+                    int size1 = pictures.size();
+                    Picture picture;
+                    for(int j = 0; j< size1; j++){
+                        picture = pictures.get(j);                                
+                        if((j+1)%6 == 0) {
                  %>
+                   <tr>
+                 <% } %>
                  <td class="pictureContener">
                      <p>
                  <center>
@@ -129,7 +135,10 @@
                      </p>
 
                  </td>
-                 <%}%>
+                <% if((j+2)%6 == 0){ %>
+                </tr>
+                   <% } 
+                 } %>
                 </tr>                                  
            
         </table>

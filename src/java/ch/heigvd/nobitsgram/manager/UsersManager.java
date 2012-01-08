@@ -75,11 +75,19 @@ public class UsersManager {
                               + "WHERE userSearch."+parameter+"=:fValue";
          Query q = em.createQuery(QUERY);
          q.setParameter("fValue", value);
-         List<User> user = q.getResultList();
+         List<User> user = q.getResultList();         
          
-         return user;
-         
-         
+         return user;                  
+    }
+    
+    public List<User> getUserConnected(){
+        List<User> myList = new ArrayList<User>();
+        Query q = em.createQuery("SELECT userSearch FROM User userSearch "
+                              + "WHERE userSearch.isConnect = true");
+        if(q.getResultList() != null){
+            myList = q.getResultList();
+        }
+        return myList;
     }
     
 

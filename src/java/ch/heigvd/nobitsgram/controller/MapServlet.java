@@ -5,12 +5,16 @@
 package ch.heigvd.nobitsgram.controller;
 
 import ch.heigvd.nobitsgram.entity.User;
+import ch.heigvd.nobitsgram.manager.UsersManager;
+import ch.heigvd.nobitsgram.model.Position;
+import ch.heigvd.nobitsgram.model.UserHistory;
 import ch.heigvd.nobitsgram.util.InterrogatorInstagram;
 import ch.heigvd.nobitsgram.util.MyParser;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,7 +29,8 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "MapServlet", urlPatterns = {"/MapServlet"})
 public class MapServlet extends HttpServlet {
-
+    @EJB
+    UsersManager usersManager;
    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
@@ -46,7 +51,7 @@ public class MapServlet extends HttpServlet {
             String lng = request.getParameter("longitude");
             String urlIdMedia = "";
             String urlSearchId = "";
-            
+            UserHistory history;
             
             List<String> positionUrl = new ArrayList<String>();
             List<String> listId = new ArrayList<String>();
@@ -54,7 +59,12 @@ public class MapServlet extends HttpServlet {
                         
             User user = (User)session.getAttribute("user");            
             if(lat != null){
-                                
+                
+                history = user.getHistory();
+                Position position = new Position(lat,lng);
+                history.addPosition(position);
+                user.setHistory(history);
+                user = usersManager.edit(user);
                 urlSearchId = "https://api.instagram.com/v1/locations/search?lat="
                     + lat+"&lng="+lng+"&access_token="+user.getAcces_token();
                 listId = getListId(urlSearchId,inter);

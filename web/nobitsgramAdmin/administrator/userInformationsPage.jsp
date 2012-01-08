@@ -7,7 +7,7 @@
 <%@include file="../../view/tools/headPage.jspf" %>
 <link rel="stylesheet" type="text/css" href="<% out.print(root+ "/css/adminHome_style.css"); %>" />
 <% User user = (User)session.getAttribute("user"); %>
-    <div class="bar" id="positionbar">
+    <div class="bar3" id="positionbar">
         <a href="<% out.print(root+ "/HomeServlet"); %>" >
              <img class="" src="<% out.print(root+"/images/usersSetting.jpg");%>" class ="posipicto" /><span id="myText">Users setting</span></a>
 
@@ -34,9 +34,9 @@
  </form>
     </div>
                     
-    <div class="menubarre1" >                    
+    <div class="menubarre2" >                    
         <a href="<% out.print(root+ "/UserInfoServlet?username="+user.getUsername()); %>" class="is_selected" >User view</a>
-        <a href="<% out.print(root+ "/UserHistoryServlet"); %>"  >User History</a>                   
+        <a href="<% out.print(root+ "/UserHistoryServlet?username="+user.getUsername()); %>"  >User History</a>                   
     </div>
     
         

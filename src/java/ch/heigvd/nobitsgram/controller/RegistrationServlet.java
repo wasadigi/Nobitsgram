@@ -7,6 +7,7 @@ package ch.heigvd.nobitsgram.controller;
 import ch.heigvd.nobitsgram.entity.*;
 import ch.heigvd.nobitsgram.manager.*;
 import ch.heigvd.nobitsgram.model.UserBean;
+import ch.heigvd.nobitsgram.model.UserHistory;
 import ch.heigvd.nobitsgram.util.*;
 import java.io.*;
 import java.util.*;
@@ -277,7 +278,8 @@ public class RegistrationServlet extends HttpServlet {
                  user.setLastDateSearch(date);
                  user.setCountConnection(1);
                  user.setCountMonthConnection(1);
-                 
+                 UserHistory history = new UserHistory();
+                 history.setCreateDate(date);
                  user = usersManager.edit(user);
                  
                 // We send the client to the redirect page

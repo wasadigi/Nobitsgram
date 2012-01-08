@@ -21,6 +21,7 @@
 }
 
 #body_bg {
+    width: 100%;
     margin-top: 0px;
 }
 #body1 {
@@ -41,24 +42,28 @@
     
 }
 
-.bar, .bar1, .bar2{    
+.bar, .bar1, .bar2, .bar3{    
     background-color: gray;
     height: 42px;
-    width: 43%;
+    width: 550px;
     margin-left: -4px;    
     list-style-type: none;
     
 }
 
 .bar1{    
-    width: 52%; 
+    width: 550px; 
     height: 38px;
 }
 .bar2{
-    width: 48.45%
+    width: 550px
 }
 
-.bar a,  .bar1 a, .bar2 a{    
+.bar3{
+    width: 500px;
+}
+
+.bar a,  .bar1 a, .bar2 a, .bar3 a{    
     border-bottom: none;
     margin-right: -3px;    
     color: black;
@@ -67,12 +72,12 @@
 }
 
 
-.bar a:hover, .bar1 a:hover, .bar2 :hover {    
+.bar a:hover, .bar1 a:hover, .bar2 a:hover, .bar3 a:hover {    
     color :#0A1ACC;   
 }
 
 
-.bar a.selected, .bar1 a.selected, .bar2 a.selected{
+.bar a.selected, .bar1 a.selected, .bar2 a.selected, .bar3 a.selected{
     background-color: #2B2B2B;
     color: #F6B22B;
     border-bottom: 4px
@@ -90,7 +95,7 @@
 
 #posearch { 
     position : absolute;
-    top: 23%;
+    top: 130px;
     right: 20px;
 }
 
@@ -152,3 +157,4 @@ html, body {
     margin-left: 68.5%; 
     border: 2px solid #000 ;
 }
+

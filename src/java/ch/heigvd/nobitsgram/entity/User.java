@@ -1,5 +1,6 @@
 package ch.heigvd.nobitsgram.entity;
 
+import ch.heigvd.nobitsgram.model.UserHistory;
 import ch.heigvd.nobitsgram.util.MyParser;
 import java.io.Serializable;
 import java.security.MessageDigest;
@@ -96,7 +97,7 @@ public class User implements Serializable {
     
     private int countMonthSearch = 0;
     
-    
+    private UserHistory history;
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar createDate;
@@ -459,6 +460,14 @@ public class User implements Serializable {
 
     public void setCountSearch(long countSearch) {
         this.countSearch = countSearch;
+    }
+
+    public UserHistory getHistory() {
+        return history;
+    }
+
+    public void setHistory(UserHistory history) {
+        this.history = history;
     }
 
     

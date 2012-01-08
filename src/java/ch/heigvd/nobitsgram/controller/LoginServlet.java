@@ -6,6 +6,7 @@ package ch.heigvd.nobitsgram.controller;
 
 import ch.heigvd.nobitsgram.entity.User;
 import ch.heigvd.nobitsgram.manager.UsersManager;
+import ch.heigvd.nobitsgram.model.UserHistory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import sun.nio.cs.HistoricallyNamedCharset;
 
 /**
  *
@@ -118,8 +120,10 @@ private UsersManager usersManager;
                     // We set the value which indicate how many time user
                     // has been connected to his account
                     user.setCountConnection(user.getCountConnection()+1);
-                    
+                    UserHistory history = user.getHistory();
                     Calendar currentDate = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
+                    history.addDateConnexion(currentDate);
+                    user.setHistory(history);
                     Calendar date = user.getLastDateConnection();
                     
                     // We check if the month change. If it change, we set the 

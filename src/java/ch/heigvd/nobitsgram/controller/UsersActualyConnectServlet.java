@@ -43,7 +43,7 @@ public class UsersActualyConnectServlet extends HttpServlet {
         try{
             HttpSession session = request.getSession();
             User user = (User)session.getAttribute("user");
-            List<User> usersConnected = usersManager.getUser("isConnect","true");
+            List<User> usersConnected = usersManager.getUserConnected();
             // We remove the current user in the list
             usersConnected.remove(user);
             
