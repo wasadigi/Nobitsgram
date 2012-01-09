@@ -11,6 +11,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Produces;
 
 
 /**
@@ -48,7 +50,8 @@ public class UsersManager {
      public User findUser(int id) {
         return em.find(userClass, id);
     }
-
+    @GET
+    @Produces({"application/xml", "application/json"})
     public List<User> findAllUser(){
         javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         cq.select(cq.from(userClass));

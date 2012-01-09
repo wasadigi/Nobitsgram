@@ -7,7 +7,7 @@
 
 
 <%@include file="tools/headPage.jspf" %>
-
+<% try{ %>
 <div class="bar" id="positionbar">
 
     <a href="<% out.print(root+ "/GalleryServlet"); %>" >
@@ -496,7 +496,11 @@
 		</form>
 
 	</div>
-
+<% } catch(NullPointerException nuExcp) { %>
+        <jsp:forward page="pagelogin.jsp" >
+                <jsp:param name="transfert" value="ok" />
+        </jsp:forward>
+<% } %>
 
 <%@include file="tools/footPage.jspf" %>
 

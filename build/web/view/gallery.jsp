@@ -39,7 +39,8 @@
     </div>
 <br/>
 <br/><br/>
-<table cellspacing="10"  style="margin-left:20%;">
+<center>
+<table cellspacing="10" >
      <% List<String> topicUrlList = (List<String>)session.getAttribute("topicUrlList");
         Random random1 = new Random(); int i = -1; int size1 = topicUrlList.size();
        
@@ -83,7 +84,7 @@
     </tr>
 </table>
 <br/>
-<table cellspacing="10"  style="margin-left:20%;">
+<table cellspacing="10">
     <% List<String> followUrlList = (List<String>)session.getAttribute("followUrlList");
         Random random2 = new Random(); int j = -1; int size2 = followUrlList.size();
      %>
@@ -124,7 +125,7 @@
     </tr>
 </table>
 <br/>
-<table cellspacing="10"  style="margin-left:20%;">
+<table cellspacing="10" >
     <% List<String> likeUrlList = (List<String>)session.getAttribute("likeUrlList");
         Random random3 = new Random(); int k = -1; int size3 = likeUrlList.size();
      %>
@@ -163,5 +164,6 @@
         </td>
     </tr>
 </table>
+</center>
 <%@include file="tools/footPage.jspf" %>
 
