@@ -9,8 +9,9 @@ package ch.heigvd.nobitsgram.model;
  * @author Eyram
  */
 
+import java.io.Serializable;
 import java.util.*;
-public class PositionWithDate {
+public class PositionWithDate implements Serializable {
     private List<Position> positions = new ArrayList<Position>();
     
     private Calendar date;

@@ -4,13 +4,15 @@
  */
 package ch.heigvd.nobitsgram.model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Eyram
  */
 
 
-public class Position {
+public class Position implements Serializable{
     
     private String lat;
     private String lng;

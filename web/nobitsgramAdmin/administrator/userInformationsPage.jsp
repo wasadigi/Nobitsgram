@@ -147,5 +147,5 @@
                 </tr>
             </table>
             </center>
-        </div>
+ </div>
 <%@include file="../../view/tools/footPage.jspf" %> 
