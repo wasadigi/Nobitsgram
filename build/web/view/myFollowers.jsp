@@ -1,5 +1,5 @@
 <%-- 
-    Document   : myFollowers
+    Document   : myFans
     Created on : 21 déc. 2011, 14:48:23
     Author     : Eyram
 --%>
@@ -9,6 +9,7 @@
 <script type="text/javascript" src="jquery-1.2.3.min.js"></script>
 <script type="text/javascript" src="Default.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+
 <div class="bar2" id="positionbar">
      <a href="<% out.print(root+ "/GalleryServlet"); %>" >
          <img class="" src="<% out.print(root+"/images/gallery.jpg");%>" class ="posipicto" /><span id="myText">Gallery </span></a>
@@ -41,13 +42,14 @@
 
     </div>
 
-    <div class="menubarre" id="position-menu-barre">
-    
+    <div class="menubarre" id="position-menu-barre">    
         <a href="<% out.print(root+ "/view/friendsPage.jsp"); %>" style="margin-top: 10px;">My contacts</a>
         <a href="<% out.print(root+ "/ListTopicUserServlet"); %>"  >My topics users</a>
         <a href="<% out.print(root+ "/UsersActualyConnectServlet"); %>">Nobitsgram users</a>
+        <a href="<% out.print(root+ "/MyFollowingServlet"); %>">My followings</a>
         <a href="<% out.print(root+ "/MyFollowerServlet"); %>"
-           class="is_selected">My followers</a>                  
+           class="is_selected">My followers</a>
+       <a href="<% out.print(root+ "/MyFanServlet"); %>">My fans</a>
     </div>
         <% 
            List<UserInstagram> myFollowers = (List<UserInstagram>)session.
@@ -87,19 +89,7 @@
                      </p>
                  
                     </td>
-                  </tr>
-                  <tr>
-                      <td>
-                  <center id="buttonContainer">
-                      <input type ="button" title ="FOLLOW" value="follow" name="<% out.print(userId); %>"  
-                         style="border:1px solid #1C86EE;
-                         background:#1C86EE;width:60px;
-                         background-color:#1C86EE;
-                         height: 20px;font-size:14px" onclick="submitFollow(idButton = '<%out.print(userId); %>')" 
-                         id="<%out.print(userId); %>" /> 
-                  </center>
-                      </td>
-                  </tr>
+                  </tr>                  
                 </table>
                       </form>
                      </td>
@@ -156,34 +146,7 @@
     var urlLike;
     var access_token = "<% out.print(user.getAcces_token()); %>";
     
-    function submitFollow(idFollow){         
-        action_Follow = document.getElementById(idFollow).value;
-       
-        urlFollow = "https://api.instagram.com/v1/users/"+idFollow+"/relationship?access_token="+access_token+"&action="+action_Follow;
-
-        $.ajax({
-        type: "POST",         
-        dataType: "jsonp",        
-        url: urlFollow,
-        success: function() {
-            if(action_Follow == "follow"){
-                document.getElementById(idFollow).value = "unfollow";
-                document.getElementById(idFollow).title = "UNFOLLOW";
-            }
-            else{
-                document.getElementById(idFollow).value = "follow";
-                document.getElementById(idFollow).title = "FOLLOW";
-            }
-             
-        },
-        error: function(){
-            alert("error to follow this user !");
-        }
-        
-    });
-
-   }
-
+   
    
    function submitLike(idLike){        
         action_Like = document.getElementById(idLike).value;        

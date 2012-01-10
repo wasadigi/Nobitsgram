@@ -52,7 +52,9 @@
         </a>
         <a href="<% out.print(root+ "/UsersActualyConnectServlet"); %>" 
            class="is_selected" >Nobitsgram users</a>
-        <a href="<% out.print(root+ "/MyFollowerServlet"); %>">My followers</a>                      
+       <a href="<% out.print(root+ "/MyFollowingServlet"); %>">My followings</a>
+        <a href="<% out.print(root+ "/MyFollowerServlet"); %>">My followers</a>
+       <a href="<% out.print(root+ "/MyFanServlet"); %>" >My fans</a>                     
     </div>
     
     

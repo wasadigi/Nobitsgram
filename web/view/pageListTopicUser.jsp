@@ -44,7 +44,9 @@
         <a href="<% out.print(root+ "/view/friendsPage.jsp"); %>" style="margin-top: 10px;">My contacts</a>
         <a href="<% out.print(root+ "/ListTopicUserServlet"); %>" class="is_selected" >My topics users</a>
         <a href="<% out.print(root+ "/UsersActualyConnectServlet"); %>">Nobitsgram users</a>
-        <a href="<% out.print(root+ "/MyFollowerServlet"); %>">My followers</a>                  
+        <a href="<% out.print(root+ "/MyFollowingServlet"); %>">My followings</a>
+        <a href="<% out.print(root+ "/MyFollowerServlet"); %>">My followers</a>
+       <a href="<% out.print(root+ "/MyFanServlet"); %>" >My fans</a>                  
     </div>
         <% List<Topic> topics = (List<Topic>)session.getAttribute("topics");
            int size = 0;
@@ -57,8 +59,6 @@
             <div class="imageContener">
                                     
               <h2 style="margin-bottom:-3px;">  <% out.print(topics.get(i).getName()); %>   </h2>
-                                        
-                
               <table>  
                     <tr>
                         <% List<User> users = topics.get(i).getUsers();
@@ -66,7 +66,10 @@
                    int size1 = users.size(); User user;
                    for(int j = 0; j < size1; j++){
                        user = users.get(j);
+                       if((j+1)%10==0){
                 %>
+                <tr> 
+                <% } %>
                         <td class="pictureContener">
                     <center>
                             <p id="picturposition">
@@ -81,17 +84,17 @@
                         <td>
                     
                         </td>
+                        <% if((j+2)%10 == 0){ %>
+                        </tr>
+                        <% } %>
                           <% } %>
                     </tr>
 
                     </table>
-                  
-                                    
-
 
             <% } %>
             
         </div>
-                
+   
 <%@include file="tools/footPage.jspf" %>
 
