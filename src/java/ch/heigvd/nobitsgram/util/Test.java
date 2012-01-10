@@ -39,7 +39,7 @@ public class Test {
       // System.out.println("\n\t\tSAISI ==> "+saisie);
        // rt.setSearchUrl(saisie);
        // String url = "https://api.instagram.com/v1/tags/"+saisie+"/media/recent?access_token="+access_token;
-       // String url1 = "http://maps.googleapis.com/maps/api/geocode/json?address="+saisie+"&sensor=true";
+        String url1 = "http://maps.googleapis.com/maps/api/geocode/json?address=USA&sensor=true";
         
         
         String id = "14433553";
@@ -65,17 +65,17 @@ public class Test {
         Date d = new Date();
         
         
-       System.out.println("CALENDAR 1===> "+c.get(c.DST_OFFSET));
-       System.out.println("CALENDAR 2===> "+c.get(c.ALL_STYLES));
-       System.out.println("CALENDAR 3===> "+c.get(c.DAY_OF_MONTH));
+      // System.out.println("CALENDAR 1===> "+c.get(c.DST_OFFSET));
+      // System.out.println("CALENDAR 2===> "+c.get(c.ALL_STYLES));
+      // System.out.println("CALENDAR 3===> "+c.get(c.DAY_OF_MONTH));
        
         
-        //System.out.println(" ====> "+url3);
+        //System.out.println(" ====> "+url1);
         
-        // String s = rt.getSearcResult(url3);
-       // System.out.println("MY LIST:\n"+MyParser.displayList(myList));
+         String s = rt.getSearcResult(url1);
+       //System.out.println("MY LIST:\n"+MyParser.displayList(myList));
        
-      //  System.out.println("******************** AVANT \n"+s+"\n*****************");
+       System.out.println("******************** AVANT \n"+s+"\n*****************");
         
         //List<UserInstagram> data = MyParser.getUsersFromJson(s,"data","username","profile_picture","id");
         

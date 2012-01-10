@@ -41,128 +41,95 @@
 <br/><br/>
 <center>
 <table cellspacing="10" >
-     <% List<String> topicUrlList = (List<String>)session.getAttribute("topicUrlList");
-        Random random1 = new Random(); int i = -1; int size1 = topicUrlList.size();
-       
-       
+     <% List<String> topicUrlList = (List<String>)session.getAttribute("topicUrlList");        
+         int size1 = topicUrlList.size();         
+        if(size1 > 0 ){
+            List<String> tmpList = topicUrlList;        
+            Random random = new Random(); 
+            int a;
+            int b = Math.min(size1, 3);
+            
      %>
      <tr><td> <img src="<% out.print(root+ "/images/topic.jpg"); %>" title="TOPIC"
                    style="background: #FFA07A;width: 30px;height:30px;" /> </td>
+         <td><h3>Topic Pictures</h3></td>
         </tr>
      <tr>
-        <% if(size1 > 0){ 
-                i= random1.nextInt(size1); 
-            }%>
+        <% for (int i = 0; i < b; i++){
+                a = random.nextInt(tmpList.size());
+         %>
         <td>
             
        
-            <img src="<% if(i > -1){
-                            out.print(topicUrlList.get(i));
-                         }
-                         else{
-                            out.print("");}%>" style="background: #FF8C00;width: 200px;height:150px;" />
+            <img src="<%out.print(tmpList.get(a));%>" style="background: #FF8C00;width: 200px;height:150px;" />
         </td>
-        <td>
-            
-            <img src="<% if(i > -1){
-                            i= random1.nextInt(size1); 
-                            out.print(topicUrlList.get(i));
-                         }
-                         else{
-                            out.print("");}%>" style="background: #FFA07A;width: 200px;height:150px;" />
-        </td>
-        <td>
-            
-            <img src="<% if(i > -1){
-                            i= random1.nextInt(size1); 
-                            out.print(topicUrlList.get(i));
-                         }
-                         else{
-                            out.print("");}%>" style="background: #FF2400;width: 200px;height:150px;" />
-        </td>
-        
+        <%  
+            tmpList.remove(a);
+        } %> 
     </tr>
+    <% } %>
 </table>
 <br/>
 <table cellspacing="10">
     <% List<String> followUrlList = (List<String>)session.getAttribute("followUrlList");
-        Random random2 = new Random(); int j = -1; int size2 = followUrlList.size();
+        int size2 = followUrlList.size();         
+        if(size2 > 0 ){
+            List<String> tmpList2 = followUrlList;        
+            Random random = new Random(); 
+            int a;            
+            int b = Math.min(size2, 3);
      %>
      <tr>
          <td> <img src="<% out.print(root+ "/images/follower.jpg"); %>" title="FOLLOWER"
                   style="background: #FFA07A;width: 35px;height:35px;" /> </td>
+         <td><h3>Follower Pictures</h3>
         
      </tr>
     <tr>
-        <% if(size2 > 0){
-            j = random2.nextInt(size2); }%>
+        <% for(int i = 0; i < b; i++){
+            a = random.nextInt(tmpList2.size()); %>
         <td>
-            <img src="<% if(j > -1){
-            out.print(followUrlList.get(j));
-            }
-            else{
-            out.print("");}%>"  style="background: #D3D3D3;width: 200px;height:150px;" />
+            <img src="<%out.print(tmpList2.get(a)); %>" style="width: 200px;height:150px;"/>
         </td>
-        <td>
-            
-            <img src="<% if(j > -1){
-                j= random2.nextInt(size2);
-                out.print(followUrlList.get(j));
-            }
-            else{
-            out.print("");}%>" style="background: #B9D3EE;width: 200px;height:150px;" />
-        </td>
-        <td>
-            
-            <img src="<% if(j > -1){
-                j= random2.nextInt(size2);
-                out.print(followUrlList.get(j));
-            }
-            else{
-            out.print("");}%>"  style="background: #6C7B8B;width: 200px;height:150px;" />
-        </td>
-        
+        <% 
+         tmpList2.remove(a);
+         } 
+        %>
     </tr>
+    <% } %>
 </table>
+        
 <br/>
 <table cellspacing="10" >
     <% List<String> likeUrlList = (List<String>)session.getAttribute("likeUrlList");
-        Random random3 = new Random(); int k = -1; int size3 = likeUrlList.size();
+        
+        int size3 = likeUrlList.size();                 
+        if(size3 > 0 ){
+            List<String> tmpList3 = likeUrlList;        
+            Random random = new Random(); 
+            int a;
+            int b = Math.min(size3, 3);
+                
      %>
      <tr>
          
          <td> <img src="<% out.print(root+ "/images/like.jpg"); %>" title="LIKE"
-                  style="background: #FFA07A;width: 30px;height:30px;" /> </td>
+                  style="width: 30px;height:30px;" /> </td>
+         <td><h3>Like Pictures</h3></td>
         
      </tr>
     <tr>
-        <td><% if(size3 > 0){
-                k= random3.nextInt(size3);
-              }%>
+        <% for(int i = 0; i < b; i++){
+                a = random.nextInt(tmpList3.size()); %>
+        <td>
             
-            <img src="<% if(k > -1){                               
-                out.print(likeUrlList.get(k));
-            }
-            else{
-            out.print("");}%>" style="background: #7D26CD;width: 200px;height:150px;" />
+            <img src="<% out.print(tmpList3.get(a));%>" style="width: 200px;height:150px;" />
         </td>
-        <td>
-            <img src="<% if(k > -1){
-                k= random3.nextInt(size3);
-                out.print(likeUrlList.get(k));
-            }
-            else{
-            out.print("");}%>" style="background: #007FFF;width: 200px;height:150px;" />
-        </td>
-        <td>
-            <img src="<% if(k > -1){
-                k= random3.nextInt(size3);
-                out.print(likeUrlList.get(k));
-            }
-            else{
-            out.print("");}%>" style="background: #00FFFF;width: 200px;height:150px;" />
-        </td>
+        <% 
+        tmpList3.remove(a);
+        } %>
     </tr>
+    <% } %>
 </table>
 </center>
 <%@include file="tools/footPage.jspf" %>

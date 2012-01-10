@@ -21,7 +21,11 @@
      <a href="<%out.print(root+ "/LogoutServlet"); %>" id="">
              <img class="" src="<% out.print(root+"/images/logout1.jpg");%>" class ="posipicto" /><span id="myText">Logout</span></a>
 
-
+ <div class="menubarre3" id="position-menu-barre">    
+        <a href="<% out.print(root+ "/view/settingAccount.jsp"); %>" 
+           style="margin-top: 10px;" class="is_selected">Setting Account</a>
+        <a href="<% out.print(root+ "/UserMediaServlet"); %>"  >My Media</a>        
+    </div>
 
         <form action="<% out.print(root+ "/SearchServlet"); %>" method="GET">
             <!-- Bare menu -->

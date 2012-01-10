@@ -12,6 +12,9 @@ import javax.persistence.PersistenceContext;
 import java.util.*;
 import ch.heigvd.nobitsgram.entity.*;
 import ch.heigvd.nobitsgram.model.UserHistory;
+import ch.heigvd.nobitsgram.util.InterrogatorInstagram;
+import ch.heigvd.nobitsgram.util.MyParser;
+import com.sun.java.swing.plaf.nimbus.SliderPainter;
 /**
  *
  * @author Eyram
@@ -36,6 +39,7 @@ public class UsersGenerator {
     private List<String> access_tokens = new ArrayList<String>();
     private List<String> idsInsta = new ArrayList<String>();
     private List<String> usernInsta = new ArrayList<String>();
+    private List<String> countryList = new ArrayList<String>();
 
     
      public void create(Topic topic){
@@ -91,18 +95,18 @@ public class UsersGenerator {
         
     
     public void initUsername(){
-        usernames.add("Mat jean");
-        usernames.add("tototo");
-        usernames.add("tititi");
-        usernames.add("toutou");
-        usernames.add("Jean-Marc");
-        usernames.add("Francis");
-        usernames.add("tonton");
-        usernames.add("maximes");
-        usernames.add("joujou");
-        usernames.add("dupond");
-        usernames.add("daltons");
-        usernames.add("jean-marie");
+//        usernames.add("Mat jean");
+//        usernames.add("tototo");
+//        usernames.add("tititi");
+//        usernames.add("toutou");
+//        usernames.add("Jean-Marc");
+//        usernames.add("Francis");
+//        usernames.add("tonton");
+//        usernames.add("maximes");
+//        usernames.add("joujou");
+//        usernames.add("dupond");
+//        usernames.add("daltons");
+//        usernames.add("jean-marie");
         usernames.add("Sylvain");
         usernames.add("maestro");
         usernames.add("tintin");                
@@ -113,12 +117,12 @@ public class UsersGenerator {
         usernames.add("Franck");
         usernames.add("toun");
         usernames.add("max");
-        usernames.add("jour");
-        usernames.add("dupe");
-        usernames.add("dalt");
-        usernames.add("marie");
-        usernames.add("Sylvie");
-        usernames.add("master");
+        //usernames.add("jour");
+        //usernames.add("dupe");
+        //usernames.add("dalt");
+        //usernames.add("marie");
+        //usernames.add("Sylvie");
+        //usernames.add("master");
         usernames.add("Hadock");
         
     }
@@ -153,21 +157,43 @@ public class UsersGenerator {
     
     public void initUser(){
         User user;
+        
         int i = 0;
         int size = access_tokens.size();
         Random random = new Random();
-        double lat;
-        double lng;
-        double latMax = 70;
-        double lngMax = 300;
-        
+        initCountryList();;
+        int sizeCountry = countryList.size();
+        int index;
+        String lat;
+        String lng;
+       String country;
+       InterrogatorInstagram inter = new InterrogatorInstagram();
+       String location;
         
         for(String s: usernames){
-            lat = random.nextFloat()*latMax;
-            lng = random.nextFloat()*lngMax;
-            if(lng > 150){
-                lng = -1*lng/2;
+            
+            if(i%10 == 0 ){
+                try{
+                  
+                System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% WAIT %%%%%%%%%%%%%%%%%%%%%%%%%%");
+                }
+                catch(Exception e){
+                    System.out.println("CAN'T WAIT **************************************");
+                }
             }
+            index = random.nextInt(sizeCountry);
+            country = countryList.get(index);
+            // We build the url of request to googleapis
+            String url = "http://maps.googleapis.com/maps/api/geocode/json?address="
+                         + country + "&sensor=true";
+
+            // we get the response of request
+            String result = inter.getSearcResult(url);
+            System.out.println("RESULT "+result+"\n ====> country == "+country+" i ===> "+i);
+            location = MyParser.parseResponse(result,"location",false);
+            lat = MyParser.parseResponse(location, "lat",true);
+            lng = MyParser.parseResponse(location, "lng",true);
+
             user = new User(s);
             user.setAcces_token(access_tokens.get(i%size));
             user.setId_Instagram(idsInsta.get(i%size));
@@ -175,9 +201,11 @@ public class UsersGenerator {
             user.setPassword("123456");
             user.setProfile_picture("http://images.instagram.com/profiles/anonymousUser.jpg");
             user.setEmail("mail@web.com");
-            user.setCountry("ch");
-            user.setLatitude(lat);
-            user.setLongitude(lng);
+            user.setCountry(country);
+            
+                // We set lat and lng to the user
+                user.setLatitude(Double.parseDouble(lat));
+                user.setLongitude(Double.parseDouble(lng));                      
             if(i%2 == 0){
               user.setIsBlocked(false);
             }
@@ -201,6 +229,79 @@ public class UsersGenerator {
              i++;
         }
     }
+    
+    public void initCountryList(){
+        countryList.add("Afghanistan");                                         
+        countryList.add("Albania");                    
+        countryList.add("Algeria");                    
+                    
+        
+
+        countryList.add("Angola");                     
+        countryList.add("Anguilla");                   
+        countryList.add("Antarctica");                 
+        
+        countryList.add("Argentina");                 
+        countryList.add("Armenia");                   
+
+        
+        countryList.add("Australia");                 
+        countryList.add("Austria");                   
+        countryList.add("Azerbaijan");                
+        countryList.add("Bahamas");                   
+        countryList.add("Bahrain");                   
+
+        countryList.add("Bangladesh");                
+        
+        countryList.add("Belarus");                   
+        countryList.add("Belgium");                   
+        
+        countryList.add("Benin");                      
+
+        
+        countryList.add("Bolivia");                             
+        countryList.add("Botswana");                    
+        
+        countryList.add("Bulgaria");    
+        countryList.add("Brazil");               
+        countryList.add("China");                     
+        
+
+        countryList.add("Fiji");                       
+        countryList.add("Finland");                      
+        countryList.add("France");                   
+        
+        
+        countryList.add("Gabon");                      
+        countryList.add("Gambia");                     
+
+        countryList.add("Georgia");      
+        countryList.add("Germany");      
+
+        countryList.add("Ghana");
+                                                  
+        countryList.add("Spain");                                    
+
+        countryList.add("Sudan");                    
+        countryList.add("Suriname");                         
+        countryList.add("Swaziland");
+        countryList.add("Sweden");     
+        countryList.add("Switzerland");
+
+        countryList.add("Syria");
+        countryList.add("Taiwan");                                         
+        countryList.add("Tanzania");                  
+        countryList.add("Thailand");                  
+        countryList.add("Togo");                      
+
+
+        countryList.add("USA");             
+        countryList.add("Uruguay");                                
+        countryList.add("Uzbekistan");                
+        
+        
+    }
+    
     
     public void insertUsersToTable(){
         

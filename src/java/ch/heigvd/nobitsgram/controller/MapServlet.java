@@ -49,12 +49,11 @@ public class MapServlet extends HttpServlet {
             HttpSession session = request.getSession();
             String lat = request.getParameter("latitude");
             String lng = request.getParameter("longitude");
-            String urlIdMedia = "";
-            String urlSearchId = "";
+            String urlMediaPosition = "";            
             UserHistory history;
+            String errorMap;
             
-            List<String> positionUrl = new ArrayList<String>();
-            List<String> listId = new ArrayList<String>();
+            List<String> positionUrl = new ArrayList<String>();            
             InterrogatorInstagram inter = new InterrogatorInstagram();
                         
             User user = (User)session.getAttribute("user");            
@@ -65,23 +64,17 @@ public class MapServlet extends HttpServlet {
                 history.addPosition(position);
                 user.setHistory(history);
                 user = usersManager.edit(user);
-                urlSearchId = "https://api.instagram.com/v1/locations/search?lat="
-                    + lat+"&lng="+lng+"&access_token="+user.getAcces_token();
-                listId = getListId(urlSearchId,inter);
-                if(listId.isEmpty()){
-                    String errorMap = "Any picture in this area";
+                urlMediaPosition ="https://api.instagram.com/v1/media/search?"
+                       + "lat="+lat+"&lng="+lng+"&access_token="+user.getAcces_token();                
+                positionUrl = getListUrl(urlMediaPosition, inter);
+                
+                if(positionUrl.isEmpty()){
+                    errorMap = "It haven't any picture in that area!";
                     session.setAttribute("errorMap", errorMap);
                 }
-            }                       
-            
-            if(!listId.isEmpty()){
-                Random random = new Random();
-                String id =""+listId.get(random.nextInt(listId.size()));                
-                urlIdMedia = "https://api.instagram.com/v1/locations/"
-                    +id+"/media/recent/?access_token="+user.getAcces_token();
-                positionUrl = getListUrl(urlIdMedia, inter);
                 
-            }            
+            }                                   
+            
                                     
             session.setAttribute("positionUrl", positionUrl);                              
             sc.getRequestDispatcher("/view/map.jsp").
@@ -108,19 +101,13 @@ public class MapServlet extends HttpServlet {
     }
 
     
-    public List<String> getListId(String url,InterrogatorInstagram inter){
-       List<String> myList = new ArrayList<String>();
-       String resp = inter.getSearcResult(url);       
-       myList = MyParser.parseResponse(resp,"data","id",true);      
-       return myList;
-    }
     
     
     public List<String> getListUrl(String url,InterrogatorInstagram inter){
         List<String> myList = new ArrayList<String>();
         
         if(url != ""){
-            String resp = inter.getSearcResult(url);
+            String resp = inter.getSearcResult(url);            
             myList = MyParser.parseResponse(resp,"data","url",true);
         }
                 

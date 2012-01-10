@@ -11,7 +11,7 @@
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
 
-.menubarre, .menubarre1, .menubarre2{
+.menubarre, .menubarre1, .menubarre2, .menubarre3{
     background-color: #2B2B2B;
     font-size : 100%;   
     height:40px;
@@ -22,7 +22,13 @@
     width: 500px;
 }
 
-.menubarre a, .menubarre1 a, .menubarre2 a{
+.menubarre3{
+    width: 550px;
+    font-size: 120%;
+    height: 50px;
+}
+
+.menubarre a, .menubarre1 a, .menubarre2 a, .menubarre3 a{
     display: inline-table;
     color: #FF9E16;
     margin-left: 20px;
@@ -30,19 +36,22 @@
     
 }
 
+
 .menubarre2 a{
     margin-left: 80px;
 }
 
-
-.menubarre a:hover, .menubarre1 a:hover, .menubarre2 a:hover{
+.menubarre3 a{
+    margin-left: 80px;
+}
+.menubarre a:hover, .menubarre1 a:hover, 
+.menubarre2 a:hover, .menubarre3 a:hover{
     color : white;
-    border-bottom: 4px solid white;
-  
-    
+    border-bottom: 4px solid white;    
 }
 
-.menubarre a.is_selected, .menubarre1 a.is_selected, .menubarre2 a.is_selected{    
+.menubarre a.is_selected, .menubarre1 a.is_selected,
+.menubarre2 a.is_selected, .menubarre3 a.is_selected{    
     color: white;
     border-bottom: 4px solid white;
 }

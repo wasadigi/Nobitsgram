@@ -308,7 +308,7 @@ Author     : Eyram
 			<option value="United Arab Emirates">United Arab Emirates</option>
 			<option value="United Kingdom">United Kingdom</option>
 
-			<option value="United States">United States</option>
+			<option value="USA">United States</option>
 			<option value="United States Minor Outlying Islands">United States Minor Outlying Islands</option>
 			<option value="Uruguay">Uruguay</option>
 			<option value="US Virgin Islands">US Virgin Islands</option>

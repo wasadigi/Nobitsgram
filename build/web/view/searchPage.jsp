@@ -67,7 +67,9 @@
 
         <% if( urlList !=null && !urlList.isEmpty()){
            int size = urlList.size(); Random random = new Random(); int j;
-           String username =(String)request.getSession().getAttribute("username");%>
+           int b = Math.min(size, 3);
+           List<Integer> tmpList = new ArrayList<Integer>();                      
+        %>
 
 
 <div>
@@ -81,8 +83,13 @@
 
 
             <%
-                for(int i = 0; i < 3; i++) {
-                    j = random.nextInt(size);
+                for(int i = 0; i < b; i++) {
+                    j = random.nextInt(size);                    
+                    while(!tmpList.isEmpty() && tmpList.contains(j)){
+                        j = random.nextInt(size);
+                    }
+                    System.out.println("j APRES ==> "+j);
+                    tmpList.add(j);
               %>
             <td>
                 <span style="margin-right: 80px;"><img src="<% out.print(urlList.get(j));%>" style="width: 220px;height:170px;" /></span>
@@ -91,7 +98,12 @@
             </td>
 
 
-           <% }%>
+           <% 
+            if(tmpList.size()%3 == 0 && size - tmpList.size() <= 3){
+                tmpList = new ArrayList<Integer>();
+            }
+             }
+            %>
 
         </tr>
     </table>

@@ -63,7 +63,9 @@
              <tr>
                  <% } %>
                  <td>
-                    <img class="" src="<% out.print(user.getProfile_picture()); %>" style="width: 80px; height: 80px"/>
+                    <a href="<% out.print(root+ "/UserInfoServlet?username="+user.getUsername()); %>">
+                        <img class="" src="<% out.print(user.getProfile_picture()); %>" style="width: 80px; height: 80px"/>
+                    </a>
                     
                     <center>
                     <br style="margin-top: -15px;"/>

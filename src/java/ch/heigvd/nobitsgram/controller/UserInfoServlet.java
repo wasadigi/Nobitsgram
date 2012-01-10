@@ -42,8 +42,8 @@ public class UserInfoServlet extends HttpServlet {
         try{
             HttpSession session = request.getSession();
             String username = request.getParameter("username").trim();            
-            User user = usersManager.getUser("username", username).get(0);            
-            session.setAttribute("user", user);
+            User userVar = usersManager.getUser("username", username).get(0);            
+            session.setAttribute("user", userVar);
             sc.getRequestDispatcher("/nobitsgramAdmin/"
                     + "administrator/userInformationsPage.jsp").forward(request, response);
         }

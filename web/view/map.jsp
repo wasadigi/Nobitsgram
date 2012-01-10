@@ -237,21 +237,25 @@
                    if(size1 != 0){
                        Random random = new Random();
                        int index;
+                       List<String> tmpList = positionUrl;
+                       int b = Math.min(size1, 9);
+                       
                        %>
                   <table style="margin-top:-5px; margin-left:-5px;">
-                     <%  for(int i = 0; i < 9; i++ ) {
-                           index = random.nextInt(size1);                      
+                     <%  for(int i = 0; i < b; i++ ) {
+                           index = random.nextInt(tmpList.size());                      
                       if(i%3 == 0){    %>                   
                       <tr>
                        <% } %>
                            <td> 
                                
-                               <img   src="<% out.print(positionUrl.get(index));%>"  style="width: 190px;height: 148px;"/>
+                               <img   src="<% out.print(tmpList.get(index));%>"  style="width: 190px;height: 148px;"/>
                                
                            </td>
                         <% if((i+1)%3 == 0){ %>
                        </tr>
                        <% }
+                          tmpList.remove(index);
                       } %>
                     </table>
                      <% } %>
@@ -260,7 +264,7 @@
                <center>
                    <h3 style="color:red"> <% out.print(errorMap); %> <h3/>
                </center>
-              <% //errorMap ="";  //session.setAttribute("errorMap",errorMap);
+              <% 
                  session.removeAttribute("errorMap");
               } %>
            </div>
