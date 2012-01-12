@@ -76,9 +76,9 @@ public class InterrogatorInstagram {
             // and we set the parameters of request according to the index of
             // both lists.
             while(i < size){
-                if( i < 0){
+                if( i == 0){
                     reqParameters = URLEncoder.encode(parameters.get(i), "UTF-8")+
-                                 "="+URLEncoder.encode(value.get(i), "UTF-8");
+                                 "="+URLEncoder.encode(value.get(i), "UTF-8");                    
                 }
                 else{
                     reqParameters +="&"+URLEncoder.encode(parameters.get(i), "UTF-8")+
@@ -86,11 +86,9 @@ public class InterrogatorInstagram {
                 }
                 i += 1;
             }
-
-            
+                        
             // We create the connection to instagram
             myUrl = new URL(url);
-
             // We open the connection
             URLConnection connect = myUrl.openConnection();
 
@@ -100,7 +98,7 @@ public class InterrogatorInstagram {
             // We send the request;
             outWriter = new OutputStreamWriter(connect.getOutputStream());
             // We add parameters to the request
-            outWriter.write(reqParameters);
+            outWriter.write(reqParameters);                        
 
             // We flush the stream
             outWriter.flush();

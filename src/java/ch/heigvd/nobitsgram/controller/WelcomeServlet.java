@@ -63,10 +63,8 @@ public class WelcomeServlet extends HttpServlet {
         String urlTopic = "https://api.instagram.com/v1/tags/"+topicName+"/media/recent?access_token="+myAccess_token;
         
         // We create a list of url with the name nobits
-        List<String> listTopicRefresh = getListsUrl(urlTopic);
-        boolean connectToServlet = false;
-        session.setAttribute("listTopicRefresh", listTopicRefresh);
-        session.setAttribute("connectToServlet",connectToServlet);
+        List<String> listTopicRefresh = getListsUrl(urlTopic);        
+        session.setAttribute("listTopicRefresh", listTopicRefresh);        
         sc.getRequestDispatcher("/view/pagelogin.jsp").forward(request, response);
     }
 
@@ -94,8 +92,8 @@ public class WelcomeServlet extends HttpServlet {
 
             // Get the result when an instance of InterrogatorInstagram do a request
             // to the instagram site.
-            String resultResearch = interrogator.getSearcResult(url);            
-            listUrl = MyParser.parseResponse(resultResearch,"data","url",true);
+            String resultResearch = interrogator.getSearcResult(url);             
+            listUrl = MyParser.parseResponse(resultResearch,"data","url",true);            
             return listUrl;
      }
 

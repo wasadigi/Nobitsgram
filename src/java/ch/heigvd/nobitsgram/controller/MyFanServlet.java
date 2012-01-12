@@ -50,7 +50,7 @@ public class MyFanServlet extends HttpServlet {
                          user.getId_Instagram()+"/follows?access_token="+access_token;
             // We get the list of Instagram user which the user is follow by
             List<UserInstagram> followings = getListUserInstgram(followingUrl, inter);
-
+           
 
             // We build the url to do the follow request to Instagram
             String myFollowersUrl =  "https://api.instagram.com/v1/users/"+
@@ -58,7 +58,7 @@ public class MyFanServlet extends HttpServlet {
 
            // We get the list of Instagra user which the current user follow
             List<UserInstagram> myFans = getListUserInstgram(myFollowersUrl, inter);        
-
+            
             // We remove each Instagram user which is in followersBy in the followers
             myFans = filterList(myFans, followings);
 
@@ -87,7 +87,7 @@ public class MyFanServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
+       doGet(request, response);
     }
 
     

@@ -45,8 +45,8 @@ public class HomeServlet extends HttpServlet {
                         
             List<User> users = usersManager.findAllUser();
             
-            //We add the list of user to the administrator session
-            session.setAttribute("users", users);          
+            // We add the list of user to the administrator session
+            session.setAttribute("users", users);
             sc.getRequestDispatcher("/nobitsgramAdmin/administrator/home.jsp").forward(request, response);
         }
         catch(Exception exc){

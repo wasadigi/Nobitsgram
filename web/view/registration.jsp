@@ -4,7 +4,7 @@ Created on : 17 nov. 2011, 13:11:15
 Author     : Eyram
 --%>
 <%@include file="tools/headPage.jspf" %>
-        <h1 style="margin-left:37%;">REGISTRATION</h1>
+        <h1 style="margin-left:37%;">REGISTRATION</h1>              
         <form action="/nobitsgram/RegistrationServlet" method="POST" accept-charset="utf-8">
             <table cellspacing="40" style="margin-left: 20%; background-color:#DCDCDC;">
 

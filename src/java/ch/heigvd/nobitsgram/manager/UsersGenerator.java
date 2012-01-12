@@ -172,15 +172,7 @@ public class UsersGenerator {
         
         for(String s: usernames){
             
-            if(i%10 == 0 ){
-                try{
-                  
-                System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% WAIT %%%%%%%%%%%%%%%%%%%%%%%%%%");
-                }
-                catch(Exception e){
-                    System.out.println("CAN'T WAIT **************************************");
-                }
-            }
+           
             index = random.nextInt(sizeCountry);
             country = countryList.get(index);
             // We build the url of request to googleapis
@@ -188,8 +180,7 @@ public class UsersGenerator {
                          + country + "&sensor=true";
 
             // we get the response of request
-            String result = inter.getSearcResult(url);
-            System.out.println("RESULT "+result+"\n ====> country == "+country+" i ===> "+i);
+            String result = inter.getSearcResult(url);      
             location = MyParser.parseResponse(result,"location",false);
             lat = MyParser.parseResponse(location, "lat",true);
             lng = MyParser.parseResponse(location, "lng",true);

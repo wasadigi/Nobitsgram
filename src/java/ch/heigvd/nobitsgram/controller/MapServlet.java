@@ -81,7 +81,8 @@ public class MapServlet extends HttpServlet {
                    forward(request, response);
                       
         }
-        catch(Exception except){            
+        catch(Exception except){
+            except.printStackTrace();
             response.sendRedirect(request.getContextPath()+"/view/pagelogin.jsp");
         }
         

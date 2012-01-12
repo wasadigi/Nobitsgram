@@ -157,14 +157,15 @@
     var access_token = "<% out.print(user.getAcces_token()); %>";
     
     function submitFollow(idFollow){         
-        action_Follow = document.getElementById(idFollow).value;
-       
-        urlFollow = "https://api.instagram.com/v1/users/"+idFollow+"/relationship?access_token="+access_token+"&action="+action_Follow;
-
+       action_Follow = document.getElementById(idFollow).value;  
+        urlFollow = "https://api.instagram.com/v1/users/"+idFollow+"/relationship?access_token="+access_token;        
         $.ajax({
         type: "POST",         
         dataType: "jsonp",        
         url: urlFollow,
+        parameters: {                
+                 action: action_Follow
+            },
         success: function() {
             if(action_Follow == "follow"){
                 document.getElementById(idFollow).value = "unfollow";
@@ -187,7 +188,7 @@
    
    function submitLike(idLike){        
         action_Like = document.getElementById(idLike).value;        
-        urlLike = "https://api.instagram.com/v1/media/"+idLike+"/likes";
+        urlLike = "https://api.instagram.com/v1/media/"+idLike+"/likes?access_token="+access_token;
     
        if(action_Like == "like"){            
             $.ajax({
@@ -209,11 +210,9 @@
 
         });
       }
-      else{
-            urlLike = urlLike+"?access_token="+access_token; 
-            
+      else{                      
             $.ajax({
-            type: "POST",         
+            type: "DELETE",         
             dataType: "jsonp",      
             url: urlLike,
             

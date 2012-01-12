@@ -71,7 +71,8 @@
 </table>
 <br/>
 <table cellspacing="10">
-    <% List<String> followUrlList = (List<String>)session.getAttribute("followUrlList");
+    <% 
+    List<String> followUrlList = (List<String>)session.getAttribute("followUrlList");
         int size2 = followUrlList.size();         
         if(size2 > 0 ){
             List<String> tmpList2 = followUrlList;        

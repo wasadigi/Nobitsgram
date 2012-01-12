@@ -6,8 +6,6 @@
 <%@page import="ch.heigvd.nobitsgram.model.Picture"%>
 <%@page import="ch.heigvd.nobitsgram.model.UserInstagram"%>
 <%@include file="tools/headPage.jspf" %>
-<script type="text/javascript" src="jquery-1.2.3.min.js"></script>
-<script type="text/javascript" src="Default.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
 
 <div class="bar2" id="positionbar">
@@ -161,17 +159,22 @@
    
    
     function submitFollow(idFollow){         
-        action_Follow = document.getElementById(idFollow).value;
-        alert(idFollow);
-        urlFollow = "https://api.instagram.com/v1/users/"+idFollow+"/relationship?access_token="+access_token;
-       
+        
+        action_Follow = document.getElementById(idFollow).value;  
+        urlFollow = "https://api.instagram.com/v1/users/"+idFollow+"/relationship?access_token="+access_token;        
+        //alert(urlFollow);
         $.ajax({
-        type: "POST",         
+        type: "POST",
+        contentType: "text/plain",        
         dataType: "jsonp",        
-        url: urlFollow,
-        data: {                
-                action : action_Follow
-            },
+        url: urlFollow,        
+        data:{
+            action :  "unfollow"
+            
+        
+        },
+        
+        
         success: function() {
             if(action_Follow == "follow"){
                 document.getElementById(idFollow).value = "unfollow";
@@ -195,15 +198,15 @@
    
    function submitLike(idLike){        
         action_Like = document.getElementById(idLike).value;        
-        urlLike = "https://api.instagram.com/v1/media/"+idLike+"/likes";
+        urlLike = "https://api.instagram.com/v1/media/"+idLike+"/likes?access_token="+access_token;
     
        if(action_Like == "like"){            
             $.ajax({
             type: "POST",         
             dataType: "jsonp",      
             url: urlLike,
-            data: {
-                access_token: access_token
+            parameters: {
+                action: action_Like
             },
 
             success: function() {       
@@ -217,11 +220,10 @@
 
         });
       }
-      else{
-            urlLike = urlLike+"?access_token="+access_token; 
+      else{            
             
             $.ajax({
-            type: "POST",         
+            type: "DELETE",         
             dataType: "jsonp",      
             url: urlLike,
             

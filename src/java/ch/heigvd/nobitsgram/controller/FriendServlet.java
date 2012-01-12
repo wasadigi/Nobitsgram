@@ -113,10 +113,12 @@ public class FriendServlet extends HttpServlet {
             user = users.get(i);
             id = user.getId();
             // We search in the database if the id matching with an Id_instagram
-            // If no, we remove the current user in the tmp list
+            // If that ok, we add the current user to tmp list
             if(usersManager.getUser("id_Instagram",id) != null &&
-               !usersManager.getUser("id_Instagram",id).isEmpty()){                
-                tmp.add(user);                
+               !usersManager.getUser("id_Instagram",id).isEmpty()){
+                if(!tmp.contains(user)){
+                    tmp.add(user);
+                }
             }
             
         }

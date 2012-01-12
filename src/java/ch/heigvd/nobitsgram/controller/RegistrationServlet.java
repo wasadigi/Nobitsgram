@@ -343,11 +343,9 @@ public class RegistrationServlet extends HttpServlet {
 
    
 
-    private Hashtable<String,String> getInstagramInfo(String code,HttpServletRequest request){
-        List<String> infoList = new ArrayList<String>();
+    private Hashtable<String,String> getInstagramInfo(String code,HttpServletRequest request){       
         Hashtable<String,String> table = new Hashtable<String, String>();
-        String delimiter ="\"";
-        
+               
 
         // This instance will permit us to communicate with instagram
         InterrogatorInstagram intInstag = new InterrogatorInstagram();
@@ -360,20 +358,23 @@ public class RegistrationServlet extends HttpServlet {
         parameters.add("client_secret");
         parameters.add("grant_type");
         parameters.add("redirect_uri");
-        parameters.add("code");
+        parameters.add("code");        
 
         // We create a list of parameters values of the OAuth's Post request,
         // and we insert the value according to parameter we insert before.
         List<String> value = new ArrayList<String>();
         value.add("5e2a174a39804619840925781251b646");
         value.add("26a951460081472fab2c0bb2f505a397");
+        // The scope is the permissions which will permit the user to
+        // modifie his data or comment or like a picture
+        
         value.add("authorization_code");
         value.add(request.getRequestURL().toString());
         value.add(code);
+        
         String oauthUrl = "https://api.instagram.com/oauth/access_token";
         // We get information about the client.
-        String informations = intInstag.getClientInformations(oauthUrl,parameters,value);
-                
+        String informations = intInstag.getClientInformations(oauthUrl,parameters,value);                     
 
         // We extract access token, username and id to record them in the databases
         String access_token = MyParser.parseResponse(informations,"access_token",true);       
