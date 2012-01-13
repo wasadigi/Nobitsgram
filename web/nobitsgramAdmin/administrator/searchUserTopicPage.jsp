@@ -58,7 +58,7 @@
                <% for(int j = 0; j < size1; j++){
                         user = topic.getUsers().get(j);
                         
-                        if(j%5 == 0){
+                        if(j%7 == 0){
              %>
              <tr>
                  <% } %>
@@ -73,7 +73,7 @@
                     
                     </center>
                 </td>
-            <% if((j+1)%5 == 0) {%>
+            <% if((j+1)%7 == 0) {%>
             </tr>
             <% }} %>
             </table>

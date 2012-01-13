@@ -138,10 +138,8 @@
 
        
 <script type="text/javascript">
-        
-   
-    var urlFollow;
-    var action_Follow;
+               
+    
     var action_Like;
     var urlLike;
     var access_token = "<% out.print(user.getAcces_token()); %>";
@@ -150,17 +148,14 @@
    
    function submitLike(idLike){        
         action_Like = document.getElementById(idLike).value;        
-        urlLike = "https://api.instagram.com/v1/media/"+idLike+"/likes";
+        urlLike = "https://api.instagram.com/v1/media/"+idLike+"/likes?access_token="+access_token;
     
        if(action_Like == "like"){            
             $.ajax({
             type: "POST",         
             dataType: "jsonp",      
             url: urlLike,
-            data: {
-                access_token: access_token
-            },
-
+            
             success: function() {       
                     document.getElementById(idLike).src = "<%out.print(root+ "/images/unlike1.jpg");%>";
                     document.getElementById(idLike).value="unlike";
@@ -176,7 +171,7 @@
             urlLike = urlLike+"?access_token="+access_token; 
             
             $.ajax({
-            type: "POST",         
+            type: "DELETE",         
             dataType: "jsonp",      
             url: urlLike,
             

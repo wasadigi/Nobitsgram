@@ -38,7 +38,7 @@
                 <jsp:param name="transfert" value="ok" />
             </jsp:forward>
                 <% }                 
-                 if((Boolean)session.getAttribute("connectToServlet") == null){ %>
+                 if((List<String>)session.getAttribute("listTopicRefresh") == null){ %>
                  <jsp:forward page="/WelcomeServlet">
                     <jsp:param name="transfert" value="ok" />
                 </jsp:forward>
@@ -96,11 +96,13 @@
                 redirect_uri = redirect_uri.replaceAll(removePath,"/");
 
                 String response_type = "code";
+                String scope ="relationships+likes+comments";
                 String oauth_url = "https://api.instagram.com/oauth/authorize/";
 
                 String url =oauth_url+"?client_id="+client_id+
                 "&redirect_uri="+redirect_uri+
-                "&response_type="+response_type;
+                "&response_type="+response_type + 
+                 "&scope="+scope;
                     %>
                 <a href="<%out.print(url);%>" ><img src="<% out.print(root+ "/images/register_1.jpg"); %>"  style="border:0; height:30px; width:150px"  target="cadre1"/></a>
 

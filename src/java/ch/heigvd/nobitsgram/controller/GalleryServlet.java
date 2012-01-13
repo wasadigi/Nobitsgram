@@ -57,7 +57,7 @@ public class GalleryServlet extends HttpServlet {
             // We get ramdom of a topic
             int size = user.getTopicList().size();
             List<String> topicUrlList = new ArrayList<String>();
-            if(size > 0){
+           if(size > 0){
                 int i = new Random().nextInt(size);            
                 String topic = user.getTopicList().get(i).getName();                   
                 String topicUrl = "https://api.instagram.com/v1/tags/"+topic+"/media/recent?access_token="+access_token;            

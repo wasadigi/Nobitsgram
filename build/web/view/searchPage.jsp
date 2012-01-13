@@ -67,7 +67,7 @@
 
         <% if( urlList !=null && !urlList.isEmpty()){
            int size = urlList.size(); Random random = new Random(); int j;
-           int b = Math.min(size, 3);
+           int b = Math.min(size, 9);
            List<Integer> tmpList = new ArrayList<Integer>();                      
         %>
 
@@ -79,7 +79,7 @@
 
     <table style="margin-left: 18%">
 
-        <tr>
+        
 
 
             <%
@@ -87,10 +87,12 @@
                     j = random.nextInt(size);                    
                     while(!tmpList.isEmpty() && tmpList.contains(j)){
                         j = random.nextInt(size);
-                    }
-                    System.out.println("j APRES ==> "+j);
+                    }                    
                     tmpList.add(j);
               %>
+             <% if(i%3 == 0){ %>
+             <tr>
+             <% } %>
             <td>
                 <span style="margin-right: 80px;"><img src="<% out.print(urlList.get(j));%>" style="width: 220px;height:170px;" /></span>
 
@@ -99,13 +101,16 @@
 
 
            <% 
-            if(tmpList.size()%3 == 0 && size - tmpList.size() <= 3){
+            if(tmpList.size()%9 == 0 && size - tmpList.size() < 9){
                 tmpList = new ArrayList<Integer>();
-            }
-             }
+            }%>
+            <% if((i+1)%3 == 0){ %>
+           </tr>    
+          <%  }
+                }
             %>
 
-        </tr>
+        
     </table>
 </div>
             <%

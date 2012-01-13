@@ -21,7 +21,7 @@
  <div class="menubarre3" id="position-menu-barre">    
         <a href="<% out.print(root+ "/view/settingAccount.jsp"); %>" 
            style="margin-top: 10px;">Setting Account</a>
-        <a href="<% out.print(root+ "/UserMediaServlet"); %>" class="is_selected">My Media</a>        
+        <a href="<% out.print(root+ "/UserMediaServlet"); %>" class="is_selected">My Medias</a>        
     </div>
 
         <form action="<% out.print(root+ "/SearchServlet"); %>" method="GET">
@@ -42,25 +42,27 @@
         </form>
 
   </div>
-                           
+                           <center>                           
 <div style="margin-top: 100px;">
      <table style="margin-left: 20px;" cellspacing="10">
       <% 
           List<String> listUrl = (List<String>)session.getAttribute("listMediaUrl");
           int size = listUrl.size();
           for(int i = 0; i < size; i++) { 
-             if(i%6 == 0){             
+             if(i%4 == 0){             
     %>
             <tr>
+                
         <% } %>  
         <td>
             <img src="<% out.print(listUrl.get(i));%>" style="width: 200px;height:150px;" />
         </td>
-     <% if((i+1)%6 == 0 ){  %>
+     <% if((i+1)%4 == 0 ){  %>
     </tr>
     <% } %>
     <% } %>
 
     </table>
 </div>
+                           </center>
 <%@include file="tools/footPage.jspf" %>

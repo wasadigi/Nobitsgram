@@ -4,7 +4,7 @@
         <listener-class>ch.heigvd.nobitsgram.listener.MyServletListener</listener-class>
     </listener>
     <session-config>
-        <session-timeout>30</session-timeout>
+        <session-timeout>7</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>view/pagelogin.jsp</welcome-file>
